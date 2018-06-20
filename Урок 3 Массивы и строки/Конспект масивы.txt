@@ -1,0 +1,77 @@
+Массивы
+Обьявление массива тип данных [](размер масива) имя=new тип[размер];
+int size=5;
+double[] dArr=new double[size];
+int [] iArr=new int[4]{3,4}- это ошибка, нужно инициализировать все;
+char[] cArr={'A','z','c','h'};
+int [] a;
+a=new int[2]{};
+Многомерный массив
+int [,](запятая размерность массива) arrTwo=new int[2,3];
+
+=new int [2,3]{{4,3,1},{5,8,7}};
+
+={{4,3,1},{4,5,6}};
+вывод
+for(int i=0;i<cArr.length;i++)
+{
+cwl(cArr[i]);
+}
+foreach(char item in cArr )
+{
+cwl(item)
+}
+для двухмерного массива
+for(int i=0;i<arrTwo.GetLength(0);i++,CWL())//это строки, второй вариант для перехода строки
+{
+for(int j=0;j<arrTwo.GetLenght(1);j++)
+{
+Console.Write(arrTwo[i,j]+"\t")'
+}
+CWL();//переход на новую строку
+}
+
+Random rand = new Random();
+
+for(int i=0;i<dArr.length;i++)
+{
+dArr[i]=rand.NextDouble()+rand.Next(2,10);
+CWL(dArr[i]);
+}
+
+Зубчатые массивы 
+int [][] jaggedArr=new int[3][];
+jaggedArr[0]=new int[3]{4,8,12};
+jaggedArr[1]=new int[5]{41,35,16,4,3};
+jaggedArr[2]=new int[2]{44,63};
+
+int n;
+
+создание и заполнение зубчатого массива
+int n=int.Parse(Console.Readline());
+int[][] jArr=new int [n][];
+for(int i=0;i<JArr.length;i++)
+{
+jArr[i]=new int[rand.Next(3,7)];
+}
+for(int i=0;i<JArr.length;i++)
+{
+for(int j=0;j<JArr[i].length;j++){
+jArr[i][j]=rand.Next(20);
+Console.Write(jArr[i][j]+"t");
+}
+cwl();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,229 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+namespace Tamagotchi
+{
+    enum TActions
+    {
+        To_feed, Take_a_walk, Put_to_bed, Play, Treat
+    }
+
+
+    class Tamagotchi
+    {
+        public int Hitpoints { get; set; } = 3;
+        public bool PokemonGone { get; set; } = false;
+        public DateTime GameStart { get; set; } = DateTime.Now;
+        public TActions LastAction { get; set; } = TActions.Treat;
+        private static Random _random = new Random();
+        public TimeSpan GameDuration { get; set; } = new TimeSpan(0, 1, _random.Next(0,61));
+        public static System.Timers.Timer GameActions;
+
+        //interface.
+        public static System.Timers.Timer GameFPS;
+        private double _points = 0;
+        public double Points { get { return _points; } }
+        private string[] _emotion = new string[]
+{
+@"
+                    ã==¬ã¬ãT===¬-ã==¬ã¬ãT===¬
+                    ¦ã¬¦¦¦¦¦ã==--¦ã¬¦¦¦¦¦ã==-
+                    ¦L-L¦L-¦L==¬-¦L-L¦L-¦L==¬
+                    ¦ã=¬¦=¬¦ã==--¦ã=¬¦=¬¦ã==-
+                    ¦L=-¦ã-¦L==T¬¦L=-¦ã-¦L==¬
+                    L===-L=¦===¦¦L===-L=¦===-
+                --------------------------------
+                --------------------------------
+                ------0---¦-¦0----0¦-¦---0------
+                ----¦-----¦-¦-¦--¦-¦-¦-----¦----
+                ----¦-----¦-¦-¦--¦-¦-¦-----¦----
+
+",
+@"
+                       ||     ||
+                       ||     ||
+                       ||     ||
+                       ||     ||
+                       ||     ||
+
+                       _________
+                      /         \",
+@"
+                       ||     ||
+                       ||     ||
+                       ||     ||
+                       ||     ||
+                       ||     ||
+
+                     ~~~~~~~~~~~~~",
+@"
+                       ||     ||
+                       ||     ||
+                       ||     ||
+                       ||     ||
+                       ||     ||
+
+                    \_____________/"
+};
+        private string[] _action = new string[] {
+            @"
+                     --------------
+                     --------------
+                     --------------
+                     --------------
+                     --------------
+                     --------------
+                     --------------
+",
+@"
+                  ---------------------
+                  ---------------------
+                  ---------------------
+                  ---------------------
+                  ---------------------
+                  ---------------------
+                  ---------------------
+",
+@"
+                 ----------------------
+                 ----------------------
+                 ----------------------
+                 ----------------------
+                 ----------------------
+                 ----------------------
+                 ----------------------
+",
+@"
+                  ---------------------
+                  ---------------------
+                  ---------------------
+                  ---------------------
+                  ---------------------
+                  ---------------------
+                  ---------------------
+",
+@"
+                  -----------------------
+                  -----------------------
+                  -----------------------
+                  -----------------------
+                  -----------------------
+                  -----------------------
+                  -----------------------"
+        };
+        private ConsoleColor[] _pocemonColor = new ConsoleColor[] { ConsoleColor.White, ConsoleColor.Red, ConsoleColor.Yellow, ConsoleColor.Green };
+        private bool _actionControl = false;
+        public Tamagotchi()
+        {
+            GameActions = new System.Timers.Timer { Interval = 3000 };
+            GameFPS = new System.Timers.Timer { Interval = 500 };
+            GameFPS.Elapsed += (object sender, System.Timers.ElapsedEventArgs e) =>
+            {
+                ShowGame();
+            };
+
+            GameActions.Elapsed += (object sender, System.Timers.ElapsedEventArgs e) =>
+            {
+                if (Hitpoints <= 0 || (DateTime.Now - GameStart) >= GameDuration)
+                {
+                    PokemonGone = true;
+                    Hitpoints = 0;
+                    return;
+                }
+                Tell();
+
+            };
+
+            GameActions.Start();
+            GameFPS.Start();
+        }
+        /// <summary>
+        /// Show game event.
+        /// </summary>
+        public void Tell()
+        {
+            GameActions.Stop();
+            _actionControl = true;
+
+
+            TActions NextAction;
+            do
+            {
+                Enum.TryParse(_random.Next(0, 4).ToString(), out NextAction);
+
+            } while (NextAction == LastAction);
+            LastAction = NextAction;
+
+            if (MessageBox.Show($"{NextAction} ?", "Action", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+            {
+                Hitpoints--;
+                if (Hitpoints <= 0)
+                {
+                    LastAction = TActions.Treat;
+                    if (MessageBox.Show($"{TActions.Treat} ?", "Action", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                    {
+                        Hitpoints++;
+                    }
+                    LastAction = NextAction;
+                }
+            }
+            else
+            {
+                _points += _random.Next(0, 10) * Hitpoints;
+            }
+
+            _actionControl = false;
+            //If PokemonGone. Timer GameActions stoped here
+            if (!PokemonGone)
+            {
+                GameActions.Start();
+            }else
+            {
+                GameActions.Close();
+            }
+
+        }
+        /// <summary>
+        /// Show hame interface.
+        /// </summary>
+        public void ShowGame()
+        {
+            GameFPS.Stop();
+
+            Console.Clear();
+            _points += 0.001;
+            TimeSpan leftTime = GameDuration - (DateTime.Now - GameStart);
+            if ((DateTime.Now - GameStart) >= GameDuration)
+            {
+                _actionControl = false;
+                Hitpoints = 0;
+                PokemonGone = true;
+                leftTime = new TimeSpan(0);
+            }
+
+            Console.WriteLine(
+ $@"
+------------------------------------------------------------
+          HP:{Hitpoints}        Sore:{_points}     LeftTime:{leftTime.Minutes}:{leftTime.Seconds}     
+------------------------------------------------------------");
+
+            Console.ForegroundColor = _pocemonColor[Hitpoints];
+            Console.WriteLine(_emotion[Hitpoints]);
+            Console.ResetColor();
+            if (_actionControl)
+            {
+                Console.ForegroundColor = (ConsoleColor)_random.Next(1, 16);
+                Console.WriteLine(_action[(int)LastAction]);
+                Console.ResetColor();
+            }
+
+            if (!PokemonGone)
+            {
+                GameFPS.Start();
+            }
+        }
+    }
+}

@@ -1,0 +1,598 @@
+
+using System;
+using System.Collections.Generic;
+using static System.Console;
+
+namespace SimpleProject
+{
+    public delegate void ExamDelegate(string t);
+
+    class Student
+    {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public DateTime BirthDate { get; set; }
+
+        public void Exam(string task)
+        {
+            WriteLine($"Студент {LastName} решил {task}");
+        }
+    }
+
+    class Teacher
+    {
+        public event ExamDelegate examEvent;
+
+        public void Exam(string task)
+        {
+            if (examEvent != null)
+            {
+                examEvent(task);
+            }
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            List<Student> group = new List<Student> {
+                new Student {
+                    FirstName = "John",
+                    LastName = "Miller",
+                    BirthDate = new DateTime(1997,3,12)
+                },
+                new Student {
+                    FirstName = "Candice",
+                    LastName = "Leman",
+                    BirthDate = new DateTime(1998,7,22)
+                },
+                new Student {
+                    FirstName = "Joey",
+                    LastName = "Finch",
+                    BirthDate = new DateTime(1996,11,30)
+                },
+                new Student {
+                    FirstName = "Nicole",
+                    LastName = "Taylor",
+                    BirthDate = new DateTime(1996,5,10)
+                }
+            };
+
+            Teacher teacher = new Teacher();
+
+            foreach (Student item in group)
+            {
+                teacher.examEvent += item.Exam;
+            }
+
+            teacher.Exam("Задача");
+        }
+    }
+}
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+using System;
+using System.Collections.Generic;
+using static System.Console;
+
+namespace SimpleProject
+{
+    class ExamEventArgs : EventArgs
+    {
+        public string Task { get; set; }
+    }
+
+    class Student
+    {        
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public DateTime BirthDate { get; set; }
+
+        public void Exam(object sender, ExamEventArgs e)
+        {
+            WriteLine($"Студент {LastName} решил {e.Task}");
+        }
+    }
+
+    class Teacher
+    {
+        public EventHandler<ExamEventArgs> examEvent;
+
+        public void Exam(ExamEventArgs task)
+        {
+            if (examEvent != null)
+            {
+                examEvent(this, task);
+            }
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            List<Student> group = new List<Student> {
+                new Student {
+                    FirstName = "John",
+                    LastName = "Miller",
+                    BirthDate = new DateTime(1997,3,12)
+                },
+                new Student {
+                    FirstName = "Candice",
+                    LastName = "Leman",
+                    BirthDate = new DateTime(1998,7,22)
+                },
+                new Student {
+                    FirstName = "Joey",
+                    LastName = "Finch",
+                    BirthDate = new DateTime(1996,11,30)
+                },
+                new Student {
+                    FirstName = "Nicole",
+                    LastName = "Taylor",
+                    BirthDate = new DateTime(1996,5,10)
+                }
+            };
+
+            Teacher teacher = new Teacher();
+
+            foreach (Student item in group)
+            {
+                teacher.examEvent += item.Exam;
+            }
+
+            ExamEventArgs eventArgs = new ExamEventArgs { Task = "Задача" };
+
+            teacher.Exam(eventArgs);
+        }
+    }
+}
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+using System;
+using System.Collections.Generic;
+using static System.Console;
+
+namespace SimpleProject
+{
+    public delegate void ExamDelegate(string t);
+
+    class Student
+    {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public DateTime BirthDate { get; set; }
+
+        public void Exam(string task)
+        {
+            WriteLine($"Студент {LastName} решил {task}");
+        }
+    }
+
+    class Teacher
+    {
+        SortedList<int, ExamDelegate> _sortedEvents = new SortedList<int, ExamDelegate>();
+        Random _rand = new Random();
+
+        public event ExamDelegate examEvent
+        {
+            add
+            {
+                for (int key; ;)
+                {
+                    key = _rand.Next();
+                    if (!_sortedEvents.ContainsKey(key))
+                    {
+                        _sortedEvents.Add(key, value);
+                        break;
+                    }
+                }
+            }
+            remove
+            {
+                _sortedEvents.RemoveAt(_sortedEvents.IndexOfValue(value));
+            }
+        }
+
+        public void Exam(string task)
+        {
+            foreach (int item in _sortedEvents.Keys)
+            {
+                if (_sortedEvents[item] != null)
+                {
+                    _sortedEvents[item](task);
+                }
+            }
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            List<Student> group = new List<Student> {
+                new Student {
+                    FirstName = "John",
+                    LastName = "Miller",
+                    BirthDate = new DateTime(1997,3,12)
+                },
+                new Student {
+                    FirstName = "Candice",
+                    LastName = "Leman",
+                    BirthDate = new DateTime(1998,7,22)
+                },
+                new Student {
+                    FirstName = "Joey",
+                    LastName = "Finch",
+                    BirthDate = new DateTime(1996,11,30)
+                },
+                new Student {
+                    FirstName = "Nicole",
+                    LastName = "Taylor",
+                    BirthDate = new DateTime(1996,5,10)
+                }
+            };
+
+            Teacher teacher = new Teacher();
+
+            foreach (Student item in group)
+            {
+                teacher.examEvent += item.Exam;
+            }
+
+            Student student = new Student
+            {
+                FirstName = "John",
+                LastName = "Doe",
+                BirthDate = new DateTime(1998, 10, 12)
+            };
+
+            teacher.examEvent += student.Exam;
+
+            teacher.Exam("Задача №1");
+
+            WriteLine();
+
+            teacher.examEvent -= student.Exam;
+
+            teacher.Exam("Задача №2");
+        }
+    }
+}
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+using System;
+using static System.Console;
+
+namespace SimpleProject
+{
+    public delegate double AnonimDelegateDouble(double x, double y);
+
+    public delegate void AnonimDelegateInt(int n);
+
+    public delegate void AnonimDelegateVoid();
+
+    class Dispacher
+    {
+        public event AnonimDelegateDouble eventDouble;
+
+        public event AnonimDelegateInt eventVoid;
+
+        public double OnEventDouble(double x, double y)
+        {
+            if (eventDouble != null)
+            {
+                return eventDouble(x, y);
+            }
+            throw new NullReferenceException();
+        }
+
+        public void OnEventVoid(int n = 0)
+        {
+            if (eventVoid != null)
+            {
+                eventVoid(n);
+            }
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            WriteLine("\tПрименение с событиями");
+
+            Dispacher dispacher = new Dispacher();
+
+            // анонимный метод
+            dispacher.eventDouble += delegate (double a, double b)
+            {
+                if (b != 0)
+                {
+                    return a / b;
+                }
+                throw new DivideByZeroException();
+            };
+
+            double n1 = 5.7, n2 = 3.2;
+
+            WriteLine($"{n1} / {n2} = {dispacher.OnEventDouble(n1, n2)}"); // вызов
+
+            WriteLine("   Использование локальной переменной");
+
+            int number = 5;
+
+            dispacher.eventVoid += delegate (int n) // анонимный метод
+            {
+                WriteLine($"{number} + {n} = { number + n}");
+            };
+
+            dispacher.OnEventVoid(); // вызов
+            dispacher.OnEventVoid(6);
+
+            WriteLine("\tПрименение с делегатом");
+
+            AnonimDelegateVoid voidDel = new AnonimDelegateVoid(delegate { WriteLine("Ok!"); });
+
+            voidDel += delegate { WriteLine("Bye!"); }; // анонимный метод
+
+            voidDel(); // вызов
+        }
+    }
+}
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+	Применение любого лямбда выражения можно разбить на три этапа:
+1. Объявление делегата необходимой сигнатуры.
+2. Создание экземпляра этого делегата и его инициализация совместимым лямбда выражением.
+3. Обращение к экземпляру делегата, при котором вычисляется лямбда выражение.
+
+using System;
+using static System.Console;
+
+namespace SimpleProject
+{
+    public delegate double AnonimDelegateDouble(double x, double y);
+
+    public delegate int AnonimDelegateInt(int n);
+
+    public delegate void AnonimDelegateVoid();
+
+    class Dispacher
+    {
+        public event AnonimDelegateDouble eventDouble;
+        public event AnonimDelegateInt eventInt;
+
+        public double OnEventDouble(double x, double y)
+        {
+            if (eventDouble != null)
+            {
+                return eventDouble(x, y);
+            }
+            throw new NullReferenceException();
+        }
+
+        public int OnEventInt(int n = 0)
+        {
+            if (eventInt != null)
+            {
+                return eventInt(n);
+            }
+            throw new NullReferenceException();
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            WriteLine("\tБлочное лямбда выражение");
+
+            Dispacher dispacher = new Dispacher();
+
+            // явная типизация
+            dispacher.eventDouble += (double a, double b) =>
+            {
+                if (b != 0)
+                {
+                    return a / b;
+                }
+                throw new DivideByZeroException();
+            };
+
+            double n1 = 5.7, n2 = 3.2;
+
+            WriteLine($"{n1} / {n2} = {dispacher.OnEventDouble(n1, n2)}"); // вызов
+
+            WriteLine("\tОдиночное лямбда выражение");
+
+            int number1 = 5, number2 = 6;
+
+            dispacher.eventInt += n => number1 + n; // неявная типизация
+
+            WriteLine($"{number1} + {number2} = {dispacher.OnEventInt(number2)}"); // вызов
+
+            WriteLine("\tПрименение с делегатом");
+
+            AnonimDelegateVoid voidDel = new AnonimDelegateVoid(() => { WriteLine("Ok!"); });
+
+            voidDel += () => { WriteLine("Bye!"); };
+
+            voidDel(); // вызов
+        }
+    }
+}
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+using System;
+using System.Collections.Generic;
+using static System.Console;
+
+namespace SimpleProject
+{
+    class Student
+    {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public DateTime BirthDate { get; set; }
+        public override string ToString()
+        {
+            return $"Фамилия: {LastName}, Имя: {FirstName}, Родился: {BirthDate.ToLongDateString()}";
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            List<Student> group = new List<Student> {
+                new Student {
+                    FirstName = "John",
+                    LastName = "Miller",
+                    BirthDate = new DateTime(1997,3,12)
+                },
+                new Student {
+                    FirstName = "Candice",
+                    LastName = "Leman",
+                    BirthDate = new DateTime(1998,7,22)
+                },
+                new Student {
+                    FirstName = "Joey",
+                    LastName = "Finch",
+                    BirthDate = new DateTime(1996,11,30)
+                },
+                new Student {
+                    FirstName = "Nicole",
+                    LastName = "Taylor",
+                    BirthDate = new DateTime(1996,5,10)
+                }
+            };
+            WriteLine("Рожденные весной:");
+
+            List<Student> students = group.FindAll(s => s.BirthDate.Month >= 3 && s.BirthDate.Month <= 5);
+
+            foreach (Student item in students)
+            {
+                WriteLine(item);
+            }
+        }
+    }
+}
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+		Разработать приложение «Тамагочи».
+Жизненный цикл персонажа – 1-2 минуты. Персонаж случайным образом выдаёт просьбы (но подряд одна и та же просьба не выдаётся).
+Просьбы могут быть следующие: Покормить, Погулять, Уложить спать, Полечить, Поиграть.
+Если просьбы не удовлетворяются трижды, персонаж «заболевает» и просит его полечить. В случае отказа – «умирает».
+Персонаж отображается в консольном окне при помощи псевдографики.
+http://www.vault.nazgul.ru/misc/pseudo/
+
+                    m
+   $m                mm            m
+    "$mmmmm        m$"    mmmmmmm$"
+          """$m   m$    m$""""""
+        mmmmmmm$$$$$$$$$"mmmm
+  mmm$$$$$$$$$$$$$$$$$$ m$$$$m  "    m  "
+$$$$$$$$$$$$$$$$$$$$$$  $$$$$$"$$$
+ mmmmmmmmmmmmmmmmmmmmm  $$$$$$$$$$
+ $$$$$$$$$$$$$$$$$$$$$  $$$$$$$"""  m
+ "$$$$$$$$$$$$$$$$$$$$$ $$$$$$  "      "
+     """""""$$$$$$$$$$$m """"
+       mmmmmmmm"  m$   "$mmmmm
+     $$""""""      "$     """"""$$
+   m$"               "m           "
+                       "
+
+
+
+/////////////////////////////////////////////////////////////////////
+
+
+Диалог с персонажем осуществляется посредством вызова метода Show() класса MessageBox из пространства имен System.Windows.Forms.
+
+Для решения этой задачи Вам понадобится класс Timer из пространства имен System.Timers, событие которого Elapsed, типа делегата ElapsedEventHandler, происходит через определенный интервал времени, который задан в свойстве Interval.
+Методы Start() и Stop() запускают и останавливают таймер, соответственно.
+
+Вы также можете захотеть делать паузы в работе приложения, в этом случае можно вызвать метод Sleep() класса Thread из пространства имен System.Threading, передав в него необходимое количество миллисекунд.
+
+
+using System.Windows.Forms;
+
+//......
+
+    class Program
+    {
+        static System.Timers.Timer timer;
+        static void Main(string[] args)
+        {
+            WriteLine("                    m\n$m                mm            m\n\"$mmmmm        m$\"    mmmmmmm$\"\n\"\"\"$m   m$    m$\"\"\"\"\"\"\nmmmmmmm$$$$$$$$$\"mmmm\nmmm$$$$$$$$$$$$$$$$$$ m$$$$m  \"    m  \"\n$$$$$$$$$$$$$$$$$$$$$$  $$$$$$\"$$$\nmmmmmmmmmmmmmmmmmmmmm  $$$$$$$$$$\n$$$$$$$$$$$$$$$$$$$$$  $$$$$$$\"\"\"  m\n\"$$$$$$$$$$$$$$$$$$$$$ $$$$$$  \"   \"\n     \"\"\"\"\"\"\"$$$$$$$$$$$m \"\"\"\"\n       mmmmmmmm\"  m$   \"$mmmmm\n     $$\"\"\"\"\"\"      \"$     \"\"\"\"\"\"$$\n   m$\"               \"m           \"\n                       \"\"\n"
+                );
+
+
+
+            timer = new System.Timers.Timer { Interval = 3000 };
+            timer.Elapsed += Timer_Elapsed;
+            timer.Start();
+            while (true)
+            {
+
+            }
+        }
+
+        private static void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            timer.Stop();
+            if (DialogResult.No == MessageBox.Show("Пойдем гулять?","Просьба",MessageBoxButtons.YesNo,MessageBoxIcon.Question))
+            {
+                WriteLine("No!");
+            }
+            else
+            {
+                WriteLine("Yes!");
+            }
+            timer.Start();
+        }
+    }
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+using static System.Console;
+
+namespace SimpleProject
+{
+    static class ExampleExtensions
+    {
+        public static int NumberWords(this string data)
+        {
+            if (string.IsNullOrEmpty(data))
+            {
+                return 0;
+            }
+
+            data = System.Text.RegularExpressions.Regex.Replace(data.Trim(), @"\s+", " ");
+
+            return data.Split(' ').Length;
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            WriteLine("Введите строку:");
+
+            string str = ReadLine();
+
+            WriteLine($"Количество слов в строке: {str.NumberWords()}");
+        }
+    }
+}
+

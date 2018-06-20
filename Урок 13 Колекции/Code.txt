@@ -1,0 +1,517 @@
+
+using System.Collections;
+using static System.Console;
+
+namespace SimpleProject
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            ArrayList arrayList1 = new ArrayList();
+            WriteLine($"Вместимость по умолчанию: {arrayList1.Capacity}");
+
+            arrayList1.Add("one");
+            WriteLine($"Вместимость после добавления одного элемента: {arrayList1.Capacity}");
+
+            arrayList1.AddRange(new int[] { 2, 5, 48, 14 });
+            WriteLine($"Вместимость после добавления коллекции: {arrayList1.Capacity}");
+
+            arrayList1.Capacity = 10;
+            WriteLine($"Вместимость задана через свойство: {arrayList1.Capacity}");
+
+            WriteLine($"Фактическое количество элементов: {arrayList1.Count}");
+
+            arrayList1.TrimToSize();
+            WriteLine($"Вместимость уменьшена до реального количества элементов: {arrayList1.Capacity}");
+
+            WriteLine($"Элемент с индексом 2: {arrayList1[2]}");
+
+            WriteLine("Все элементы коллекции:");
+
+            foreach (object item in arrayList1)
+            {
+                WriteLine($"\t{item}");
+            }
+        }
+    }
+}
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+using System.Collections;
+using static System.Console;
+
+namespace SimpleProject
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Write("Исходная коллекция: ");
+            ArrayList arrayList = new ArrayList(new int[] { 1, 2, 3, 4 });
+            foreach (int i in arrayList)
+            {
+                Write($"{i} ");
+            }
+
+            Write("\n\nВставка элемента: ");
+            arrayList.Insert(2, "Hello");
+            foreach (object item in arrayList)
+            {
+                Write($"{item} ");
+            }
+
+            Write("\n\nУдаление элемента: ");
+            arrayList.RemoveAt(3);
+            foreach (object item in arrayList)
+            {
+                Write($"{item} ");
+            }
+
+            WriteLine("\n\nИндекс элемента \"Hello\": " + arrayList.IndexOf("Hello"));
+
+            Write("\nПолучение диапазона: ");
+            ArrayList days = new ArrayList(new string[] { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" });
+            ArrayList onlyWork = new ArrayList(days.GetRange(1, 5));
+            foreach (string s in onlyWork)
+            {
+                Write($"{s} ");
+            }
+
+            Write("\n\nСортировка коллекции: ");
+            onlyWork.Sort();
+            foreach (string s in onlyWork)
+            {
+                Write($"{s} ");
+            }
+
+            WriteLine();
+        }
+    }
+}
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+using System.Collections;
+using static System.Console;
+
+namespace SimpleProject
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Stack stack = new Stack();
+
+            Write("Метод Push(): ");
+            stack.Push("one");
+            stack.Push("two");
+            stack.Push("three");
+
+            foreach (string item in stack)
+            {
+                Write($"{item} ");
+            }
+
+            Write("\n\nМетод Pop(): ");
+            stack.Pop();
+            foreach (string item in stack)
+            {
+                Write($"{item} ");
+            }
+
+            WriteLine($"\n\nМетод Peek(): {(string)stack.Peek()}");
+
+            WriteLine("\nСуществует ли элемент \"ten\": " + stack.Contains("ten")); // false
+            WriteLine("\nСуществует ли элемент \"two\": " + stack.Contains("two")); // true
+
+            Write("\nМетод CopyTo(): ");
+            string[] strArr = new string[stack.Count];
+            stack.CopyTo(strArr, 0);
+            foreach (string item in strArr)
+            {
+                Write($"{item} ");
+            }
+
+            WriteLine("\n\nКоличество элементов: " + stack.Count); // 3
+            stack.Clear();
+            WriteLine("\nКоличество элементов после вызова метода Clear(): " + stack.Count); // 0
+        }
+    }
+}
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+using System.Collections;
+using static System.Console;
+
+namespace SimpleProject
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Write("Метод Enqueue(): ");
+            Queue queue = new Queue();
+            for (int i = 1; i < 4; i++)
+            {
+                queue.Enqueue(i);
+            }
+
+            foreach (int item in queue)
+                Write($"{item} ");
+
+            WriteLine($"\n\nМетод Dequeue(): {queue.Dequeue()}\n");
+
+            WriteLine($"Существует ли элемент 1: {queue.Contains(1)}\n");
+
+            WriteLine($"Метод Peek() {queue.Peek()}\n");
+
+            WriteLine($"Существует ли элемент 2: {queue.Contains(2)}"); 
+        }
+    }
+}
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+using System.Collections;
+using static System.Console;
+
+namespace SimpleProject
+{
+    class Student
+    {
+        public string Name { get; set; }
+        public override string ToString()
+        {
+            return $"Имя: {Name}";
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Hashtable hash = new Hashtable();
+            hash.Add(1, "John");
+            hash.Add("two", new Student { Name = "Jack" });
+
+            WriteLine("----------- Вывод ключ-значение ------------\n");
+            foreach (object item in hash.Keys)
+            {
+                WriteLine("Ключ: " + item + " Значение: " + hash[item]);
+            }
+
+            hash.Add("Pi", 3.14159);
+
+            WriteLine("\n----- Коллекция значений после добавление элемента -----\n");
+            foreach (object item in hash.Values)
+                WriteLine(item);
+
+            WriteLine("\n----- Удаление элемента по ключу \"two\" ------\n");
+            hash.Remove("two");
+
+            WriteLine($"Существует ли элемент \"two\": {hash.ContainsKey("two")}"); // false
+        }
+    }
+}
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+using System.Collections;
+using static System.Console;
+
+namespace SimpleProject
+{
+    class Student
+    {
+        public string Name { get; set; }
+        public override string ToString()
+        {
+            return $"Имя: {Name}";
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            SortedList sortedList = new SortedList();
+            sortedList.Add(3, 6.7);
+            sortedList.Add(2, new Student { Name = "Jack" });
+            sortedList.Add(1, "one");
+
+            WriteLine("----------- Вывод ключ-значение ------------\n");
+            foreach (object item in sortedList.Keys)
+            {
+                WriteLine($"Ключ: {item} Значение: {sortedList[item]}");
+            }
+
+            WriteLine("\n------- Вывод ключ-значение по индексу --------\n");
+            for (int i = 0; i < sortedList.Count; i++)
+            {
+                WriteLine($"Ключ: {sortedList.GetKey(i)} Значение: {sortedList.GetByIndex(i)}");
+            }
+
+            WriteLine("\n----------- Коллекция значений ------------\n");
+            foreach (object item in sortedList.Values)
+                WriteLine(item);
+
+            WriteLine("\n----- Удаление элемента по ключу 3 ------\n");
+            sortedList.Remove(3);
+
+            WriteLine($"Существует ли элемент 3: {sortedList.ContainsKey(3)}"); // false
+        }
+    }
+}
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+using System.Collections;
+using static System.Console;
+
+namespace SimpleProject
+{
+    public class SortedArrayList : ArrayList
+    {
+        public void AddSorted(object item)
+        {
+            int position = BinarySearch(item);
+
+            if (position < 0)
+            {
+                position = ~position;
+            }
+
+            Insert(position, item);
+        }
+
+        public void ModifySorted(object item, int index)
+        {
+            RemoveAt(index);
+
+            int position = BinarySearch(item);
+
+            if (position < 0)
+            {
+                position = ~position;
+            }
+
+            Insert(position, item);
+        }
+    }
+    
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            SortedArrayList sortedAL = new SortedArrayList();
+
+            WriteLine("----------- Начальные значения ------------\n");
+            sortedAL.AddSorted(200);
+            sortedAL.AddSorted(-7);
+            sortedAL.AddSorted(0);
+            sortedAL.AddSorted(-20);
+            sortedAL.AddSorted(56);
+            sortedAL.AddSorted(200);
+
+            foreach (int i in sortedAL)
+            {
+                Write(i + " ");
+            }
+            WriteLine();
+
+            WriteLine("\n----------- Изменение значений ------------\n");
+            sortedAL.ModifySorted(3, 5);
+            sortedAL.ModifySorted(-1, 2);
+            sortedAL.ModifySorted(2, 4);
+            sortedAL.ModifySorted(7, 3);
+
+            foreach (int i in sortedAL)
+            {
+                Write(i + " ");
+            }
+            WriteLine();
+        }
+    }
+}
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+using System;
+using System.Collections;
+using static System.Console;
+
+namespace SimpleProject
+{
+    class DateComparer : IComparer
+    {
+        public int Compare(object x, object y)
+        {
+            if (x is Student && y is Student)
+            {
+                return DateTime.Compare((x as Student).BirthDate, (y as Student).BirthDate);
+            }
+            throw new NotImplementedException();
+        }
+    }
+
+    class Student : IComparable
+    {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public DateTime BirthDate { get; set; }
+
+        public override string ToString()
+        {
+            return $"Фамилия: {LastName}, Имя: {FirstName}, Родился: {BirthDate.ToLongDateString()}";
+        }
+
+        public int CompareTo(object obj)
+        {
+            if (obj is Student)
+            {
+                return LastName.CompareTo((obj as Student).LastName);
+            }
+            throw new NotImplementedException();
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            ArrayList auditory = new ArrayList {
+                new Student {
+                    FirstName ="John",
+                    LastName ="Miller",
+                    BirthDate =new DateTime(1997,3,12)
+                },
+                new Student {
+                    FirstName ="Candice",
+                    LastName ="Leman",
+                    BirthDate =new DateTime(1998,7,22)
+                }
+            };
+
+            WriteLine("+++++++++++++++++ список студентов ++++++++++\n");
+
+            foreach (Student student in auditory)
+            {
+                WriteLine(student);
+            }
+
+            WriteLine("\n+++++++++++++++ сортировка по фамилии ++++++++\n");
+
+            auditory.Sort();
+
+            foreach (Student student in auditory)
+            {
+                WriteLine(student);
+            }
+
+            WriteLine("\n+++++++++ сортировка по дате рождения ++++++++\n");
+
+            auditory.Sort(new DateComparer());
+
+            foreach (Student student in auditory)
+            {
+                WriteLine(student);
+            }
+        }
+    }
+}
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+using System;
+using System.Collections;
+using static System.Console;
+
+namespace SimpleProject
+{
+    class Student
+    {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+
+        Guid _guid;
+
+        public Student()
+        {
+            _guid = Guid.NewGuid();
+        }
+
+        public override string ToString()
+        {
+            return $"{LastName} {FirstName}";
+        }
+
+        public override int GetHashCode()
+        {
+            return (_guid.ToString() + ToString()).GetHashCode();
+        }
+    }
+
+    class Program
+    {
+        static Hashtable group = new Hashtable {
+                {
+                new Student {
+                    FirstName ="John",
+                    LastName ="Miller"
+                },new ArrayList{8,4,9}
+                },
+                {
+                new Student {
+                    FirstName ="Candice",
+                    LastName ="Leman"
+                },new ArrayList{12,9,10}
+                }
+            };
+        static void RatingsList()
+        {
+            WriteLine("+++++++++++++ Список студентов с оценками ++++++++++\n");
+
+            foreach (Student student in group.Keys)
+            {
+                Write($"{student}: ");
+                foreach (int item in (group[student] as ArrayList))
+                {
+                    Write($"{item} ");
+                }
+                WriteLine();
+            }
+        }
+        static void SetRating(string name, int mark)
+        {
+
+            WriteLine($"\n+++++++++++++ Студент {name} получил оценку {mark} ++++++\n");
+
+            foreach (Student item in group.Keys)
+            {
+                if (item.LastName == name)
+                {
+                    (group[item] as ArrayList).Add(mark);
+                }
+            }
+        }
+        static void Main(string[] args)
+        {
+            RatingsList();
+
+            SetRating("Leman", 11);
+
+            RatingsList();
+        }
+    }
+}
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Разработать класс очереди печати сотрудников. Предусмотреть в классе методы: помещение документа 
+в очередь печати, извлечение следующего документа из очереди печати, проверка наличия документов в очереди.
+При помещении документа задается его приоритет, извлекаются в первую очередь документы с более высоким приоритетом.

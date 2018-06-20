@@ -1,0 +1,19 @@
+
+    Обобщенные контейнеры             Необобщенные контейнеры                 Описание
+      Collection<T>                         CollectionBase	          Базовый класс для коллекций
+      List<T>                               ArrayList                 Список элементов с динамически изменяемым размером
+      Dictionary<TKey, TValue>              Hashtable                 Коллекция пар имя - значение
+      SortedDictionary<TKey, TValue>        SortedList                Сортированная коллекция пар имя - значение
+      Stack<T>                              Stack                     Реализация списка LIFO
+      Queue<T>                              Queue                     Реализация списка FIFO
+      LinkedList<T>                         нет                       Реализация двухсвязного списка
+
+
+
+    Обобщенные интерфейсы                 Необобщенные итерфейсы
+          ILits<T>                                ILits
+          IDictionary<T>                       IDictionary
+          ICollection<T>                       ICollection
+          IEnumerator<T>                       IEnumerator
+          IComparer<T>                         IComparer
+          IComparable<T>                       IComparable

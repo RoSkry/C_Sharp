@@ -1,0 +1,293 @@
+
+using System;
+using static System.Console;
+
+namespace SimpleProject
+{
+    class Program
+    {
+        static int DivisionNumbers(int n1, int n2)
+        {
+            int result = 0;
+
+            try
+            {
+                result = n1 / n2;
+            }
+            catch (DivideByZeroException de)
+            {
+                throw new Exception("Проверка фильтров исключения", de);
+            }
+            return result;
+        }
+
+        static void Main(string[] args)
+        {
+            WriteLine("Введите два числа");
+
+            int number1, number2, result = 0;
+
+            try
+            {
+                number1 = int.Parse(ReadLine());
+                number2 = int.Parse(ReadLine());
+
+                result = DivisionNumbers(number1, number2);
+
+                WriteLine($"Результат деления чисел: { result }");
+            }
+            catch (Exception e) when (e.InnerException != null)
+            {
+                WriteLine(e.Message); // дополнительная информация
+                WriteLine(e.InnerException.Message); // предыдущее исключение
+            }
+            catch (Exception e)
+            {
+                WriteLine(e.Message);
+            }
+        }
+    }
+}
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+using System;
+using static System.Console;
+
+namespace SimpleProject
+{
+    class ExampleNameOf
+    {
+        public string Name { get; set; }
+        public ExampleNameOf(string name)
+        {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
+            Name = name;
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            try
+            {
+                ExampleNameOf example = new ExampleNameOf(null);
+            }
+            catch (Exception e)
+            {
+                WriteLine(e.Message);
+            }
+        }
+    }
+}
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+using System;
+using static System.Console;
+
+namespace SimpleProject
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            WriteLine("Демонстрация System.GC");
+            WriteLine($"Максимальное поколение: {GC.MaxGeneration}");
+
+            GarbageHelper hlp = new GarbageHelper();
+            // узнаем поколение, в котором находится объект
+            WriteLine($"Поколение объекта: {GC.GetGeneration(hlp)}");
+            // количество занятой памяти
+            WriteLine($"Занято памяти (байт): {GC.GetTotalMemory(false)}");
+            
+            hlp.MakeGarbage(); // создаем мусор
+            WriteLine($"Занято памяти (байт): {GC.GetTotalMemory(false)}");
+            
+            GC.Collect(0); // вызываем явный сбор мусора в поколении 0
+
+            WriteLine($"Занято памяти (байт): {GC.GetTotalMemory(false)}");
+
+            WriteLine($"Поколение объекта: {GC.GetGeneration(hlp)}");
+            
+            GC.Collect(); // вызываем явный сбор мусора во всех поколениях
+
+            WriteLine($"Занято памяти (байт): {GC.GetTotalMemory(false)}");
+
+            WriteLine($"Поколение объекта: {GC.GetGeneration(hlp)}");
+        }
+    }
+    
+    // Вспомогательный класс для создания мусора
+    class GarbageHelper
+    {
+        // Метод, создающий мусор
+        public void MakeGarbage()
+        {
+	    Person p = null;
+            for (int i = 0; i < 1000; i++)
+            {
+                p = new Person{ Age = i };
+            }
+	    WriteLine(p.Age);
+        }
+
+        class Person
+        {
+            string _name;
+            string _surname;
+            public int Age { get;set; }
+        }
+    }
+}
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+using System;
+using static System.Console;
+
+namespace SimpleProject
+{
+    class DisposeExample : IDisposable
+    {
+        //используется для того, чтобы выяснить, вызывался ли метод Dispose()
+        private bool isDisposed = false;
+
+        private void Cleaning(bool disposing) // вспомогательный метод
+        {
+            // убедиться, что ресурсы ещё не освобождены
+            if (!isDisposed) // очищать только один раз
+            {
+                //если true, то освобождаем все управляемые ресурсы
+                if (disposing)
+                {
+                    WriteLine("Освобождение управляемых ресурсов");
+                }
+                WriteLine("Освобождение неуправляемых ресурсов");
+            }
+            isDisposed = true;
+        }
+        
+        public void Dispose()
+        {
+            // вызов вспомогательного метода
+            // true - очистка инициирована пользователем объекта
+            Cleaning(true);
+            // запретить сборщику мусора осуществлять финализацию
+            GC.SuppressFinalize(this);
+        }
+
+        ~DisposeExample()
+        {
+            // false указывает на то, что очистку инициировал сборщик мусора
+            Cleaning(false);
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            DisposeExample test = new DisposeExample();
+            test.Dispose();
+
+            DisposeExample test1 = new DisposeExample();
+        }
+    }
+}
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+using System;
+using static System.Console;
+
+namespace SimpleProject
+{
+    class DisposeExample : IDisposable
+    {
+        //используется для того, чтобы выяснить, вызывался ли метод Dispose()
+        private bool isDisposed = false;
+
+        private void Cleaning(bool disposing) // вспомогательный метод
+        {
+            // убедиться, что ресурсы ещё не освобождены
+            if (!isDisposed) // очищать только один раз
+            {
+                //если true, то освобождаем все управляемые ресурсы
+                if (disposing)
+                {
+                    WriteLine("Освобождение управляемых ресурсов");
+                }
+                WriteLine("Освобождение неуправляемых ресурсов");
+            }
+            isDisposed = true;
+        }
+
+        public void Dispose()
+        {
+            // вызов вспомогательного метода
+            // true - очистка инициирована пользователем объекта
+            Cleaning(true);
+            // запретить сборщику мусора осуществлять финализацию
+            GC.SuppressFinalize(this);
+        }
+
+        ~DisposeExample()
+        {
+            // false указывает на то, что очистку инициировал сборщик мусора
+            Cleaning(false);
+        }
+        public void DoSomething()
+        {
+            WriteLine("Выполнение определенных операций");
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            using (DisposeExample test = new DisposeExample())
+            {
+                test.DoSomething();
+            }
+        }
+    }
+}
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            DisposeExample test = new DisposeExample();
+            try
+            {
+                test.DoSomething();
+            }
+            finally
+            {
+                test.Dispose();
+            }
+        }
+    }
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+			Написать приложение «Автомобильные гонки».
+В гонке участвует от 2 до 7 автомобилей (количество задается пользователем перед началом каждой гонки).
+Автомобили двигаются по экрану консоли от левого края к правому с переменной скоростью.
+Победителем гонки считается автомобиль, который первым достиг правого края консоли.
+Автомобили отображать в консоли с помощью символов псевдографики. Для решения задачи необходимо
+реализовать класс «Автомобиль», который имеет цвет (красный, синий и т.д. – назначается автомобилю случайным образом в конструкторе), номер (1, 2, и т.д. – задается программой).
+Для класса перегрузить оператор ++, который перемещает автомобиль вперед на случайное количество позиций в консоли (от 1 до 5).
+Предусмотреть возможность поломки автомобиля во время гонок – вероятность поломки – 5%.
+В случае поломки объект «Автомобиль» генерирует исключительную ситуацию, которая должна быть обработана в программе – поломанный автомобиль перестает двигаться, но остается на экране (отображается на экране как поломанный), и выбывает из гонок.
+Пользователь перед началом гонок может сделать ставку на один из автомобилей. В случае, если побеждает автомобиль пользователя – программа сообщает «Вы выиграли», иначе – «Вы проиграли».
+Программа должна иметь меню, предлагающее пользователю сделать ставку и начать новую гонку или выйти из программы.

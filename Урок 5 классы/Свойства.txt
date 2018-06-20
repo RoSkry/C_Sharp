@@ -1,0 +1,36 @@
+class Example 
+{
+int _num;
+ public int Num
+{
+get{return _Num;}
+set{_num=value;}
+
+}
+
+
+}
+prop tab tab
+propful tab tab 
+синтаксис инициализации обьектов 
+
+пространство имен область обьявления данных обеспечивающую логическую взаимосвязь данных 
+Using A; 
+namespace b 
+{
+Class Ink{
+
+}
+}
+
+
+namespace A{
+char Ink 
+{
+
+}
+class Decx{
+
+}
+
+}

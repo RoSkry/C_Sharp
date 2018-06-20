@@ -1,0 +1,21 @@
+Перегрузка операторов - механизм который позволяет определить стандартные операции для пользовательских 
+типов;
+должна выполняться открытыми статическими методами
+нельзя использовать ref и out 
+public static тип возврата operator символ(параметры) 
+
+
+перегрузка унарных операторов 
+ildasm
+
+перегрузка бинарных операторов 
+
+ConsoleKeyInfo info = Console.ReadKey() принимает булевское значение (true) 
+if(info.Key==ConsoleKey.)RightArrow +1
+Left Arrow -1
+UpArrow +6
+DowArrow -6 
+PageUp +12
+PageDowns -12 
+
+Console.SetcursorPosition(?,?)

@@ -1,0 +1,25 @@
+Перегрузка операторов сравнения 
+== !=  ><   >= <= 
+Перегружать надо в паре 
+
+Есть два метода в классе 
+1) static bool Reference Equals(object obj1,object jbj2){ }
+-перегрузить нельзя
+
+
+
+
+
+2) virtual bool Equals(object obj1, object obj2){ }  
+
+
+строгое равенство 
+перегрузка true false 
+перегрузка логических операторов && || 
+перегрузка оператора преобразований 
+
+public static inmplicit(не) или explicit(явное) operator целевой тип(исходный тип) 
+
+Figue 
+Quadrangle 
+Square Rectangle

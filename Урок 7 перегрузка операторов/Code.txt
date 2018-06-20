@@ -1,0 +1,298 @@
+
+using System;
+using static System.Console;
+
+namespace SimpleProject
+{
+    public abstract class Human
+    {
+        string _firstName;
+        string _lastName;
+        DateTime _birthDate;
+
+        public Human(string fName, string lName, DateTime date)
+        {
+            _firstName = fName;
+            _lastName = lName;
+            _birthDate = date;
+        }
+
+        public abstract void Think();
+
+        public override string ToString()
+        {
+            return $"\nФамилия: {_lastName}\nИмя: {_firstName}\nДата рождения: {_birthDate.ToLongDateString()}";
+        }
+    }
+
+    abstract class Learner : Human
+    {
+        string _institution;
+
+        public Learner(string fName, string lName, DateTime date, string institution) : base(fName, lName, date)
+        {
+            _institution = institution;
+        }
+
+        public abstract void Study();
+
+        public override string ToString()
+        {
+            return base.ToString() + $"\nУчебное заведение: {_institution}.";
+        }
+    }
+
+    class Student : Learner
+    {
+        string _groupName;
+
+        public Student(string fName, string lName, DateTime date, string institution, string groupName) : base(fName, lName, date, institution)
+        {
+            _groupName = groupName;
+        }
+
+        public override void Think()
+        {
+            WriteLine("Я думаю как студент.");
+        }
+
+        public override void Study()
+        {
+            WriteLine("Я изучаю предметы в институте.");
+        }
+
+        public override string ToString()
+        {
+            return base.ToString() + $"\nУчусь в {_groupName} группе.";
+        }
+    }
+
+    class SchoolChild : Learner
+    {
+        string _className;
+
+        public SchoolChild(string fName, string lName, DateTime date, string institution, string className) : base(fName, lName, date, institution)
+        {
+            _className = className;
+        }
+
+        public override void Think()
+        {
+            WriteLine("Я думаю как школьник.");
+        }
+
+        public override void Study()
+        {
+            WriteLine("Я изучаю предметы в школе.");
+        }
+
+        public override string ToString()
+        {
+            return base.ToString() + $"\nУчусь в {_className} классе.";
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Learner[] learners =
+            {
+                new Student("John", "Doe", new DateTime(1990, 6, 12), "IT Step", "15PPS21"),
+                new SchoolChild("Jack", "Smith", new DateTime(2008, 4, 18), "School#154", "1-A")
+            };
+
+            foreach (Learner item in learners)
+            {
+                WriteLine(item);
+
+                item.Think();
+
+                item.Study();
+            }
+        }
+    }
+}
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+            Student student = new Student("John", "Doe", new DateTime(1990, 6, 12), "IT Step", "15PPS21");
+
+            WriteLine($"Полное имя типа - {student.GetType().FullName}.");
+
+            WriteLine($"Имя текущего элемента - {student.GetType().Name}.");
+
+            WriteLine($"Базовый класс текущего элемента - {student.GetType().BaseType}.");
+
+            WriteLine($"Является ли текущий элемент абстрактным объектом - {student.GetType().IsAbstract}.");
+
+            WriteLine($"Является ли объект классом - {student.GetType().IsClass}.");
+
+            WriteLine($"Можно ли получить доступ к объекту из кода за пределами сборки - {student.GetType().IsVisible}.");
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+using static System.Console;
+
+namespace SimpleProject
+{
+    class Point
+    {
+        public int X { get; set; }
+        public int Y { get; set; }
+
+        //перегрузка инкремента
+        public static Point operator ++(Point s)
+        {
+            s.X++;
+            s.Y++;
+            return s;
+        }
+        //перегрузка декремента
+        public static Point operator --(Point s)
+        {
+            s.X--;
+            s.Y--;
+            return s;
+        }
+        //перегрузка оператора -
+        public static Point operator -(Point s)
+        {
+            return new Point { X = -s.X, Y = -s.Y };
+        }
+
+        public override string ToString()
+        {
+            return $"Point: X = {X}, Y = {Y}";
+        }
+    }
+
+    class Program
+    {
+        static void Main()
+        {
+            Point point = new Point { X = 10, Y = 10 };
+            WriteLine($"Исходная точка\n{point}");
+
+            WriteLine("Префиксная и постфиксная формы инкремента выполняются одинаково");
+            WriteLine(++point); // x=11, y=11
+            WriteLine(point++); // x=12, y=12
+
+            WriteLine($"Префиксная форма декремента\n{--point}");
+
+            WriteLine($"Выполнение оператора –\n{-point}");
+
+            WriteLine($"не изменило исходную точку\n{point}");
+        }
+    }
+}
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+using static System.Console;
+
+namespace SimpleProject
+{
+    class Point
+    {
+        public int X { get; set; }
+        public int Y { get; set; }
+    }
+
+    class Vector
+    {
+        public int X { get; set; }
+        public int Y { get; set; }
+
+        public Vector() { }
+
+        public Vector(Point begin, Point end)
+        {
+            X = end.X - begin.X;
+            Y = end.Y - begin.Y;
+        }
+
+        public static Vector operator +(Vector v1, Vector v2)
+        {
+            return new Vector { X = v1.X + v2.X, Y = v1.Y + v2.Y };
+        }
+
+        public static Vector operator -(Vector v1, Vector v2)
+        {
+            return new Vector { X = v1.X - v2.X, Y = v1.Y - v2.Y };
+        }
+
+        public static Vector operator *(Vector v, int n)
+        {
+            v.X *= n;
+            v.Y *= n;
+            return v;
+        }
+
+        public override string ToString()
+        {
+            return $"Vector: X = {X}, Y = {Y}";
+        }
+    }
+
+    class Program
+    {
+        static void Main()
+        {
+            Point p1 = new Point { X = 2, Y = 3 };
+            Point p2 = new Point { X = 3, Y = 1 };
+
+            Vector v1 = new Vector(p1, p2);
+
+            Vector v2 = new Vector { X = 2, Y = 3 };
+
+            WriteLine($"\tВектора\n{v1}\n{v2}");
+
+            WriteLine($"\n\tСложение векторов\n{v1 + v2}\n"); // x=3, y=1
+
+            WriteLine($"\tРазность векторов\n{v1 - v2}\n"); // x=-1, y=-5
+
+            WriteLine("Введите целое число");
+
+            int n = int.Parse(ReadLine());
+
+            v1 *= n;
+
+            WriteLine($"\n\tУмножение вектора на число {n}\n{v1}\n");
+        }
+    }
+}
+
+--------------------------------------------------------------------------------
+
+
+        public static Vector operator *(int n, Vector v)
+        {
+            return v * n;
+        }
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+                    /*
+                    if ((KeyInfo.Modifiers & ConsoleModifiers.Alt) != 0)
+                        Console.Write("ALT+");
+                    if ((KeyInfo.Modifiers & ConsoleModifiers.Shift) != 0)
+                        Console.Write("SHIFT+");
+                    if ((KeyInfo.Modifiers & ConsoleModifiers.Control) != 0)
+                        Console.Write("CTL+");
+
+                    if (KeyInfo.Key==ConsoleKey.A && (KeyInfo.Modifiers & ConsoleModifiers.Control)!=0)
+                        Console.WriteLine("Ctrl+A");
+                     */
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+		Реализовать класс «Перекидной календарь».
+
+Объект класса отображает календарь выбранного месяца.
+По умолчанию – текущий месяц. Перегрузить для класса «Перекидной календарь» операторы ++ (перейти на следующий месяц), -- (перейти на предыдущий месяц), + (перейти на N месяцев вперед), - (перейти на N месяцев назад).
+Программа предоставляет пользователю возможность «перелистывать» календарь с помощью клавиатуры (стрелка вправо – на месяц вперед, влево – на месяц назад,  PgUp – на 12 месяцев вперед, PgDn – на 12 месяцев назад, стрелка вверх – на 6 месяцев вперед, стрелка вниз – на 6 месяцев назад).
+Календарь отображать на экране консоли в виде таблицы, с использованием цветов для рабочих и выходных (суббота, воскресенье) дней. Названия месяцев отображаются соответствующим времени года цветом (Зима – синий, Весна – Зеленый, Лето – Желтый, Осень – Красный).
+Минимальная дата, которую способен отобразить календарь – 1.01.1990г., максимальная – 31.12.2020
+
+            

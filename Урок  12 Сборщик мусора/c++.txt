@@ -1,0 +1,37 @@
+#include<iostream>
+using namespace std;
+
+//Шаблон структуры с битовыми полями
+struct byte {
+	unsigned b1 : 1;
+	unsigned b2 : 1;
+	unsigned b3 : 1;
+	unsigned b4 : 1;
+	unsigned b5 : 1;
+	unsigned b6 : 1;
+	unsigned b7 : 1;
+	unsigned b8 : 1;
+};
+
+// Определение объединения с вложенной структурой
+union bits {
+	char ch;
+	byte bit;
+} un;// un - переменная типа объединения
+
+void decode(bits bt, int ch); // Прототип функции
+
+void main() {
+	cout << "\n\t Enter any symbol:\n";
+	cout << "\n\t Enter: ";
+	un.ch = getchar();
+	decode(un, un.ch);
+
+	system("pause");
+}
+
+// Функция двоичного представления символов
+void decode(bits bt, int ch) {
+	cout << "\tBinary code of " << ch << ":\n\n";
+	cout << '\t' << bt.bit.b8 << "  " << bt.bit.b7 << "  " << bt.bit.b6 << " " << bt.bit.b5 << "  " << bt.bit.b4 << "  " << bt.bit.b3 << "  " << bt.bit.b2 << " " << bt.bit.b1 << "\n\n";
+}

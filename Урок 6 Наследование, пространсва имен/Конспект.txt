@@ -1,0 +1,10 @@
+Пространство имен 
+using псевдоним = имя присваивания;
+Using sc=System.controls;
+sc.Button b= new SC.Button(); 
+желательно к класу ооращаться через :: 
+
+using static System.Console; 
+теперь можно писать 
+Writeline("Ok!");
+

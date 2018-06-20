@@ -1,0 +1,369 @@
+
+using System.IO;
+using System.Text;
+using static System.Console;
+
+namespace SimpleProject
+{
+    class Program
+    {
+        static void WriteFile(string filePath)
+        {
+            using (FileStream fs = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.None))
+            {
+                // получаем данные для записи в файл
+                WriteLine("Enter the data to write to the file:");
+                string writeText = ReadLine();
+                // преобразуем строку в массив байт
+                byte[] writeBytes = Encoding.Default.GetBytes(writeText);
+                // записываем данные в файл
+                fs.Write(writeBytes, 0, writeBytes.Length);
+                WriteLine("Information recorded!");
+            }
+        }
+        static string ReadFile(string filePath)
+        {
+            using (FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
+            {
+                byte[] readBytes = new byte[(int)fs.Length];
+                // считываем данные из файла
+                fs.Read(readBytes, 0, readBytes.Length);
+                // преобразуем байты в строку
+                return Encoding.Default.GetString(readBytes);
+            }
+        }
+        static void Main(string[] args)
+        {
+            string filePath = "test.bin";
+
+            WriteFile(filePath);
+
+            // выводим результат на консоль
+            WriteLine($"\nData read from the file: {ReadFile(filePath)}");
+        }
+    }
+}
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+using System.IO;
+using System.Text;
+using static System.Console;
+
+namespace SimpleProject
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string filePath = "test.txt";
+            using (FileStream fs = new FileStream(filePath, FileMode.Create))
+            {
+                using (StreamWriter sw = new StreamWriter(fs, Encoding.Unicode))
+                {
+                    // получаем данные для записи в файл
+                    WriteLine("Enter the data to write to the file:");
+                    string writeText = ReadLine();
+                    // записываем данные в файл
+                    sw.WriteLine(writeText);
+
+                    foreach (var item in writeText)
+                    {
+                        sw.Write($"{item} ");
+                    }
+
+                    WriteLine("\nData recorded!");
+                }
+            }
+        }
+    }
+}
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+using System.IO;
+using System.Text;
+using static System.Console;
+
+namespace SimpleProject
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string filePath = "test.txt";
+            using (FileStream fs = new FileStream(filePath, FileMode.Open))
+            {
+                using (StreamReader sr = new StreamReader(fs, Encoding.Unicode))
+                {
+                    // выводим результат на консоль
+                    WriteLine($"Data read from the file:\n");
+                    WriteLine(sr.ReadToEnd()); // получаем все данные из файла
+                }
+            }
+        }
+    }
+}
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+using System;
+using System.IO;
+using System.Text;
+
+namespace CSharp
+{
+    class Program
+    {
+        static void BinaryFileWrite(string path)
+        {
+            FileStream fileStream = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.None);
+            try
+            {
+                BinaryWriter writer = new BinaryWriter(fileStream, Encoding.Unicode);
+                try
+                {
+                    Console.WriteLine("Enter text:");
+                    string text = Console.ReadLine();
+                    double pi = 3.1415926;
+                    int number = 23345;
+
+                    writer.Write(text);
+                    writer.Write(pi);
+                    writer.Write(number);
+                }
+                finally
+                {
+                    writer.Close();
+                }
+
+                Console.WriteLine("Ok!");
+            }
+            finally
+            {
+                fileStream.Close();
+            }
+        }
+        static string BinaryFileRead(string path)
+        {
+            using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.None))
+            {
+                using (BinaryReader reader = new BinaryReader(stream, Encoding.Unicode))
+                {
+                    return $"{reader.ReadString()}\n{reader.ReadDouble()}\n{reader.ReadInt32()}";
+                }           
+            }
+        }
+
+        static void Main(string[] args)
+        {
+            string filePath = "test.dat";
+            try
+            {
+                BinaryFileWrite(filePath);
+
+                Console.WriteLine(BinaryFileRead(filePath));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            Console.ReadLine();
+        }
+    }
+}
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+using System.IO;
+using static System.Console;
+
+namespace SimpleProject
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            DirectoryInfo dir = new DirectoryInfo("."); // текущий каталог
+            WriteLine($"Full path to the directory:\n{dir.FullName}");
+            WriteLine($"Time of creation: {dir.CreationTime}");
+
+            WriteLine("\n\tAll directory files:");
+            FileInfo[] files = dir.GetFiles(); // все файлы в каталоге
+            foreach (FileInfo f in files)
+            {
+                WriteLine(f.Name);
+            }
+            WriteLine();
+        }
+    }
+}
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+using System.IO;
+using static System.Console;
+
+namespace SimpleProject
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string path = @"D:\Test";
+            if(Directory.Exists(path))
+            {
+                WriteLine($"Date and time of catalog creation: {Directory.GetCreationTime(path)}");
+
+                WriteLine($"\nSubdirectories in the specified directory:");
+                foreach (string item in Directory.GetDirectories(path))
+                {
+                    WriteLine($"\t{item}");
+                }
+
+                WriteLine($"\nLogical devices of this computer:");
+                foreach (string item in Directory.GetLogicalDrives())
+                {
+                    WriteLine($"\t{item}");
+                }
+                // удаляем каталог, все подкаталоги и файлы
+                Directory.Delete(path, true);
+            }
+            if (!Directory.Exists(path))
+            {
+                WriteLine($"\nSpecified directory does not exist.\n");
+            }
+        }
+    }
+}
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+        public static void Main()
+        {
+            DriveInfo di = new DriveInfo(@"D:/");
+            Console.WriteLine(di.DriveType);
+            Console.WriteLine(di.AvailableFreeSpace);
+            DriveInfo[] drives = DriveInfo.GetDrives();
+            foreach (DriveInfo d in drives)
+            {
+                Console.WriteLine(d.Name);
+                Console.WriteLine(d.DriveType);
+            }
+        }
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+using System.IO;
+using System.Text;
+using static System.Console;
+
+namespace SimpleProject
+{
+    class Program
+    {
+    static void WriteFile(FileInfo f)
+    {
+        using (FileStream fs = f.Open(FileMode.Create, FileAccess.Write, FileShare.None))
+        {
+            WriteLine("\nEnter the data to write to the file:");
+            string writeText = ReadLine();
+            byte[] writeBytes = Encoding.Default.GetBytes(writeText);
+            fs.Write(writeBytes, 0, writeBytes.Length);
+            WriteLine("\nData recorded!\n");
+        }
+    }
+    static string ReadFile(FileInfo f)
+    {
+        using (FileStream fs = f.OpenRead())
+        {
+            byte[] readBytes = new byte[(int)fs.Length];
+            fs.Read(readBytes, 0, readBytes.Length);
+            return Encoding.Default.GetString(readBytes);
+        }
+    }
+        static void Main(string[] args)
+        {
+            DirectoryInfo dir = new DirectoryInfo(@"D:\Test");
+            if (!dir.Exists) // если каталог не существует
+            {
+                dir.Create(); // создаем каталог
+            }
+            WriteLine($"Last access time to the directory: {dir.LastAccessTime}");
+
+            // создаем подкаталог
+            DirectoryInfo dir1 = dir.CreateSubdirectory("Subdir1");
+            WriteLine($"Full path to the directory:\n{dir1.FullName}");
+
+            FileInfo fInfo = new FileInfo( dir1.ToString() + @"\Test.bin");
+            //FileInfo fInfo = new FileInfo( dir1.FullName + @"\Test.bin");
+            //FileInfo fInfo = new FileInfo( dir1 + @"\Test.bin");
+            WriteFile(fInfo);
+            WriteLine(ReadFile(fInfo));
+
+            WriteLine($"\n\tOnly files with the extension '.bin':");
+            FileInfo[] files = dir1.GetFiles("*.bin");
+            foreach (FileInfo f in files)
+            {
+                WriteLine(f.Name);
+            }
+            WriteLine();
+        }
+    }
+}
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+using System;
+using System.IO;
+using static System.Console;
+
+namespace SimpleProject
+{
+    class Program
+    {
+        static void WriteFile(string path)
+        {
+            using (StreamWriter sw = File.CreateText(path))
+            {
+                WriteLine("Enter the data to write to the file:");
+                string writeText = ReadLine();
+
+                sw.WriteLine(writeText);
+                foreach (var item in writeText)
+                {
+                    sw.Write($"{item} ");
+                }
+                WriteLine("\nData recorded!");
+            }
+        }
+        static string ReadFile(string path)
+        {
+            using (StreamReader sr = File.OpenText(path))
+            {
+                return sr.ReadToEnd();
+            }
+        }
+        static void Main(string[] args)
+        {
+            string path = @"D:/Test/Subdir1/Test.txt";
+
+            try
+            {
+                WriteFile(path);
+                WriteLine($"\nData read from the file:\n");
+                WriteLine(ReadFile(path));
+            }
+            catch (Exception ex)
+            {
+                WriteLine(ex.Message);
+            }
+            WriteLine();
+        }
+    }
+}
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

@@ -1,0 +1,96 @@
+public DayOfWeek NextDay(DayOfWeek day)
+{
+    return (day < DayOfWeek.Sunday) ? ++day : DayOfWeek.Monday;
+}
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+        enum CommodityType // тип товара
+        {
+            FrozenFood, Food, DomesticChemistry, BuildingMaterials, Petrol
+        }
+
+        enum TransportType // тип транспорта
+        {
+            Semitrailer, Coupling, Refrigerator, OpenSideTruck, FuelTruck
+        }
+
+        static void Main(string[] args)
+        {
+            Console.WriteLine("¬ведите число от 1 до 5");
+
+            int number = int.Parse(Console.ReadLine());
+
+            if (number > 0 && number < 6)
+            {
+                CommodityType commodity = (CommodityType)Enum.GetValues(typeof(CommodityType)).GetValue(number - 1);
+
+                TransportType transport = TransportType.Semitrailer;
+
+                switch (commodity)
+                {
+                    case CommodityType.FrozenFood:
+                        transport = TransportType.Refrigerator;
+                        break;
+                    case CommodityType.Food:
+                        transport = TransportType.Semitrailer;
+                        break;
+                    case CommodityType.DomesticChemistry:
+                        transport = TransportType.Coupling;
+                        break;
+                    case CommodityType.BuildingMaterials:
+                        transport = TransportType.OpenSideTruck;
+                        break;
+                    case CommodityType.Petrol:
+                        transport = TransportType.FuelTruck;
+                        break;
+                }
+                Console.WriteLine("ƒл€ товара - {0} необходим транспорт - {1}.", commodity, transport);
+            }
+            else
+            {
+                Console.WriteLine("ќшибка ввода");
+            }
+        }
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+enum DistanceSun : ulong
+{
+    Sun = 0, Mercury = 57900000, Venus = 108200000, Earth = 149600000,
+    Mars = 227900000, Jupiter = 7783000000, Saturn = 1427000000,
+    Uranus = 2870000000, Neptune = 4496000000
+}
+
+static void Main(string[] args)
+{
+    string moon = "Moon";
+
+    // проверка наличи€ константы в заданном перечислении
+    if (!Enum.IsDefined(typeof(DistanceSun), moon))
+    {
+        Console.WriteLine("\t«начени€ " + moon + " нет в перечислении DistanceSun.");
+    }
+    Console.WriteLine("\n\t‘орматированный вывод всех значений констант указанного перечислени€.");
+    foreach (DistanceSun item in Enum.GetValues(typeof(DistanceSun)))
+    {
+        Console.WriteLine("{0,-10} {1,-10} {2,20}", 
+        Enum.Format(typeof(DistanceSun), item, "G"), // вывод в виде строки с 									именем константы
+        Enum.Format(typeof(DistanceSun), item, "D"), // вывод в виде 											дес€тичного значени€
+        Enum.Format(typeof(DistanceSun), item, "X")); // вывод в виде											16-ричного значени€
+//Console.WriteLine($"{Enum.Format(typeof(DistanceSun), item, "G"),-10} {Enum.Format(typeof(DistanceSun), item, "D"),-10} {Enum.Format(typeof(DistanceSun), item, "X"),20}");
+    }
+    Console.WriteLine("\n\t¬се значени€ констант указанного перечислени€.");
+    foreach (string str in Enum.GetNames(typeof(DistanceSun)))
+    {
+        Console.WriteLine(str);
+    }
+
+    ulong number = 227900000;
+    Console.WriteLine("\n\t»м€ константы со значением {0} из указанного перечислени€.\n", number);
+    Console.WriteLine(Enum.GetName(typeof(DistanceSun), number));
+}
+
+јбстракци€ Ц это придание объекту характеристик, которые отличают его от всех других объектов, четко определ€€ его концептуальные границы.
+
+»нкапсул€ци€ - сокрытие реализации конкретного класса и предоставлении интерфейса дл€ работы с ним.

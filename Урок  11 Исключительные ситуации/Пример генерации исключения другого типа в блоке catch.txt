@@ -1,0 +1,32 @@
+    static public Int32 SomeMethod(Int32 x)
+    {
+        try
+        {
+            return 100 / x;
+        }
+        catch (DivideByZeroException e)//перехват исключения деления на 0
+        {
+            //генерация исключения недопустимого значения аргумента
+            //исходное исключение передается как внутреннее исключение
+            throw new ArgumentOutOfRangeException("x can't be 0", e);
+        }
+	finally
+	{
+	    Console.WriteLine("Finally");
+	}
+	Console.WriteLine("Bye!"); // не выведится никогда
+    }
+
+    static void Main()
+    {
+        try
+        {
+            SomeMethod(0);
+        }
+        catch (ArgumentOutOfRangeException e)
+        {
+            Console.WriteLine(e.Message);
+            //вывод внутренного исключения
+            Console.WriteLine("InnerException: {0}",e.InnerException.Message);
+        }
+    }

@@ -1,0 +1,49 @@
+Задерей Юрий Николаевич
+zaderey.step@i.ua
+
+c# 
+Windows Forms 
+WPF
+ADO.NET
+SP
+NP 
+WCF
+ASP.NET
+DP
+Xamarin
+Unity
+
+using System;
+using .....
+namespace ConsoleApplication{
+{
+class program{
+static void main()
+{
+}
+}
+}
+Вне области класса нелья писать 
+ Console.WriteLine("Hello c#") - вывести на экран Unicode
+asemly атрибуты сборки 
+Net.framework 4.5.2
+.exe результат работы приложения
+Microsoft Intermidiate Language Disassembler(ILDASM)
+
+Common Language runTime
+Just In Time(JIT) компилятор
+Рефлекторы:
+ILspy
+JetBrains dotPeek
+Telerik Just Decompile
+Дотфускаторы- шифруют код (они платные)
+бесплатные Phoenix Protector
+Dotfuscator community Edition 
+платные Babel 
+CodeVeil 
+
+csc /t:exe /out:D:\Program.exe D:\Program.cs
+
+Portable Exexutable 
+Common Language Specification (CLS)
+cwl()

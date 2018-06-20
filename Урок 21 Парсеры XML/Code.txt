@@ -1,0 +1,511 @@
+
+Разработать класс «Счет для оплаты». В классе предусмотреть следующие поля:
+ - оплата за день;
+ - количество дней;
+ - штраф за один день задержки оплаты;
+ - количество дней задержи оплаты;
+ - сумма к оплате без штрафа (вычисляемое поле);
+ - штраф (вычисляемое поле);
+ - общая сумма к оплате (вычисляемое поле).
+
+В классе объявить статическое свойство типа bool, значение которого влияет на процесс форматирования объектов этого класса.
+Если значение этого свойства равно true, тогда сериализуются и десериализируются все поля, если false – вычисляемые поля не сериализуются.
+
+Разработать приложение, в котором необходимо продемонстрировать использование этого класса, результаты должны записываться и считываться из файла.
+
+
+        
+        public void Save()
+        {
+            SoapFormatter SoapFormat = new SoapFormatter();
+
+            using (Stream wStream = new FileStream("invoice.soap", FileMode.Create, FileAccess.Write, FileShare.None))
+            {
+                SoapFormat.Serialize(wStream, this);
+            }
+        }
+
+        public void Load()
+        {
+            SoapFormatter SoapFormat = new SoapFormatter();
+
+            using (Stream rStream = File.OpenRead("invoice.soap"))
+            {
+                Invoice temp = (Invoice)SoapFormat.Deserialize(rStream);
+                Console.WriteLine(temp);
+            }
+        }
+
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+using System;
+using System.IO;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Soap;
+using static System.Console;
+
+namespace SimpleProject
+{
+    [Serializable]
+    public class Person : ISerializable
+    {
+        public string Name { get; set; }
+
+        public DateTime DateBirth { get; set; }
+
+        public Person() { }
+
+        private Person(SerializationInfo info, StreamingContext context)
+        {
+            Name = info.GetString("PersonName").ToUpper();
+            DateBirth = info.GetDateTime("DateBirth").ToUniversalTime();
+        }
+
+        void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue("PersonName", Name.ToLower());
+            info.AddValue("DateBirth", DateBirth.ToLocalTime());
+        }
+
+        public override string ToString()
+        {
+            return $"Name: {Name}, Date of Birth: {DateBirth}.";
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Person person = new Person { Name = "Jack", DateBirth = new DateTime(1995, 11, 5) };
+
+            SoapFormatter soapFormat = new SoapFormatter();
+            try
+            {
+                using (Stream fStream = File.Create("test.soap"))
+                {
+                    soapFormat.Serialize(fStream, person);
+                }
+                WriteLine("SoapSerialize OK!\n");
+
+                Person p = null;
+                using (Stream fStream = File.OpenRead("test.soap"))
+                {
+                    p = (Person)soapFormat.Deserialize(fStream);
+                }
+                WriteLine(p);
+            }
+            catch (Exception ex)
+            {
+                WriteLine(ex);
+            }
+        }
+    }
+}
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+using System;
+using System.IO;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Soap;
+using static System.Console;
+
+namespace SimpleProject
+{
+    [Serializable]
+    public class Person
+    {
+        public string Name { get; set; }
+
+        public DateTime DateBirth { get; set; }
+
+        // вызывается во время процесса сериализации
+        [OnSerializing]
+        private void OnSerializing(StreamingContext context)
+        {
+            Name = Name.ToUpper();
+            DateBirth = DateBirth.ToUniversalTime();
+        }
+
+        // вызывается по завершении процесса десериализации
+        [OnDeserialized]
+        private void OnDeserialized(StreamingContext context)
+        {
+            Name = Name.ToLower();
+            DateBirth = DateBirth.ToLocalTime();
+        }
+
+        public override string ToString()
+        {
+            return $"Name: {Name}, Date of Birth: {DateBirth}.";
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Person person = new Person { Name = "Jack", DateBirth = new DateTime(1995, 11, 5) };
+
+            SoapFormatter soapFormat = new SoapFormatter();
+            try
+            {
+                using (Stream fStream = File.Create("test.soap"))
+                {
+                    soapFormat.Serialize(fStream, person);
+                }
+                WriteLine("SoapSerialize OK!\n");
+
+                Person p = null;
+                using (Stream fStream = File.OpenRead("test.soap"))
+                {
+                    p = (Person)soapFormat.Deserialize(fStream);
+                }
+                WriteLine(p);
+            }
+            catch (Exception ex)
+            {
+                WriteLine(ex);
+            }
+        }
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+using System;
+
+namespace SimpleProject
+{
+    /// <summary>
+    /// The <c>Distance</c> class provides methods for converting kilometers to and from miles.
+    /// </summary>
+    public class Distance
+    {
+        /// <summary>
+        /// Converts kilometers to miles.
+        /// </summary>
+        /// <param name="kilometers">
+        /// Used to indicate kilometers. A <see cref="double"/> type representing a value.
+        /// </param>
+        /// <exception cref="ArgumentException">
+        /// If <paramref name="kilometers"/> is negative.
+        /// </exception>
+        /// <returns>Returns the distance in miles.</returns>
+        public static double KilometersToMiles(double kilometers)
+        {
+            if (kilometers < 0)
+            {
+                throw new ArgumentException("The value must be positive.");
+            }
+            return kilometers * 0.621371;
+        }
+
+        /// <summary>
+        /// Converts miles to kilometers.
+        /// </summary>
+        /// <param name="miles">
+        /// Used to indicate miles. A <see cref="double"/> type representing a value.
+        /// </param>
+        /// <exception cref="ArgumentException">
+        /// If <paramref name="miles"/> is negative.
+        /// </exception>
+        /// <returns>Returns the distance in kilometers.</returns>
+        public static double MilesToKilometers(double miles)
+        {
+            if (miles < 0)
+            {
+                throw new ArgumentException("The value must be positive.");
+            }
+            return miles * 1.60934;
+        }
+    }
+}
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+				Наиболее используемые теги:
+- summary – предоставляет краткое описание типа, текст, написанный между тегами, отображается IntelliSense в Visual Studio;
+- param – предоставляет описание связанного параметра, текст, написанный между тегами, отображается при написании клиенского кода;
+- paramref – позволяет связать содержащееся слово с названием параметра с таким же именем в теге <param>;
+- returns – предоставляет описание значения, возвращаемого методом;
+- remarks – предоставляет более подробную информацию о типе или элементе;
+- para – позволяет управлять форматом вывода документации, вставляя или перенося сегменты внутри абзацев;
+- c – иллюстрирует короткий сегмент кода;
+- code – иллюстрирует большой пример кода;
+- example – предназначен для иллюстрации примеров кода, как правило, включает в себя теги <c> и <code>;
+- see – позволяет создать ссылку на любой тип, который используется внутри класса, ссылки интегрируются непосредственно в справочную систему Visual Studio;
+- exception – позволяет документировать типы исключений, которые будет генерировать данный элемент;
+- include – связывает внешний файл документации с Вашим исходным кодом;
+- value – предоставляет описание значения свойства.
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+using System;
+using System.Xml;
+using static System.Console;
+
+namespace SimpleProject
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            XmlTextReader reader = null;
+            try
+            {
+                reader = new XmlTextReader("Cars.xml");
+                reader.WhitespaceHandling = WhitespaceHandling.None;
+                while (reader.Read())
+                {
+                    if (reader.NodeType == XmlNodeType.Element && reader.Name == "Car" && reader.AttributeCount > 0)
+                    {
+                        while (reader.MoveToNextAttribute())
+                        {
+                            if (reader.Name == "Image")
+                            {
+                                WriteLine(reader.Value);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                WriteLine(ex.Message);
+            }
+            finally
+            {
+                if (reader != null)
+                    reader.Close();
+            }
+        }
+    }
+}
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+using System;
+using System.Xml;
+using static System.Console;
+
+namespace SimpleProject
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            XmlTextReader reader = null;
+            try
+            {
+                reader = new XmlTextReader("Cars.xml");
+                reader.WhitespaceHandling = WhitespaceHandling.None;
+                while (reader.Read())
+                {
+                    WriteLine($"Type={reader.NodeType}\t\tName={reader.Name}\t\tValue={reader.Value}");
+                    if (reader.AttributeCount > 0)
+                    {
+                        while (reader.MoveToNextAttribute())
+                        {
+                            WriteLine($"Type={reader.NodeType}\tName={reader.Name}\tValue={reader.Value}");
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                WriteLine(ex.Message);
+            }
+            finally
+            {
+                if (reader != null)
+                    reader.Close();
+            }
+        }
+    }
+}
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+using System;
+using System.Xml;
+using static System.Console;
+
+namespace SimpleProject
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            try
+            {
+                XmlDocument doc = new XmlDocument();
+                doc.Load("Cars.xml");
+                
+                XmlNode root = doc.DocumentElement;
+                // удалить первый элемент Cars
+                root.RemoveChild(root.FirstChild); 
+                // создать узлы элементов.
+                XmlNode bike = doc.CreateElement("Motorcycle");
+                XmlNode elem1 = doc.CreateElement("Nanufactured");
+                XmlNode elem2 = doc.CreateElement("Model");
+                XmlNode elem3 = doc.CreateElement("Year");
+                XmlNode elem4 = doc.CreateElement("Color");
+                XmlNode elem5 = doc.CreateElement("Engine");
+                // создать текстовые узлы
+                XmlNode text1 = doc.CreateTextNode("Harley-Davidson Motor Co. Inc.");
+                XmlNode text2 = doc.CreateTextNode("Harley 20J");
+                XmlNode text3 = doc.CreateTextNode("1920");
+                XmlNode text4 = doc.CreateTextNode("Olive");
+                XmlNode text5 = doc.CreateTextNode("37 HP");
+                // присоединить текстовые узлы к узлам элементов
+                elem1.AppendChild(text1);
+                elem2.AppendChild(text2);
+                elem3.AppendChild(text3);
+                elem4.AppendChild(text4);
+                elem5.AppendChild(text5);
+                // присоединить узлы элементов к узлу bike
+                bike.AppendChild(elem1);
+                bike.AppendChild(elem2);
+                bike.AppendChild(elem3);
+                bike.AppendChild(elem4);
+                bike.AppendChild(elem5);
+                // присоединить узел bike к корневому узлу
+                root.AppendChild(bike);
+
+                doc.Save("Motorcycle.xml"); // сохранить измененный документ
+
+                WriteLine("The Motorcycle.xml file is generated!");
+            }
+            catch (Exception ex)
+            {
+                WriteLine(ex.Message);
+            }
+        }
+    }
+}
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+using System;
+using System.Xml;
+using static System.Console;
+
+namespace SimpleProject
+{
+    class Program
+    {
+        static void OutputNode(XmlNode node)
+        {
+            WriteLine($"Type={node.NodeType}\tName={node.Name}\tValue={node.Value}");
+            if (node.Attributes != null)
+            {
+                foreach (XmlAttribute attr in node.Attributes)
+                    WriteLine($"Type= {attr.NodeType}\tName={attr.Name}\tValue={attr.Value}");
+            }
+            if (node.HasChildNodes)
+            {
+                foreach (XmlNode child in node.ChildNodes)
+                    OutputNode(child);
+            }
+        }
+
+        static void Main(string[] args)
+        {
+            try
+            {
+                XmlDocument doc = new XmlDocument();
+                doc.Load("Cars.xml");
+                OutputNode(doc.DocumentElement);
+            }
+            catch (Exception ex)
+            {
+                WriteLine(ex.Message);
+            }
+        }
+    }
+}
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+using System;
+using System.Xml;
+using static System.Console;
+
+namespace SimpleProject
+{
+    class Program
+    {
+        static void OutputNode(XmlNode node)
+        {
+            WriteLine($"Type={node.NodeType}\tName={node.Name}\tValue={node.Value}");
+            
+            if (node.HasChildNodes)
+            {
+                foreach (XmlNode child in node.ChildNodes)
+                    OutputNode(child);
+            }
+        }
+
+        static void Main(string[] args)
+        {
+            try
+            {
+                XmlDocument doc = new XmlDocument();
+                doc.Load("Cars.xml");
+                OutputNode(doc.DocumentElement);
+            }
+            catch (Exception ex)
+            {
+                WriteLine(ex.Message);
+            }
+        }
+    }
+}
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+using System;
+using System.Xml;
+using static System.Console;
+
+namespace SimpleProject
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            XmlTextWriter writer = null;
+            try
+            {
+                writer = new XmlTextWriter("Cars.xml", System.Text.Encoding.Unicode);
+                writer.Formatting = Formatting.Indented;
+                writer.WriteStartDocument();
+                writer.WriteStartElement("Cars");
+                writer.WriteStartElement("Car");
+                writer.WriteAttributeString("Image", "MyCar.jpeg");
+                writer.WriteElementString("Manufactured", "La Hispano Suiza de Automovils");
+                writer.WriteElementString("Model", "Alfonso");
+                writer.WriteElementString("Year", "1912");
+                writer.WriteElementString("Color", "Black");
+                writer.WriteElementString("Speed", "130");
+                writer.WriteEndElement();
+                writer.WriteEndElement();
+
+                WriteLine("The Cars.xml file is generated!");
+            }
+            catch (Exception ex)
+            {
+                WriteLine(ex.Message);
+            }
+            finally
+            {
+                if (writer != null)
+                    writer.Close();
+            }
+        }
+    }
+}

@@ -1,0 +1,36 @@
+ ласс это шаблон по которому создаем обьект 
+class Student (internal) по умолчанию
+{
+int _id;
+private string _firstName;
+string _lastName;
+public void print()
+{
+cwl($"номер:{_id}, фамили€:{_lastname},им€:{_firstname}");
+}
+public Student(string l,string f)
+{
+_firstname=f;
+_lsastname=l;
+}
+ctor tab tab;// по умолчанию
+
+}
+
+
+main(){
+student=new student();
+st.Print();
+Student st1=st;
+
+}
+
+модификаторы доступа 
+public общедоступный виден где угодно 
+protected классы наследники получают доступ 
+
+internal элементы котрые видны в рамках текущей сборки
+protected internel элементы котрые видны в рамках текущей сборки наследникам 
+
+»нкапсул€ци€ скрытие реалезации класса
+јбстракци€ придание обьекту характеристик которые отличают его от другого обьекта

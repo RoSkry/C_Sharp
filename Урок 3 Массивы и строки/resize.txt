@@ -1,0 +1,28 @@
+    public static class draiver
+    {       
+       
+        public static int[] add_arr(ref int[] a)
+       {
+           Random r = new Random();
+           int tmp = r.Next(7, 1550);
+           Array.Resize(ref a, a.Length + 1);
+           a[a.Length - 1] = tmp;
+           return a;
+       }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+		int[] arr = new int[4]{34, 23, 12, 67};
+		draiver.add_arr(ref arr);
+
+		foreach(int item in arr)
+		{
+		   Console.WriteLine(item + " ");
+		}
+
+		Console.ReadLine();
+        }
+    }

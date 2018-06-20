@@ -1,0 +1,40 @@
+Структуры - составной тип данных, который является последовательностью переменных различных типов. 
+namespace ... 
+{
+struct
+}
+
+class 
+{
+struct 
+}
+есть конструктор по умолчанию изменить не можем 
+
+struct Dimentions
+{
+public double Height;
+public double Width;
+public Dimentions(double n,double w)
+{
+height=h;
+Width=w;
+}
+public viod print()
+{
+cwl($"Ширина:{Width},высота:{Height}");
+}
+
+
+}
+   static void Main(string[] args)
+        {
+            Dimentions d1 = new Dimentions();
+            d1.print();
+ Dimentions d2 = new Dimentions(6.3,8.4);
+            d2.print();
+            d1.Height += 5;
+            d1.Width += 8;
+            d1.print();
+
+        }
+Структуры не наследуються, можна наследовать от интерфейса 

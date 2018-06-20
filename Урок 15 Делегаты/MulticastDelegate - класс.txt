@@ -1,0 +1,176 @@
+MulticastDelegate - класс
+
+Представляет групповой делегат, то есть делегат, имеющий в своем списке вызовов более одного элемента.
+
+Иерархия наследования
+System.Object
+  System.Delegate
+    System.MulticastDelegate
+
+Пространство имен:  System
+
+[SerializableAttribute]
+[ComVisibleAttribute(true)]
+public abstract class MulticastDelegate : Delegate
+
+Конструкторы
+
+ MulticastDelegate(Object, String)	Инициализирует новый экземпляр класса MulticastDelegate.
+ MulticastDelegate(Type, String)	Инициализирует новый экземпляр класса MulticastDelegate.
+
+Свойства
+
+ Method	Возвращает метод, представленный делегатом. (Унаследовано от Delegate.)
+ Target	Возвращает экземпляр класса, метод которого вызывает текущий делегат. (Унаследовано от Delegate.)
+
+Методы
+
+ Clone	Создает неполную копию делегата. (Унаследовано от Delegate.)
+ CombineImpl	Объединяет данный делегат Delegate с указанным Delegate и формирует новый делегат. (Переопределяет Delegate.CombineImpl(Delegate).)
+ DynamicInvoke	Динамически (с поздней привязкой) вызывает метод, представленный текущим делегатом. (Унаследовано от Delegate.)
+ DynamicInvokeImpl	Динамически (с поздней привязкой) вызывает метод, представленный текущим делегатом. (Унаследовано от Delegate.)
+ Equals	Определяет, равны ли этот групповой делегат и указанный объект. (Переопределяет Delegate.Equals(Object).)
+ Finalize	Позволяет объекту попытаться освободить ресурсы и выполнить другие операции по очистке перед тем, как объект будет утилизирован сборщиком мусора. (Унаследовано от Object.)
+
+ GetHashCode	Возвращает хэш-код для текущего экземпляра. (Переопределяет Delegate.GetHashCode().)
+ GetInvocationList	Возвращает список вызовов данного группового делегата в порядке вызова. (Переопределяет Delegate.GetInvocationList().)
+ GetMethodImpl	Возвращает статический метод, представленный текущим MulticastDelegate. (Переопределяет Delegate.GetMethodImpl().)
+ GetObjectData	Заполняет объект SerializationInfo всеми данными, необходимыми для сериализации данного экземпляра. (Переопределяет Delegate.GetObjectData(SerializationInfo, StreamingContext).)
+ GetType	Возвращает объект класса Type для текущего экземпляра. (Унаследовано от Object.)
+ MemberwiseClone	Создает "плоскую" копию текущего объекта. (Унаследовано от Object.)
+ RemoveImpl	Удаляет элемент, равный указанному делегату, из списка вызовов данного MulticastDelegate. (Переопределяет Delegate.RemoveImpl(Delegate).)
+ ToString	Возвращает строковое представление текущего объекта. (Унаследовано от Object.)
+
+Операторы
+
+ Equality	Определяет, равны ли два объекта MulticastDelegate.
+ Inequality	Определяет, отличаются ли два объекта MulticastDelegate.
+
+Методы расширения
+
+ GetMethodInfo	Возвращает объект, представляющий метод, представленный делегатом указанного. (Определено в RuntimeReflectionExtensions.)
+
+Заметки
+
+MulticastDelegate является специальным классом. Компиляторы и иные средства могут быть производными от этого класса, но его нельзя наследовать явным образом. Это справедливо и для класса Delegate.
+
+Кроме методов, которые наследуются типами делегатов из MulticastDelegate, среда CLR предоставляет два специальных метода: BeginInvoke и EndInvoke. Дополнительные сведения об этих методах см. в разделе Асинхронный вызов синхронных методов.
+
+MulticastDelegate содержит связный список делегатов, называемый списком вызовов, состоящий из одного или нескольких элементов. При активации группового делегата делегаты в списке вызовов вызываются синхронно в том порядке, в каком они представлены. Если при выполнении этого списка происходит ошибка, выбрасывается исключение.
+Примеры
+
+В следующем примере демонстрируется использование классов, производных от MulticastDelegate.
+
+using System;
+
+    // This class contains strings. It has a member method that
+    // accepts a multicast delegate as a parameter and calls it.
+
+    class HoldsStrings
+    {
+        // The following line causes the compiler to generate
+        // a new delegate class named CheckAndPrintDelegate that
+        // inherits from System.MulticastDelegate.
+        public delegate void CheckAndPrintDelegate(string str);
+
+        // An ArrayList that holds strings
+        private System.Collections.ArrayList myStringArray = new System.Collections.ArrayList();
+
+        // A method that adds more strings to the Collection
+        public void addstring( string str) {
+            myStringArray.Add(str);
+        }
+
+        // Iterate through the strings and invoke the method(s) that the delegate points to
+        public void PrintAllQualified(CheckAndPrintDelegate myDelegate) {
+            foreach (string str in myStringArray) {
+                myDelegate(str);
+            }
+        }
+    }   //end of class HoldsStrings
+
+    // This class contains a few sample methods
+    class StringFuncs
+    {
+        // This method prints a string that it is passed if the string starts with a vowel
+        public static void ConStart(string str) {
+            if (!(str[0]=='a'||str[0]=='e'||str[0]=='i'||str[0]=='o'||str[0]=='u'))
+                Console.WriteLine(str);
+        }
+
+        // This method prints a string that it is passed if the string starts with a consonant
+        public static void VowelStart(string str) {
+            if ((str[0]=='a'||str[0]=='e'||str[0]=='i'||str[0]=='o'||str[0]=='u'))
+                Console.WriteLine(str);
+        }
+    }
+
+    // This class demonstrates using Delegates, including using the Remove and
+    // Combine methods to create and modify delegate combinations.
+    class Test
+    {
+        static public void Main()
+        {
+            // Declare the HoldsStrings class and add some strings
+            HoldsStrings myHoldsStrings = new HoldsStrings();
+            myHoldsStrings.addstring("This");
+            myHoldsStrings.addstring("is");
+            myHoldsStrings.addstring("a");
+            myHoldsStrings.addstring("multicast");
+            myHoldsStrings.addstring("delegate");
+            myHoldsStrings.addstring("example");
+
+            // Create two delegates individually using different methods
+            HoldsStrings.CheckAndPrintDelegate ConStartDel =
+                new HoldsStrings.CheckAndPrintDelegate(StringFuncs.ConStart);
+            HoldsStrings.CheckAndPrintDelegate VowStartDel =
+                new HoldsStrings.CheckAndPrintDelegate(StringFuncs.VowelStart);
+
+            // Demonstrate that MulticastDelegates may store only one delegate
+            Delegate [] DelegateList;
+
+            // Returns an array of all delegates stored in the linked list of the
+            // MulticastDelegate. In these cases the lists will hold only one (Multicast) delegate
+            DelegateList = ConStartDel.GetInvocationList();
+            Console.WriteLine("ConStartDel contains " + DelegateList.Length + " delegate(s).");
+            DelegateList = VowStartDel.GetInvocationList();
+            Console.WriteLine("ConStartVow contains " + DelegateList.Length + " delegate(s).");
+
+            // Determine whether the delegates are System.Multicast delegates
+            // if (ConStartDel is System.MulticastDelegate && VowStartDel is System.MulticastDelegate) {
+                Console.WriteLine("ConStartDel and ConStartVow are System.MulticastDelegates");
+            // }
+
+            // Run the two single delegates one after the other
+            Console.WriteLine("Running ConStartDel delegate:");
+            myHoldsStrings.PrintAllQualified(ConStartDel);
+            Console.WriteLine("Running VowStartDel delegate:");
+            myHoldsStrings.PrintAllQualified(VowStartDel);
+
+            // Create a new, empty MulticastDelegate
+            HoldsStrings.CheckAndPrintDelegate MultiDel;
+
+            // Delegate.Combine receives an unspecified number of MulticastDelegates as parameters
+            MultiDel = (HoldsStrings.CheckAndPrintDelegate) Delegate.Combine(ConStartDel, VowStartDel);
+
+            // How many delegates is this delegate holding?
+            DelegateList = MultiDel.GetInvocationList();
+            Console.WriteLine("\nMulitDel contains " + DelegateList.Length + " delegates.");
+
+            // What happens when this mulitcast delegate is passed to PrintAllQualified
+            Console.WriteLine("Running the multiple delegate that combined the first two");
+            myHoldsStrings.PrintAllQualified(MultiDel);
+
+            // The Remove and Combine methods modify the multiple delegate
+            MultiDel = (HoldsStrings.CheckAndPrintDelegate) Delegate.Remove(MultiDel, VowStartDel);
+            MultiDel = (HoldsStrings.CheckAndPrintDelegate) Delegate.Combine(MultiDel, ConStartDel);
+
+            // Finally, pass the combined delegates to PrintAllQualified again
+            Console.WriteLine("\nRunning the multiple delegate that contains two copies of ConStartDel:");
+            myHoldsStrings.PrintAllQualified(MultiDel);
+
+            return;
+        }   //end of main
+    }   //end of Test
+
+

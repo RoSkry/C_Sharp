@@ -1,0 +1,238 @@
+Func<TResult> - делегат
+ 
+Инкапсулирует метод от 0 до 16 параметров и ВОЗВРАЩАЕТ значение типа, указанного в параметре TResult.
+
+Пространство имен:   System
+Сборка:  mscorlib (в mscorlib.dll)
+
+Синтаксис
+public delegate TResult Func<out TResult>()
+
+Возвращаемое значение
+Type: TResult
+Возвращаемое значение метода, инкапсулируемого данным делегатом.
+Параметры типа
+TResult
+Тип возвращаемого значения метода, инкапсулируемого данным делегатом.
+
+Заметки
+Этот делегат можно использовать для представления метода, который можно передавать в качестве параметра без явного объявления пользовательского делегата.Инкапсулируемый метод должен соответствовать заданной этим делегатом сигнатуре метода.Это означает, что инкапсулируемый метод должен не иметь параметров, но возвращать значение.
+
+Примечание
+Для ссылки на метод без параметров, возвращающий значение типа void (или, в Visual Basic, объявленный как Sub, а не как Function) следует использовать универсальный метод-делегат Action.
+При использовании делегата Func<TResult> не нужно явным образом определять делегат, инкапсулирующий метод без параметров.Например, в следующем коде выполняется явное объявление делегата с именем WriteMethod и ссылка на метод экземпляра OutputTarget.SendToFile присваивается экземпляру его делегата.
+
+using System;
+using System.IO;
+
+delegate bool WriteMethod();
+
+public class TestDelegate
+{
+   public static void Main()
+   {
+      OutputTarget output = new OutputTarget();
+      WriteMethod methodCall = output.SendToFile;
+      if (methodCall())
+         Console.WriteLine("Success!"); 
+      else
+         Console.WriteLine("File write operation failed.");
+   }
+}
+
+public class OutputTarget
+{
+   public bool SendToFile()
+   {
+      try
+      {
+         string fn = Path.GetTempFileName();
+         StreamWriter sw = new StreamWriter(fn);
+         sw.WriteLine("Hello, World!");
+         sw.Close();
+         return true;
+      }  
+      catch
+      {
+         return false;
+      }
+   }
+}
+
+В следующем примере этот код упрощается путем создания экземпляра делегата Func<TResult> вместо явного объявления нового делегата и присвоения ему именованного метода.
+using System;
+using System.IO;
+
+public class TestDelegate
+{
+   public static void Main()
+   {
+      OutputTarget output = new OutputTarget();
+      Func<bool> methodCall = output.SendToFile;
+      if (methodCall())
+         Console.WriteLine("Success!"); 
+      else
+         Console.WriteLine("File write operation failed.");
+   }
+}
+
+public class OutputTarget
+{
+   public bool SendToFile()
+   {
+      try
+      {
+         string fn = Path.GetTempFileName();
+         StreamWriter sw = new StreamWriter(fn);
+         sw.WriteLine("Hello, World!");
+         sw.Close();
+         return true;
+      }  
+      catch
+      {
+         return false;
+      }
+   }
+}
+
+Кроме того, в языке C# делегат Func<TResult> можно использовать с анонимными методами, как показано в следующем примере. (Введение в анонимные методы см. в разделе Анонимные методы (Руководство по программированию в C#).)
+using System;
+using System.IO;
+
+public class Anonymous
+{
+   public static void Main()
+   {
+      OutputTarget output = new OutputTarget();
+      Func<bool> methodCall = delegate() { return output.SendToFile(); };
+      if (methodCall())
+         Console.WriteLine("Success!"); 
+      else
+         Console.WriteLine("File write operation failed.");
+   }
+}
+
+public class OutputTarget
+{
+   public bool SendToFile()
+   {
+      try
+      {
+         string fn = Path.GetTempFileName();
+         StreamWriter sw = new StreamWriter(fn);
+         sw.WriteLine("Hello, World!");
+         sw.Close();
+         return true;
+      }  
+      catch
+      {
+         return false;
+      }
+   }
+}
+
+Еще делегату Func<T, TResult> можно присвоить лямбда-выражение, как показано в следующем примере. (Введение в лямбда-выражения см. в разделах Лямбда-выражения (Visual Basic) и Лямбда-выражения (Руководство по программированию в C#).)
+using System;
+using System.IO;
+
+public class Anonymous
+{
+   public static void Main()
+   {
+      OutputTarget output = new OutputTarget();
+      Func<bool> methodCall = () => output.SendToFile(); 
+      if (methodCall())
+         Console.WriteLine("Success!"); 
+      else
+         Console.WriteLine("File write operation failed.");
+   }
+}
+
+public class OutputTarget
+{
+   public bool SendToFile()
+   {
+      try
+      {
+         string fn = Path.GetTempFileName();
+         StreamWriter sw = new StreamWriter(fn);
+         sw.WriteLine("Hello, World!");
+         sw.Close();
+         return true;
+      }  
+      catch
+      {
+         return false;
+      }
+   }
+}
+Тип лежаший в основе лямбда-выражения должен быть одним из универсальных методов-делегатов Func. Это позволяет передавать лямбда-выражение в качестве параметра без явного присвоения его делегату.В частности, поскольку у многих методов типов в пространстве имен System.Linq есть параметры Func, лямбда-выражение этим методам можно передавать без явного создания делегата Func.
+Если имеется дорогостоящее вычисление, которое необходимо выполнять только в случае, когда результат действительно необходим, можно присвоить эту дорогостоящую функцию делегату Func<TResult>.Тогда выполнение этой функции можно будет отложить до момента использования в каком-либо выражении свойства, получающего доступ к значению.В примере следующего раздела показано, как это сделать.
+
+Примеры
+В следующем примере демонстрируется использование делегата, не имеющего параметров.Этот код создает универсальный класс с именем LazyValue, имеющий поле типа Func<TResult>.Это поле делегата может содержать ссылку на любую функцию, возвращающую значение типа, соответствующего типу параметра объекта LazyValue.Тип LazyValue имеет также свойство Value, выполняющее данную функцию (если она еще не выполнена) и возвращающий результирующее значение.
+В этом примере создаются два метода и экземпляры двух объектов LazyValue с использованием лямбда-выражений, вызывающих эти методы.Эти лямбда-выражения не принимают параметров, поскольку им лишь требуется вызвать метод.Как показывают выходные данные, эти два метода выполняются только при извлечении значения каждого из объектов LazyValue.
+
+using System;
+
+static class Func1
+{
+   public static void Main()
+   {
+      // Note that each lambda expression has no parameters.
+      LazyValue<int> lazyOne = new LazyValue<int>(() => ExpensiveOne());
+      LazyValue<long> lazyTwo = new LazyValue<long>(() => ExpensiveTwo("apple"));
+
+      Console.WriteLine("LazyValue objects have been created.");
+
+      // Get the values of the LazyValue objects.
+      Console.WriteLine(lazyOne.Value);
+      Console.WriteLine(lazyTwo.Value);
+   }
+
+   static int ExpensiveOne()
+   {
+      Console.WriteLine("\nExpensiveOne() is executing.");
+      return 1;
+   }
+
+   static long ExpensiveTwo(string input)
+   {
+      Console.WriteLine("\nExpensiveTwo() is executing.");
+      return (long)input.Length;
+   }
+}
+
+class LazyValue<T> where T : struct
+{
+   private Nullable<T> val;
+   private Func<T> getValue;
+
+   // Constructor.
+   public LazyValue(Func<T> func)
+   {
+      val = null;
+      getValue = func;
+   }
+
+   public T Value
+   {
+      get
+      {
+         if (val == null)
+            // Execute the delegate.
+            val = getValue();
+         return (T)val;
+      }
+   }
+}
+/* The example produces the following output:
+
+    LazyValue objects have been created.
+
+    ExpensiveOne() is executing.
+    1
+
+    ExpensiveTwo() is executing.
+    5
+*/ 

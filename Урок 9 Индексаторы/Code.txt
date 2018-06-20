@@ -1,0 +1,626 @@
+
+using System;
+using static System.Console;
+
+namespace SimpleProject
+{
+    public class Laptop
+    {
+        public string Vendor { get; set; }
+        public double Price { get; set; }
+
+        public override string ToString()
+        {
+            return $"{Vendor} {Price}";
+        }
+    }
+
+    public class Shop
+    {
+        Laptop[] laptopArr;
+
+        public Shop(int size)
+        {
+            laptopArr = new Laptop[size];
+        }
+        public int Length
+        {
+            get { return laptopArr.Length; }
+        }
+
+        public Laptop this[int index]
+        {
+            get
+            {
+                if (index >= 0 && index < Length)
+                {
+                    return laptopArr[index];
+                }
+                throw new IndexOutOfRangeException();
+            }
+            set
+            {
+                if (index >= 0 && index < Length)
+                {
+                    laptopArr[index] = value;
+                }
+            }
+        }
+    }
+    public class Program
+    {
+        public static void Main()
+        {
+            Shop laptops = new Shop(3);
+            laptops[0] = new Laptop { Vendor = "Samsung", Price = 5200 };
+            laptops[1] = new Laptop { Vendor = "Asus", Price = 4700 };
+            laptops[2] = new Laptop { Vendor = "LG", Price = 4300 };
+
+            try
+            {
+                for (int i = 0; i < laptops.Length; i++)
+                {
+                    WriteLine(laptops[i]);
+                }
+            }
+            catch
+            {
+            }
+        }
+    }
+}
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++.
+
+using System;
+using static System.Console;
+
+namespace SimpleProject
+{
+    public class Laptop
+    {
+        public string Vendor { get; set; }
+        public double Price { get; set; }
+
+        public override string ToString()
+        {
+            return $"{Vendor} {Price}";
+        }
+    }
+
+    enum Vendors { Samsung, Asus, LG };
+
+    public class Shop
+    {
+        private Laptop[] laptopArr;
+
+        public Shop(int size)
+        {
+            laptopArr = new Laptop[size];
+        }
+        public int Length
+        {
+            get { return laptopArr.Length; }
+        }
+
+        public Laptop this[int index]
+        {
+            get
+            {
+                if (index >= 0 && index < laptopArr.Length)
+                {
+                    return laptopArr[index];
+                }
+                throw new IndexOutOfRangeException();
+            }
+            set
+            {
+                if (index >= 0 && index < laptopArr.Length)
+                {
+                    laptopArr[index] = value;
+                }
+            }
+        }
+
+        public Laptop this[string name]
+        {
+            get
+            {
+                if (Enum.IsDefined(typeof(Vendors), name))
+                {
+                    return laptopArr[(int)Enum.Parse(typeof(Vendors), name)];
+                }
+                else
+                {
+                    return new Laptop();
+                }
+            }
+            set
+            {
+                if (Enum.IsDefined(typeof(Vendors), name))
+                {
+                    laptopArr[(int)Enum.Parse(typeof(Vendors), name)] = value;
+                }
+            }
+        }
+
+        private int FindByPrice(double price)
+        {
+            for (int i = 0; i < laptopArr.Length; i++)
+            {
+                if (laptopArr[i].Price == price)
+                {
+                    return i;
+                }
+            }
+            return -1;
+        }
+
+        public Laptop this[double price]
+        {
+            get
+            {
+                int index = FindByPrice(price);
+                if (index >= 0)
+                {
+                    return this[index];
+                }
+                throw new Exception("Недопустимая стоимость.");
+            }
+            set
+            {
+                int index = FindByPrice(price);
+                if (index >= 0)
+                {
+                    this[index] = value;
+                }
+            }
+        }
+    }
+
+    public class Program
+    {
+        public static void Main()
+        {
+            Shop laptops = new Shop(3);
+            laptops[0] = new Laptop { Vendor = "Samsung", Price = 5200 };
+            laptops[1] = new Laptop { Vendor = "Asus", Price = 4700 };
+            laptops[2] = new Laptop { Vendor = "LG", Price = 4300 };
+
+            try
+            {
+                for (int i = 0; i < laptops.Length; i++)
+                {
+                    WriteLine(laptops[i]);
+                }
+                WriteLine();
+
+                WriteLine($"Производитель Asus: {laptops["Asus"]}.");
+
+                WriteLine($"Производитель HP: {laptops["HP"]}.");
+                
+                laptops["HP"] = new Laptop(); // игнорирование
+
+                WriteLine($"Стоимость 4300: {laptops[4300.0]}.");
+
+                // недопустимая стоимость
+                WriteLine($"Стоимость 10500: {laptops[10500.0]}.");
+
+                laptops[10500.0] = new Laptop(); // игнорирование
+            }
+            catch (Exception ex)
+            {
+                WriteLine(ex.Message);
+            }
+        }
+    }
+}
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+using static System.Console;
+
+namespace SimpleProject
+{
+    public class MultArray
+    {
+        private int[,] array;
+
+        public int Rows { get; private set; }
+
+        public int Cols { get; private set; }
+
+        public MultArray(int rows, int cols)
+        {
+            Rows = rows;
+            Cols = cols;
+            array = new int[rows, cols];
+        }
+
+        public int this[int r, int c]
+        {
+            get { return array[r, c]; }
+            set { array[r, c] = value; }
+        }
+    }
+    public class Program
+    {
+        static void Main()
+        {
+            MultArray multArray = new MultArray(2, 3);
+
+            for (int i = 0; i < multArray.Rows; i++)
+            {
+                for (int j = 0; j < multArray.Cols; j++)
+                {
+                    multArray[i, j] = i + j;
+                    Write($"{multArray[i, j]} ");
+                }
+                WriteLine();
+            }
+        }
+    }
+}
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+    interface IFly
+    {
+        void Fly();
+    }
+
+    interface ISwim
+    {
+        void Swim();
+    }
+
+    interface IRun
+    {
+        void Run();
+    }
+
+    abstract class Bird
+    {
+        protected string name;
+
+        public void IsEggs() { }
+
+        //public abstract void Fly(); - проблема, так как существуют птицы, которые не летают - решение - Interface
+    }
+
+    class Duck : Bird, IFly, ISwim
+    {
+        public Duck()
+        {
+            name = "Duck";
+        }
+        public void Fly() { Console.WriteLine(name); }
+        public void Swim() { }
+    }
+
+    class Penguin : Bird, ISwim
+    {
+        public Penguin()
+        {
+            name = "Penguin";
+        }
+
+        public void Swim() { }
+    }
+
+    class Ostrich : Bird, IRun // страус
+    {
+        public Ostrich()
+        {
+            name = "Ostrich";
+        }
+        public void Run() { }
+    }
+
+    abstract class Insect // насекомое
+    {
+        protected string name;
+    }
+
+    class Butterfly : Insect, IFly
+    {
+        public Butterfly()
+        {
+            name = "Butterfly";
+        }
+
+        public void Fly() { Console.WriteLine(name); }
+    }
+
+    class Plane : IFly
+    {
+        string name = "Plane";
+        public void Fly() { Console.WriteLine(name); }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            IFly[] iFly = { new Duck(), new Butterfly(), new Plane() };
+
+            foreach (IFly item in iFly)
+            {
+                item.Fly();
+            }
+
+            // применение is и as
+            Bird[] birds = { new Penguin(), new Ostrich(), new Duck() };
+
+            foreach (Bird item in birds)
+            {
+                // необходимо вызвать метод Fly()
+                if (item is IFly)
+                {
+                    (item as IFly).Fly();
+                }
+            }
+
+            Console.Read();
+        }
+    }
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+interface IPerson
+{
+    string LastName { get; set; }
+
+    int Age { get; }
+
+    string Gender { set; }
+}
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+using System;
+using static System.Console;
+
+namespace SimpleProject
+{
+    abstract class Human
+    {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public DateTime BirthDate { get; set; }
+        public override string ToString()
+        {
+            return $"\nФамилия: {LastName} Имя: {FirstName} Дата рождения: {BirthDate.ToLongDateString()}";
+        }
+    }
+    abstract class Employee : Human
+    {
+        public string Position { get; set; }
+        public double Salary { get; set; }
+
+        public override string ToString()
+        {
+            return base.ToString() + $"\nДолжность: {Position} Заработная плата: {Salary} $";
+        }
+    }
+    interface IWorker
+    {
+        bool IsWorking { get; }
+        string Work();
+    }
+    interface IManager
+    {
+        IWorker[] ListOfWorkers { get; set; }
+        void Organize();
+        void MakeBudget();
+        void Control();
+    }
+    class Director : Employee, IManager
+    {
+        public IWorker[] ListOfWorkers { get; set; }
+
+        public void Control()
+        {
+            WriteLine("Контролирую работу!");
+        }
+
+        public void MakeBudget()
+        {
+            WriteLine("Формирую бюджет!");
+        }
+
+        public void Organize()
+        {
+            WriteLine("Организую работу!");
+        }
+    }
+
+    class Seller : Employee, IWorker
+    {
+        bool isWorking = true;
+
+        public bool IsWorking
+        {
+            get
+            {
+                return isWorking;
+            }
+        }
+
+        public string Work()
+        {
+            return "Продаю товар!";
+        }
+    }
+
+    class Cashier : Employee, IWorker
+    {
+        bool isWorking = true;
+        public bool IsWorking
+        {
+            get
+            {
+                return isWorking;
+            }
+        }
+
+        public string Work()
+        {
+            return "Принимаю оплату за товар!";
+        }
+    }
+
+    class Storekeeper : Employee, IWorker
+    {
+        bool isWorking = true;
+        public bool IsWorking
+        {
+            get
+            {
+                return isWorking;
+            }
+        }
+
+        public string Work()
+        {
+            return "Учитываю товар!";
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Director director = new Director { LastName = "Doe", FirstName = "John", BirthDate = new DateTime(1998, 10, 12), Position = "Директор", Salary = 12000 };
+
+            IWorker seller = new Seller { LastName = "Beam", FirstName = "Jim", BirthDate = new DateTime(1956, 5, 23), Position = "Продавец", Salary = 3780 };
+
+            if (seller is Employee)
+                WriteLine($"Заработная плата продавца: {(seller as Employee).Salary}"); // приведение интерфейсной ссылки к классу Employee
+
+            director.ListOfWorkers = new IWorker[] {
+                seller,
+                new Cashier { LastName = "Smith", FirstName = "Nicole", BirthDate = new DateTime(1956, 5, 23), Position = "Кассир", Salary = 3780 },
+                new Storekeeper { LastName = "Ross", FirstName = "Bob", BirthDate = new DateTime(1956, 5, 23), Position = "Кладовщик", Salary = 4500 }
+            };
+
+            WriteLine(director);
+            if (director is IManager) // использование оператора is
+            {
+                director.Control();
+            }
+
+            foreach (IWorker item in director.ListOfWorkers)
+            {
+                WriteLine(item);
+
+                if (item.IsWorking)
+                {
+                    WriteLine(item.Work());
+                }
+            }
+        }
+    }
+}
+
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+using System;
+using static System.Console;
+
+namespace SimpleProject
+{
+    interface IIndexer
+    {
+        string this[int index]
+        {
+            get;
+            set;
+        }
+        string this[string index]
+        {
+            get;
+        }
+    }
+
+    enum Numbers { one, two, three, four, five };
+
+    class IndexerClass : IIndexer
+    {
+        string[] _names = new string[5];
+
+        public string this[int index]
+        {
+            get
+            {
+                return _names[index];
+            }
+            set
+            {
+                _names[index] = value;
+            }
+        }
+
+        public string this[string index]
+        {
+            get
+            {
+                if (Enum.IsDefined(typeof(Numbers), index))
+                    return _names[(int)Enum.Parse(typeof(Numbers), index)];
+                else
+                    return "";
+            }
+        }
+
+        public IndexerClass()
+        {
+            // запись значений, используя индексатор с целочисленным параметром
+            this[0] = "Bob";
+            this[1] = "Candice";
+            this[2] = "Jimmy";
+            this[3] = "Joey";
+            this[4] = "Nicole";
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            IndexerClass indexerClass = new IndexerClass();
+
+            WriteLine("\t\tВывод значений\n");
+            WriteLine("Использование индексатора с целочисленным параметром:");
+            for (int i = 0; i < 5; i++)
+            {
+                WriteLine(indexerClass[i]);
+            }
+
+            WriteLine("\nИспользование индексатора со строковым параметром:");
+            foreach (string item in Enum.GetNames(typeof(Numbers)))
+            {
+                WriteLine(indexerClass[item]);
+            }
+        }
+    }
+}
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+Написать приложение, которое будет отображать в консоли простейшие геометрические фигуры заданные пользователем.
+Пользователь выбирает фигуру и задает ее расположение на экране, а также размер и цвет с помощью меню.
+Все заданные пользователем фигуры отображаются одновременно на экране.
+Фигуры (прямоугольник, ромб, треугольник, трапеция, многоугольник) рисуются звездочками или другими символами.
+Для реализации программы необходимо разработать иерархию классов (продумать возможность абстрагирования).
+
+Для хранения всех, заданных пользователем фигур, создать класс «Коллекция геометрических фигур» с методом «Отобразить все фигуры».
+
+-----------------------------------------------------------------------------------------------
+
+Написать приложение «Праздничное небо».
+В праздник в небе над городом можно наблюдать фейерверки, воздушные шары, группы парашютистов.
+Эти объекты никак не связаны иерархией наследования, но все же ваше приложение должно реализовать объект «Праздничное небо», который является коллекцией «объектов праздничного неба» (подсказка – коллекцией/массивом интерфейсов).
+В любой момент времени в небе можно наблюдать только один «объект праздничного неба», который пролетев по небу, исчезает и ему на смену приходит другой объект.
+При старте приложения коллекция «Праздничное небо» заполняется случайным образом и случайным количеством «объектов праздничного неба». После чего начинается шоу.
+Необходимо реализовать следующие виды фейерверков – крест, диагональный крест, цветок. Виды парашютистов – группа «треугольник», группа «ромб».
+Виды воздушных шаров – цветок, хаос. Продумать возможную иерархию родственных объектов.

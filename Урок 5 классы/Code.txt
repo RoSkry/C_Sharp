@@ -1,0 +1,650 @@
+
+class MyClass
+{
+      public readonly int var = 10;
+      public readonly int[] myArr = { 1, 2, 3 };
+}
+
+class Program
+{
+       static void Main(string[] args)
+      {
+      	MyClass obj = new MyClass();
+        obj.var = 100; 		  // Ошибка
+        obj.myArr = new int[10];  // Ошибка
+        obj.myArr[0] = 11; 	// Ошибки нет
+      }
+}
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+class Bank
+{
+    public static float balance = 1000000;
+
+    public void Balance(int n)
+    {
+        Console.WriteLine($"Филиалу №{n} доступно {balance:C}.");
+    }
+    public void Credit(int n, int sum)
+    {
+        balance -= sum;
+
+        Console.WriteLine($"В филиале №{n} взяли кредит на {sum}, осталось {balance:C}.");
+    }
+    public void Deposit(int n, int sum)
+    {
+        balance += sum;
+        
+        Console.WriteLine($"В филиале №{n} открыли депозит на {sum}, осталось {balance:C}.");
+    }
+}
+class Program
+{
+    static void Main(string[] args)
+    {
+        Bank filial1 = new Bank();
+        Bank filial2 = new Bank();
+
+        filial1.Balance(1);
+        filial1.Balance(2);
+        filial1.Credit(1, 100000);
+        filial1.Balance(2);
+        filial1.Credit(2, 200000);
+        filial1.Balance(1);
+        filial1.Deposit(1, 200000);
+        filial1.Balance(2);
+    }
+}
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+class Car
+{
+private string _driverName;
+      private int _currSpeed;
+
+      public Car():this("Нет водителя", 0){}
+      public Car(string driverName):this(driverName, 0){}
+	public Car(string driverName, int speed) // Главный конструктор
+      {
+      	_driverName = driverName;
+            _currSpeed = 10;
+      }
+public void SetDriver(string driverName)
+{
+	_driverName = driverName;
+}
+      public void PrintState()        // Распечатка текущих данных
+      {
+            Console.WriteLine($"{_driverName} едет со скоростью {_currSpeed} км/ч.");
+      }
+      public void SpeedUp(int delta)  // Увеличение скорости
+      {
+          _currSpeed += delta;
+      }
+}
+class Program
+{
+static void Main(string[] args)
+      {
+      	Car myCar = new Car();
+            for (int i = 0; i <= 10; i++)
+            {
+            	myCar.SpeedUp(5);
+                	myCar.PrintState();
+            }
+      }
+}
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+public class ClassA
+{
+    public void MethodA(ClassB obj)
+    {
+        obj.MethodB(this);
+    }
+}
+
+public class ClassB
+{
+    public void MethodB(ClassA obj)
+    {
+        Console.WriteLine("Работа с классом " + obj.GetType().Name);
+    }
+}
+
+public class Program
+{
+    public static void Main()
+    {
+        ClassA a = new ClassA();
+        ClassB b = new ClassB();
+        a.MethodA(b);
+    }
+}
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+class Program
+{
+static void MyFunction(int[] MyArr, int i)
+{
+  MyArr[0] = 100;
+  i = 100;
+}
+
+static void Main(string[] args)
+{
+        int і = 0;
+      	int[] MyArr = { 0, 1, 2, 4 };
+      	Console.WriteLine("i = " + і);
+      	Console.WriteLine("MyArr[0] = " + MyArr[0]);
+      	Console.WriteLine("Вызов MyFunction");
+      	MyFunction(MyArr, і);
+      	Console.WriteLine("i = " + і);
+      	Console.WriteLine("MyArr[0] = " + MyArr[0]);
+}
+}
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+class Mathematic
+{
+public static int Sum(int a, int b)
+	{
+      	return a + b;
+      }
+      public static int Sum(int a, int b, int c)
+      {
+      	return a + b + c;
+      }
+      public static double Sum(double a, double b)
+      {
+      	return a + b;
+      }
+}	
+class Program
+{
+static void Main(string[] args)
+      {
+      	int a = 10, b = 20, c = 30;
+            double da = 2.5, db = 4.8;
+            Console.WriteLine($"{a} + {b} = {Mathematic.Sum(a, b)}");
+            Console.WriteLine($"{a} + {b} + {c} = {Mathematic.Sum(a, b, c)}");
+            Console.WriteLine($"{da} + {db} = {Mathematic.Sum(da, db)}");
+      }
+}
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+class Program
+{
+private static void MyFunction(int i, int[] myArr)
+{
+   Console.WriteLine("Внутри метода MyFunction до изменения i = " + i);
+   Console.Write("MyArr { ");
+   foreach (int val in myArr)
+   	Console.Write(val + " ");
+   Console.WriteLine("}");
+
+   i = 100;
+   myArr = new int[] { 3, 2, 1 };
+
+   Console.WriteLine("Внутри метода MyFunction после изменения i = " + i);
+   Console.Write("MyArr { ");
+   foreach (int val in myArr)
+     	Console.Write(val + " ");
+   Console.WriteLine("}");
+}
+
+static void Main(string[] args)
+{
+   int i = 10;
+   int[] myArr = { 1, 2, 3 };
+
+   Console.WriteLine("Внутри метода Main до передачи в метод MyFunction i = " + i);
+   Console.Write("MyArr { ");
+   foreach (int val in myArr)
+   	Console.Write(val + " ");
+   Console.WriteLine("}");
+
+   MyFunction(i, myArr);
+
+   Console.WriteLine("Внутри метода Main после передачи в метод MyFunction i = " + i);
+   Console.Write("MyArr { ");
+   foreach (int val in myArr)
+   	Console.Write(val + " ");
+   Console.WriteLine("}");
+}
+}
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+class Program
+{
+private static void MyFunction(ref int i, ref int[] myArr)
+{
+   Console.WriteLine("Внутри метода MyFunction до изменения i = " + i);
+   Console.Write("MyArr { ");
+   foreach (int val in myArr)
+   	Console.Write(val + " ");
+   Console.WriteLine("}");
+
+   i = 100;
+   myArr = new int[] { 3, 2, 1 };
+
+   Console.WriteLine("Внутри метода MyFunction после изменения i = " + i);
+   Console.Write("MyArr { ");
+   foreach (int val in myArr)
+   		Console.Write(val + " ");
+   Console.WriteLine("}");
+}
+static void Main(string[] args)
+{
+   int i = 10;
+   int[] myArr = { 1, 2, 3 };
+
+   Console.WriteLine("Внутри метода Main до передачи в метод MyFunction i = " + i);
+   Console.Write("MyArr { ");
+   foreach (int val in myArr)
+   	Console.Write(val + " ");
+   Console.WriteLine("}");
+
+   MyFunction(ref i, ref myArr);
+
+   Console.WriteLine("Внутри метода Main после передачи в метод MyFunction i = " + i);
+   Console.Write("MyArr { ");
+   foreach (int val in myArr)
+   		Console.Write(val + " ");
+   Console.WriteLine("}");
+}
+}
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        int i;
+        GetDigit(out i);
+        Console.WriteLine("i = " + i);
+    }
+    private static void GetDigit(out int digit)
+    {
+        //return; // Error
+        digit = new Random().Next(10);
+    }
+}
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+class Program
+{
+static void Main(string[] args)
+      {
+      	Console.WriteLine("Сумма = " + Sum(new int[] { 1, 2, 3, 4, 5 }));
+      }
+      private static int Sum(int[] arr)
+      {
+      	int res = 0;
+            foreach (int i in arr)
+                res += i;
+            return res;
+      }
+}
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+class Program
+{
+static void Main(string[] args)
+      {
+      	Console.WriteLine("Сумма = " + Sum( 1, 2, 3, 4, 5 ));
+      }
+      private static int Sum(params int[] arr)
+      {
+      	int res = 0;
+            foreach (int i in arr)
+                res += i;
+            return res;
+      }
+}
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+// Class1.cs
+partial class MyClass
+{
+public static void Method1()
+      {
+      	Console.WriteLine("Класс: \"MyClass\" Метод: \"Method1\"");
+      }
+}
+
+---------------------------------------------------------------------------------
+
+// Class2.cs
+partial class MyClass
+{
+public static void Method2()
+      {
+      	Console.WriteLine("Класс: \"MyClass\" Метод: \"Method2\"");
+      }
+}
+
+----------------------------------------------------------------------------------
+
+// Program.cs
+class Program
+{
+static void Main(string[] args)
+      {
+      	MyClass.Method1();
+        MyClass.Method2();
+      }
+}
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+using System;
+
+namespace SimpleProject
+{
+    class Example
+    {
+        static int _num;
+        public static int Num
+        {
+            get { return _num; }
+            set { _num = value; }
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.Write("Введите целое число: ");
+            Example.Num = int.Parse(ReadLine()); // set
+            Console.Write("Вы ввели: ");
+            Console.WriteLine(Example.Num); // get
+        }
+    }
+}
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+using System;
+
+namespace SimpleProject
+{
+    class Employee
+    {
+        string _firstName;
+        public string FirstName
+        {
+            get { return _firstName != null ? _firstName : "Не задано"; }
+            set { _firstName = value.ToUpper(); }
+        }
+
+        string _lastName;
+        public string LastName
+        {
+            get { return _lastName != null ? _lastName : "Не задано"; ; }
+            set { _lastName = value.ToUpper(); }
+        }
+
+        int _age;
+        public int Age
+        {
+            get { return _age; }
+            set { _age = (value > 115 || value < 1) ? 0 : value; }
+        }
+
+        float _wage;
+        public float Wage
+        {
+            get { return _wage; }
+            set { _wage = value < 0 ? 0 : value; }
+        }
+
+        public string Print()
+        {
+            return $"Имя: {FirstName}\nФамилия: {LastName}\nВозраст: {Age}\nЗарплата: {Wage}\n";
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Employee emp1 = new Employee { FirstName = "Дмитрий", LastName = "Сикорский", Age = 19, Wage = 4800f };
+            Employee emp2 = new Employee();
+            emp2.FirstName = "Денис";
+            // свойство LastName не установлено
+            // попытка присвоить невозможный возраст
+            emp2.Age = 120;
+            //попытка задать зарплату со знаком минус
+            emp2.Wage = -1000;
+            Employee emp3 = new Employee { FirstName = "Наталья", LastName = "Борисова", Age = 29, Wage = 2500f };
+            Console.WriteLine(emp1.Print());
+            Console.WriteLine(emp2.Print());
+            Console.WriteLine(emp3.Print());
+        }
+    }
+}
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+using System;
+
+namespace SimpleProject
+{
+    class Example
+    {
+        public int Id { get; } = DateTime.Now.Year < 2000 ? 1001 : 2001;
+        public int Num { get; set; } = 675;
+        public string FirstName { get; set; } = "John";
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Example example = new Example();
+
+            Console.WriteLine($"Имя: {example.FirstName}\nНомер: {example.Num}\nId: {example.Id}");
+        }
+    }
+}
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+using System;
+
+namespace SimpleProject
+{
+    class Student
+    {
+        public string FirstName { get; set; } = "John";
+
+        public string LastName { get; set; } = "Doe";
+
+        public string Group { get; set; }
+
+        public DateTime DateBirth { get; set; }
+
+        public string Print()
+        {
+            return $"Имя: {FirstName}\nФамилия: {LastName}\nДата рождения: {DateBirth.ToLongDateString()}\nГруппа: {Group}\n";
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Student student1 = new Student { FirstName = "Дмитрий", LastName = "Иванов", DateBirth = new DateTime(1996,3,23), Group = "21PR12" };
+            Student student2 = new Student();
+            Student student3 = new Student { FirstName = "Наталья", LastName = "Борисова", DateBirth = new DateTime(1990,11,12), Group = "25PR31" };
+            WriteLine(student1.Print());
+            Console.WriteLine(student2.Print());
+            Console.WriteLine(student3.Print());
+        }
+    }
+}
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+            Student student = null;
+            DateTime? date = null;
+            if (student != null)
+            {
+                date = student.DateBirth;
+            }
+
+----------------------------------------------------------------------
+
+            Student student = null;
+            DateTime? date = student?.DateBirth;
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+using System;
+
+namespace SimpleProject
+{
+    class Group
+    {
+        public string Name { get; set; }
+    }
+
+    class Student
+    {
+        public string FirstName { get; set; } = "John";
+
+        public string LastName { get; set; } = "Doe";
+
+        public Group Group { get; set; }
+
+        public DateTime DateBirth { get; set; }
+
+        public string Print()
+        {
+            return $"Имя: {FirstName}\nФамилия: {LastName}\nДата рождения: {DateBirth.ToLongDateString()}\nГруппа: {Group.Name}\n";
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Экземпляр класса Student не создан.");
+            Student student1 = null;
+            DateTime? date = student1?.DateBirth;
+            Console.WriteLine($"\n\tДата рождения: {date}");
+
+            Console.WriteLine("\nСвойство Group класса Student не проинициализировано.");
+            Student student2 = new Student();
+            string groupName = student2?.Group?.Name;
+            Console.WriteLine($"\n\tНазвание группы: {groupName}");
+
+            Console.WriteLine("\nСвойство Group класса Student проинициализировано.");
+            Student student3 = new Student { Group = new Group { Name = "24PR31" } };
+            groupName = student3?.Group?.Name;
+            Console.WriteLine($"\n\tНазвание группы: {groupName}");
+
+            Console.WriteLine("\nЭлемент массива Student с null-значением.\n");
+            Student[] students = { student1, student2, student3 };
+            Student student = students?[0] ?? new Student { Group = new Group() };
+            Console.WriteLine(student.Print());
+        }
+    }
+}
+
+-------------------------------------------------------------------------
+
+            Student student = new Student();
+            string groupName = student == null ? null : student.Group == null ? null : student.Group.Name;
+
+-----------------------------------------
+
+int? nullInt = null;
+nullInt = nullInt ?? 50;
+Console.WriteLine(nullInt); // 50
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Создать класс, описывающий студента. Предусмотреть в нем следующие моменты: фамилия, имя, отчество, группа, возраст, массив (зубчатый) оценок по программированию,
+администрированию и дизайну. А также добавить методы по работе с перечисленными данными: возможность установки/получения оценки, получение среднего балла по заданному предмету,
+распечатка данных о студенте.
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+using System;
+
+namespace A
+{
+	class Incrementer
+	{
+        private int _count;
+
+        public Incrementer(int count)
+        {
+            _count = count;
+        }
+        public int MultyIncrement()
+        {
+            for (int i = 0; i < 5; i++)
+                _count++;
+            return _count;
+        }
+    }
+   
+}
+namespace B
+{
+    class Incrementer
+    {
+        private int _var;
+
+        public Incrementer(int var)
+        {
+            _var = var;
+        }
+        public int AnotherMultyIncrement()
+        {
+            for (int i = 0; i < 5; i++)
+                _var += 10;
+            return _var;
+        }
+    }
+    class Tester
+        {
+            public static void Main()
+            {
+                Incrementer obj1 = new Incrementer(10);
+                Console.WriteLine(obj1.AnotherMultyIncrement());
+                A.Incrementer obj2 = new A.Incrementer(5);
+                Console.WriteLine(obj2.MultyIncrement());
+            }
+        }
+}
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+namespace ITAcademy
+{
+    namespace ProgrammingDepartment
+    {
+        namespace CSharp
+        {
+            namespace Basics
+            {
+                class MyClass
+                {
+                    //...
+                }
+            }
+        }
+}
+}
+полное имя класса:  ITAcademy.ProgrammingDepartment.CSharp.Basics.MyClass

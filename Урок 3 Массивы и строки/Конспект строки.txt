@@ -1,0 +1,55 @@
+Строки 
+string str="Строка"; System.String
+string str1=new string(new char[4],{'A','c','z''o'});
+string str2 = new string ('$',5);
+string str3=Console.Readline();
+
+string verb=@"D:\Temp"не надо экраинировать, буквальная строка
+
+Операции со строками
+string s="привет";
+s+="Helo";
+s+="Ok";
+cwl(s);//приветHelloOk
+
+str2.ToCharArray() преобразует строку в масив символов
+string.format("Строка{0}еще{1}",2,4);
+
+Интерпалированые строки 
+int n=5,m=8;
+CWL($"Строка{n:c}еще{m}");
+CWL("Число 1{(n>m?"больше:меньше")}числа 2");
+класс stringBuilder не пересоздается обьект
+StringBuilder builder=new StringBuilder();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 

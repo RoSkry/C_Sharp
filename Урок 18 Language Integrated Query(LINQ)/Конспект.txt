@@ -1,0 +1,11 @@
+1.delegate 
+2. +=delegate(){}
+3. (...)=>{...}
+
+
+LINQ -язык интегрированых запросов 
+
+Результат IEnumerable query=from имя переменной in колекция 
+select имя переменой
+var s=new {FirstName="fgh",Lastname="fg"};- анонимный тип 
+cw(s);

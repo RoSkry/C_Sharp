@@ -1,0 +1,28 @@
+checked генерируется исключительная ситуация
+unchecked игнорирует
+
+try
+{
+checked{
+b=(byte)(b+200);
+}
+}
+
+catch(Exception ex) {
+cw(ex.Message)
+}
+
+ try
+            {
+
+            }
+            catch (Exception) when ()//условие
+            {
+
+
+            }
+            catch (Exception)
+            {
+
+              
+            }

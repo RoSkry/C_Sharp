@@ -1,0 +1,12 @@
+static void Main() (string[] args)
+{
+foreach(string item in args)
+{
+Cwl(item)
+}
+Cwl(Enviroment.CommandLine);//путь к программе
+}
+
+Hello c# чтобы присутствовал пробел пишем в кавычках
+Пуск cmd 
+D:\>Проект.exe

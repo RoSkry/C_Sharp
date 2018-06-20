@@ -1,0 +1,882 @@
+
+// Class1.cs
+using System;
+namespace A
+{
+    public class ClassA
+    {
+        public void Print()
+        {
+            Console.WriteLine("Printing from A.ClassA");
+        }
+    }
+}
+
+-------------------------------------------------------------------------------------------------
+
+
+// Class2.cs
+using System;
+namespace A
+{
+    class ClassB
+    {
+        public void Print()
+        {
+            Console.WriteLine("Printing from A.ClassB");
+        }
+    }
+}
+namespace A
+{
+    class ClassC
+    {
+        public void Print()
+        {
+          Console.WriteLine("Printing from A.ClassC");
+        }
+    }
+}
+
+----------------------------------------------------------------------------------------
+
+
+// Program.cs
+
+using System;
+using A;
+namespace B
+{
+    public class Class
+    {
+        public static void Main()
+        {
+            ClassA a = new ClassA();
+            a.Print();
+
+            ClassB b = new ClassB();
+            b.Print();
+
+            ClassC c = new ClassC();
+            c.Print();
+        }
+    }
+}
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+using System.Windows.Forms.DataVisualization.Charting;
+
+using WFCharting = System.Windows.Forms.DataVisualization.Charting;
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+// Class1.cs
+
+using System;
+namespace NS
+{
+    public class Class
+    {
+        public void Print()
+        {
+            Console.WriteLine("Printing from NS.");
+        }
+    }
+}
+
+---------------------------------------------------------------------
+
+
+// Class2.cs
+
+using System;
+namespace NS1
+{
+    public class Class
+    {
+        public void Print()
+        {
+            Console.WriteLine("Printing from NS1.");
+        }
+    }
+}
+
+----------------------------------------------------------------------
+
+
+// Program.cs
+
+using System;
+using X = NS;
+using Y = NS1;
+namespace M
+{
+    public class ClassM
+    {
+        public int m = 3;
+
+        public static void Main()
+        {
+            //X.Class objA = new X.Class(); Error
+            X::Class objA = new X::Class();
+            objA.Print();
+            Y::Class objB = new Y::Class();
+            objB.Print();
+        }
+    }
+    public class X
+    {
+         //...
+    }
+}
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+using static System.Console;
+using static System.Math;
+class Program
+{
+    static void Main()
+    {
+        WriteLine("Корень квадратный из 81 = " + Sqrt(81));
+        WriteLine("2 в степени 5 = " + Pow(2, 5));
+    }
+}
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+using static System.Console;
+
+namespace SimpleProject
+{
+    public class Human
+    {
+        int _id;
+        protected string firstName;
+        protected string lastName;
+    }
+    public class Employee : Human
+    {
+        double _salary;
+        public Employee(string fName, string lName, double salary)
+        {
+            firstName = fName;
+            lastName = lName;
+            _salary = salary;
+            //_id = 34; Error
+        }
+
+        public void Print()
+        {
+            WriteLine($"Фамилия: {lastName}\nИмя: {firstName}\nЗаработная плата: {_salary} $");
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Employee employee = new Employee("John", "Doe", 2563.57);
+            employee.Print();
+        }
+    }
+}
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+using System;
+using static System.Console;
+
+namespace SimpleProject
+{
+    public class Human
+    {
+        string _firstName;
+        string _lastName;
+        DateTime _birthDate;
+
+        public Human(string fName, string lName)
+        {
+            _firstName = fName;
+            _lastName = lName;
+        }
+
+        public Human(string fName, string lName, DateTime date)
+        {
+            _firstName = fName;
+            _lastName = lName;
+            _birthDate = date;
+        }
+
+        public void Show()
+        {
+            WriteLine($"\nФамилия: {_lastName}\nИмя: {_firstName}\nДата рождения: {_birthDate.ToShortDateString()}");
+        }
+    }
+
+    public class Employee : Human
+    {
+        double _salary;
+        public Employee(string fName, string lName) : base(fName, lName) { }
+
+        public Employee(string fName, string lName, double salary)
+            : base(fName, lName)
+        {
+            _salary = salary;
+        }
+        public Employee(string fName, string lName, DateTime date, double salary) : base(fName, lName, date)
+        {
+            _salary = salary;
+        }
+
+        public void Print()
+        {
+            Show();
+            WriteLine($"Заработная плата: {_salary} $");
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Employee employee = new Employee("John", "Doe");
+            employee.Print();
+
+            employee = new Employee("Jim", "Beam", 1253);
+            employee.Print();
+
+            employee = new Employee("Jack", "Smith", DateTime.Now, 3587.43);
+            employee.Print();
+        }
+    }
+}
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+    public class Human
+    {
+        protected string middleName;
+
+        // остальной код остался прежним
+    }
+
+    public class Employee : Human
+    {
+        new string middleName;
+
+        // остальной код остался прежним
+    }
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+using System;
+using static System.Console;
+
+namespace SimpleProject
+{
+    public class Human
+    {
+        // реализация класса остается прежней
+    }
+
+    public class Employee : Human
+    {
+        // реализация класса остается прежней
+    }
+
+    class Manager : Employee
+    {
+        string _fieldActivity;
+
+        public Manager(string fName, string lName, DateTime date, double salary,string activity) : base(fName, lName, date,salary)
+        {
+            _fieldActivity = activity;
+        }
+
+        public void ShowManager()
+        {
+            WriteLine($"Менеджер. Сфера деятельности: {_fieldActivity}");
+        }
+    }
+    class Scientist : Employee
+    {
+        string _scientificDirection;
+        public Scientist(string fName, string lName, DateTime date, double salary, string direction) : base(fName, lName, date, salary)
+        {
+            _scientificDirection = direction;
+        }
+        public void ShowScientist()
+        {
+            WriteLine($"Ученый. Научное направление: {_scientificDirection}");
+        }
+    }
+    class Specialist : Employee
+    {
+        string _qualification;
+        public Specialist(string fName, string lName, DateTime date, double salary, string qualification) : base(fName, lName, date, salary)
+        {
+            _qualification = qualification;
+        }
+        public void ShowSpecialist()
+        {
+            WriteLine($"Специалист. Квалификация: {_qualification}");
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Employee manager = new Manager("John", "Doe", new DateTime(1995,7,23), 3500, "продукты питания");
+
+            Employee[] employees = {
+              manager,
+              new Scientist("Jim", "Beam", new DateTime(1956,3,15), 4253, "история"),
+              new Specialist("Jack", "Smith", new DateTime(1996,11,5), 2587.43,"физика")
+            };
+
+            foreach (Employee item in employees)
+            {
+                item.Print();
+                //item.ShowScientist(); Error
+
+                try
+                {
+                    ((Specialist)item).ShowSpecialist(); // Способ №1
+                }
+                catch
+                {
+                }
+
+                Scientist scientist = item as Scientist; // Способ №2
+
+                if (scientist != null)
+                {
+                    scientist.ShowScientist();
+                }
+
+                if (item is Manager) // Способ №3
+                {
+                    (item as Manager).ShowManager();
+                }
+            }
+        }
+    }
+}
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Абстракция – это придание объекту характеристик, которые отличают его от всех других объектов, четко определяя его концептуальные границы.
+
+Инкапсуляция - сокрытие реализации конкретного класса и предоставлении интерфейса для работы с ним.
+
+Наследование - повторное использование уже имеющихся классов, при этом расширяя их функциональные возможности.
+
+Полиморфизм позволяет производным классам создавать собственную реализацию методов, определенных базовым классом благодаря процессу, который называется переопределение метода. 
+
+• Ad-hoc полифорфизм (перегрузка методов, приведение типа) – поддерживается, можно создать несколько методов с одним именем и разными аргументами, примитивные типы могут неявно приводиться.
+• Параметрический полиморфизм (обобщённое программирование) – поддерживается, можно создать полиморфные (обобщённые) типы.
+• Полиморфизм включения (наследование) – поддерживается, есть интерфейсы, наследование классов, одиночная и множественная диспетчеризация. Примитивные типы неполиморфны.
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+using System;
+using static System.Console;
+
+namespace SimpleProject
+{
+    public class Human
+    {
+        string _firstName;
+        string _lastName;
+        DateTime _birthDate;
+
+        public Human(string fName, string lName, DateTime date)
+        {
+            _firstName = fName;
+            _lastName = lName;
+            _birthDate = date;
+        }
+
+        public void Print()
+        {
+            WriteLine($"\nФамилия: {_lastName}\nИмя: {_firstName}\nДата рождения: {_birthDate.ToShortDateString()}");
+        }
+    }
+
+    public class Employee : Human
+    {
+        double _salary;
+
+        public Employee(string fName, string lName, DateTime date, double salary) : base(fName, lName, date)
+        {
+            _salary = salary;
+        }
+
+        public void Print()
+        {
+            WriteLine($"Заработная плата: {_salary} $");
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Human employee = new Employee("Jack", "Smith", DateTime.Now, 3587.43);
+            employee.Print();
+        }
+    }
+}
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+using System;
+using static System.Console;
+
+namespace SimpleProject
+{
+    public class Human
+    {
+        // остальной код остался прежним
+
+        public virtual void Print()
+        {
+            WriteLine($"\nФамилия: {_lastName}\nИмя: {_firstName}\nДата рождения: {_birthDate.ToShortDateString()}");
+        }
+    }
+
+    public class Employee : Human
+    {
+        // остальной код остался прежним
+
+        public void Print()
+        {
+            WriteLine($"Заработная плата: {_salary} $");
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Human employee = new Employee("Jack", "Smith", DateTime.Now, 3587.43);
+            employee.Print();
+        }
+    }
+}
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+using System;
+using static System.Console;
+
+namespace SimpleProject
+{
+    public class Human
+    {
+        // остальной код остался прежним
+
+        public virtual void Print()
+        {
+            WriteLine($"\nФамилия: {_lastName}\nИмя: {_firstName}\nДата рождения: {_birthDate.ToShortDateString()}");
+        }
+    }
+
+    public class Employee : Human
+    {
+        // остальной код остался прежним
+
+        public override void Print()
+        {
+            WriteLine($"Заработная плата: {_salary} $");
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Human employee = new Employee("Jack", "Smith", DateTime.Now, 3587.43);
+            employee.Print();
+        }
+    }
+}
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+using System;
+using static System.Console;
+
+namespace SimpleProject
+{
+    public class Human
+    {
+        // остальной код остался прежним
+
+        public virtual void Print()
+        {
+            WriteLine($"\nФамилия: {_lastName}\nИмя: {_firstName}\nДата рождения: {_birthDate.ToShortDateString()}");
+        }
+    }
+
+    public class Employee : Human
+    {
+        // остальной код остался прежним
+
+        public override void Print()
+        {
+            base.Print();
+            WriteLine($"Заработная плата: {_salary} $");
+        }
+    }
+
+    class Manager : Employee
+    {
+        string _fieldActivity;
+
+        public Manager(string fName, string lName, DateTime date, double salary, string activity) : base(fName, lName, date, salary)
+        {
+            _fieldActivity = activity;
+        }
+
+        public override void Print()
+        {
+            Write($"\nМенеджер. Сфера деятельности: {_fieldActivity}");
+            base.Print();
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Human employee = new Employee("Jack", "Smith", DateTime.Now, 3587.43);
+            employee.Print();
+
+            Human manager = new Manager("John", "Doe", new DateTime(1995, 7, 23), 3500, "продукты питания");
+            manager.Print();
+        }
+    }
+}
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+        // остальной код остался прежним
+
+    public class Employee : Human
+    {
+        // остальной код остался прежним
+
+        public new void Print()
+        {
+            base.Print();
+            WriteLine($"Заработная плата: {_salary} $");
+        }
+    }
+
+    class Manager : Employee
+    {
+        // остальной код остался прежним
+
+        public override void Print()
+        {
+            Write($"\nМенеджер. Сфера деятельности: {_fieldActivity}");
+            base.Print();
+        }
+    }
+
+        // остальной код остался прежним
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+        // остальной код остался прежним
+
+    public class Employee : Human
+    {
+        // остальной код остался прежним
+
+        public sealed override void Print()
+        {
+            base.Print();
+            WriteLine($"Заработная плата: {_salary} $");
+        }
+    }
+
+    class Manager : Employee
+    {
+        // остальной код остался прежним
+
+        public override void Print()
+        {
+            Write($"\nМенеджер. Сфера деятельности: {_fieldActivity}");
+            base.Print();
+        }
+    }
+
+        // остальной код остался прежним
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+using System;
+using static System.Console;
+
+namespace SimpleProject
+{
+    public class Human
+    {
+        string _firstName;
+        string _lastName;
+        DateTime _birthDate;
+
+        public Human(string fName, string lName, DateTime date)
+        {
+            _firstName = fName;
+            _lastName = lName;
+            _birthDate = date;
+        }
+        public virtual void Print()
+        {
+            WriteLine($"\nФамилия: {_lastName}\nИмя: {_firstName}\nДата рождения: {_birthDate.ToLongDateString()}");
+        }
+    }
+
+    public class Employee : Human
+    {
+        double _salary;
+
+        public Employee(string fName, string lName, DateTime date, double salary) : base(fName, lName, date)
+        {
+            _salary = salary;
+        }
+
+        public override void Print()
+        {
+            base.Print();
+            WriteLine($"Заработная плата: {_salary} $");
+        }
+    }
+
+    class Manager : Employee
+    { 
+        string _fieldActivity;
+
+        public Manager(string fName, string lName, DateTime date, double salary, string activity) : base(fName, lName, date, salary)
+        {
+            _fieldActivity = activity;
+        }
+
+        public override void Print()
+        {
+            Write($"\nМенеджер. Сфера деятельности: {_fieldActivity}");
+            base.Print();
+        }
+    }
+    class Scientist : Employee
+    {
+        string _scientificDirection;
+        public Scientist(string fName, string lName, DateTime date, double salary, string direction) : base(fName, lName, date, salary)
+        {
+            _scientificDirection = direction;
+        }
+        public override void Print()
+        {
+            Write($"\nУченый. Научное направление: {_scientificDirection}");
+            base.Print();
+        }
+    }
+    class Specialist : Employee
+    {
+        string _qualification;
+        public Specialist(string fName, string lName, DateTime date, double salary, string qualification) : base(fName, lName, date, salary)
+        {
+            _qualification = qualification;
+        }
+        public override void Print()
+        {
+            Write($"\nСпециалист. Квалификация: {_qualification}");
+            base.Print();
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Human[] people = {
+              new Manager("John", "Doe", new DateTime(1995,7,23), 3500, "продукты питания"),
+              new Scientist("Jim", "Beam", new DateTime(1956,3,15), 4253, "история"),
+              new Specialist("Jack", "Smith", new DateTime(1996,11,5), 2587.43,"физика")
+            };
+
+            foreach (Human item in people)
+            {
+                item.Print(); // полиморфизм
+            }
+        }
+    }
+}
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+    public abstract class Human
+    {
+        string _firstName;
+        string _lastName;
+        DateTime _birthDate;
+
+        public Human(string fName, string lName, DateTime date)
+        {
+            _firstName = fName;
+            _lastName = lName;
+            _birthDate = date;
+        }
+
+        public abstract void Think();
+
+        public virtual void Print()
+        {
+            WriteLine($"\nФамилия: {_lastName}\nИмя: {_firstName}\nДата рождения: {_birthDate.ToLongDateString()}");
+        }
+    }
+
+    abstract class Learner : Human
+    {
+        string _institution;
+
+        public Learner(string fName, string lName, DateTime date, string institution) : base(fName, lName, date)
+        {
+            _institution = institution;
+        }
+
+        public abstract void Study();
+
+        public override void Print()
+        {
+            base.Print();
+            WriteLine($"Учебное заведение: {_institution}.");
+        }
+    }
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+using System;
+using static System.Console;
+
+namespace SimpleProject
+{
+    public abstract class Human
+    {
+        string _firstName;
+        string _lastName;
+        DateTime _birthDate;
+
+        public Human(string fName, string lName, DateTime date)
+        {
+            _firstName = fName;
+            _lastName = lName;
+            _birthDate = date;
+        }
+
+        public abstract void Think();
+
+        public virtual void Print()
+        {
+            WriteLine($"\nФамилия: {_lastName}\nИмя: {_firstName}\nДата рождения: {_birthDate.ToLongDateString()}");
+        }
+    }
+
+    abstract class Learner : Human
+    {
+        string _institution;
+
+        public Learner(string fName, string lName, DateTime date, string institution) : base(fName, lName, date)
+        {
+            _institution = institution;
+        }
+
+        public abstract void Study();
+
+        public override void Print()
+        {
+            base.Print();
+            WriteLine($"Учебное заведение: {_institution}.");
+        }
+    }
+
+    class Student : Learner
+    {
+        string _groupName;
+        public Student(string fName, string lName, DateTime date, string institution, string groupName) : base(fName, lName, date, institution)
+        {
+            _groupName = groupName;
+        }
+
+        public override void Think()
+        {
+            WriteLine("Я думаю как студент.");
+        }
+
+        public override void Study()
+        {
+            WriteLine("Я изучаю предметы в институте.");
+        }
+
+        public override void Print()
+        {
+            base.Print();
+            WriteLine($"Учусь в {_groupName} группе.");
+        }
+    }
+
+    class SchoolChild : Learner
+    {
+        string _className;
+        public SchoolChild(string fName, string lName, DateTime date, string institution, string className) : base(fName, lName, date, institution)
+        {
+            _className = className;
+        }
+        public override void Think()
+        {
+            WriteLine("Я думаю как школьник.");
+        }
+
+        public override void Study()
+        {
+            WriteLine("Я изучаю предметы в школе.");
+        }
+
+        public override void Print()
+        {
+            base.Print();
+            WriteLine($"Учусь в {_className} классе.");
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Learner[] learners = 
+            {
+                new Student("John", "Doe", new DateTime(1990, 6, 12), "IT Step", "15PPS21"),
+                new SchoolChild("Jack", "Smith", new DateTime(2008, 4, 18), "School#154", "1-A")
+            };
+            foreach (Learner item in learners)
+            {
+                item.Print();
+                item.Think();
+                item.Study();
+            }
+        }
+    }
+}
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Разработать абстрактный класс «Геометрическая Фигура» с методами «Площадь Фигуры» и «Периметр Фигуры».
+Разработать классы-наследники: Треугольник, Квадрат, Ромб, Прямоугольник, Параллелограмм, Трапеция, Круг, Эллипс.
+Реализовать конструкторы, которые однозначно определяют объекты данных классов.
+Реализовать класс «Составная Фигура», который может состоять из любого количества «Геометрических Фигур».
+Для данного класса определить методы нахождения площади и периметра фигуры.

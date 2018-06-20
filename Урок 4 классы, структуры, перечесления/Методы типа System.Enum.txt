@@ -1,0 +1,10 @@
+Преобразует в строку значение члена перечисления в соответствии с форматом:
+	- G(g) возвращает строковое описание константы или число, если константы с таким именем нет.
+	- D(d) возвращает начение в десятичном формате 
+	- X(x) возвращает начение в 16-ричном формате
+
+	public static Type GetUnderlineType(Type enumType) возвращает тип, который лежит в основе перечисления
+	public static GetName(Type enumType, object val) возвращает имя константы перечисления с заданным значением
+	public static GetValues(Type enumType) возвращает константы в виде массива
+	public static GetNames(Type enumType) возвращает имена констант в виде массива
+	public static bool IsDefined(Type enumType, object val) определет отностится ли константа к данному ыеречислению.

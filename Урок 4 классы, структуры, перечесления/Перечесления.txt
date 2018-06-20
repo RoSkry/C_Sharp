@@ -1,0 +1,34 @@
+перечесления - не пустой список именованых констант
+System.Enum 
+enum DayOfWeek {Monday,Tuesday,wednesday,thursday,friday,saturday,sunday};
+
+namespace ...    namespace 
+{                 {
+                     class Program
+                     {
+                        enum                       }
+                     }
+enum 
+
+class..
+}
+
+
+
+Class Program
+{
+void Main()
+{
+DayofWeek day=DayOfWeek.Friday;
+
+switch Tab Tab 
+switch(day) +Enter 
+{
+
+
+}
+
+Перечесления делаю код более понятным 
+          int
+enum Имя: тип {значения}
+

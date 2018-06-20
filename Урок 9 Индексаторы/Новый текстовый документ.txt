@@ -1,0 +1,14 @@
+Индексаторы [] свойство с параметром 
+public тип данных this[индекс] 
+{
+set{return element;}
+get{element=value};
+}
+
+int [] ar={...}
+main
+ar[i] 
+
+int[] arr={3,4,5,13};
+
+public int this [][] 

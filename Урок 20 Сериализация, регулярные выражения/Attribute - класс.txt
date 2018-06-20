@@ -1,0 +1,729 @@
+Attribute - класс
+ 
+Представляет базовый класс для настраиваемых атрибутов.
+Пространство имен:   System
+Сборка:  mscorlib (в mscorlib.dll)
+
+Иерархия наследования
+System.Object
+System.Attribute
+Microsoft.Build.Framework.LoadInSeparateAppDomainAttribute
+Microsoft.Build.Framework.OutputAttribute
+Microsoft.Build.Framework.RequiredAttribute
+Microsoft.Build.Framework.RequiredRuntimeAttribute
+Microsoft.Build.Framework.RunInMTAAttribute
+Microsoft.Build.Framework.RunInSTAAttribute
+Microsoft.JScript.Expando
+Microsoft.JScript.Hide
+Microsoft.JScript.JSFunctionAttribute
+Microsoft.JScript.NotRecommended
+Microsoft.JScript.Override
+Microsoft.JScript.ReferenceAttribute
+Microsoft.SqlServer.Server.SqlFacetAttribute
+Microsoft.SqlServer.Server.SqlFunctionAttribute
+Microsoft.SqlServer.Server.SqlProcedureAttribute
+Microsoft.SqlServer.Server.SqlTriggerAttribute
+Microsoft.SqlServer.Server.SqlUserDefinedAggregateAttribute
+Microsoft.SqlServer.Server.SqlUserDefinedTypeAttribute
+Microsoft.VisualBasic.ComClassAttribute
+Microsoft.VisualBasic.CompilerServices.DesignerGeneratedAttribute
+Microsoft.VisualBasic.CompilerServices.OptionCompareAttribute
+Microsoft.VisualBasic.CompilerServices.OptionTextAttribute
+Microsoft.VisualBasic.CompilerServices.StandardModuleAttribute
+Microsoft.VisualBasic.HideModuleNameAttribute
+Microsoft.VisualBasic.MyGroupCollectionAttribute
+Microsoft.VisualBasic.VBFixedArrayAttribute
+Microsoft.VisualBasic.VBFixedStringAttribute
+Microsoft.VisualC.DebugInfoInPDBAttribute
+Microsoft.VisualC.DecoratedNameAttribute
+Microsoft.VisualC.MiscellaneousBitsAttribute
+System.Activities.OverloadGroupAttribute
+System.Activities.Presentation.ActivityDesignerOptionsAttribute
+System.Activities.Presentation.DefaultTypeArgumentAttribute
+System.Activities.Presentation.Expressions.ExpressionMorphHelperAttribute
+System.Activities.Presentation.PropertyEditing.EditorOptionAttribute
+System.Activities.Presentation.PropertyEditing.EditorReuseAttribute
+System.Activities.Presentation.TypeResolvingOptionsAttribute
+System.Activities.Presentation.View.OutlineView.HidePropertyInOutlineViewAttribute
+System.Activities.Presentation.View.OutlineView.ShowInOutlineViewAttribute
+System.Activities.Presentation.View.OutlineView.ShowPropertyInOutlineViewAsSiblingAttribute
+System.Activities.Presentation.View.OutlineView.ShowPropertyInOutlineViewAttribute
+System.Activities.RequiredArgumentAttribute
+System.AddIn.AddInAttribute
+System.AddIn.Pipeline.AddInAdapterAttribute
+System.AddIn.Pipeline.AddInBaseAttribute
+System.AddIn.Pipeline.AddInContractAttribute
+System.AddIn.Pipeline.HostAdapterAttribute
+System.AddIn.Pipeline.QualificationDataAttribute
+System.AttributeUsageAttribute
+System.CLSCompliantAttribute
+System.CodeDom.Compiler.GeneratedCodeAttribute
+System.ComponentModel.AmbientValueAttribute
+System.ComponentModel.AttributeProviderAttribute
+System.ComponentModel.BindableAttribute
+System.ComponentModel.BrowsableAttribute
+System.ComponentModel.CategoryAttribute
+System.ComponentModel.ComplexBindingPropertiesAttribute
+System.ComponentModel.Composition.CatalogReflectionContextAttribute
+System.ComponentModel.Composition.ExportAttribute
+System.ComponentModel.Composition.ExportMetadataAttribute
+System.ComponentModel.Composition.ImportAttribute
+System.ComponentModel.Composition.ImportingConstructorAttribute
+System.ComponentModel.Composition.ImportManyAttribute
+System.ComponentModel.Composition.MetadataAttributeAttribute
+System.ComponentModel.Composition.MetadataViewImplementationAttribute
+System.ComponentModel.Composition.PartCreationPolicyAttribute
+System.ComponentModel.Composition.PartMetadataAttribute
+System.ComponentModel.Composition.PartNotDiscoverableAttribute
+System.ComponentModel.DataAnnotations.AssociationAttribute
+System.ComponentModel.DataAnnotations.BindableTypeAttribute
+System.ComponentModel.DataAnnotations.ConcurrencyCheckAttribute
+System.ComponentModel.DataAnnotations.DisplayAttribute
+System.ComponentModel.DataAnnotations.DisplayColumnAttribute
+System.ComponentModel.DataAnnotations.DisplayFormatAttribute
+System.ComponentModel.DataAnnotations.EditableAttribute
+System.ComponentModel.DataAnnotations.FilterUIHintAttribute
+System.ComponentModel.DataAnnotations.KeyAttribute
+System.ComponentModel.DataAnnotations.MetadataTypeAttribute
+System.ComponentModel.DataAnnotations.ScaffoldColumnAttribute
+System.ComponentModel.DataAnnotations.ScaffoldTableAttribute
+System.ComponentModel.DataAnnotations.Schema.ColumnAttribute
+System.ComponentModel.DataAnnotations.Schema.ComplexTypeAttribute
+System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedAttribute
+System.ComponentModel.DataAnnotations.Schema.ForeignKeyAttribute
+System.ComponentModel.DataAnnotations.Schema.InversePropertyAttribute
+System.ComponentModel.DataAnnotations.Schema.NotMappedAttribute
+System.ComponentModel.DataAnnotations.Schema.TableAttribute
+System.ComponentModel.DataAnnotations.TimestampAttribute
+System.ComponentModel.DataAnnotations.UIHintAttribute
+System.ComponentModel.DataAnnotations.ValidationAttribute
+System.ComponentModel.DataObjectAttribute
+System.ComponentModel.DataObjectFieldAttribute
+System.ComponentModel.DataObjectMethodAttribute
+System.ComponentModel.DefaultBindingPropertyAttribute
+System.ComponentModel.DefaultEventAttribute
+System.ComponentModel.DefaultPropertyAttribute
+System.ComponentModel.DefaultValueAttribute
+System.ComponentModel.DescriptionAttribute
+System.ComponentModel.Design.HelpKeywordAttribute
+System.ComponentModel.Design.ProjectTargetFrameworkAttribute
+System.ComponentModel.Design.Serialization.DefaultSerializationProviderAttribute
+System.ComponentModel.Design.Serialization.DesignerSerializerAttribute
+System.ComponentModel.Design.Serialization.RootDesignerSerializerAttribute
+System.ComponentModel.DesignerAttribute
+System.ComponentModel.DesignerCategoryAttribute
+System.ComponentModel.DesignerSerializationVisibilityAttribute
+System.ComponentModel.DesignOnlyAttribute
+System.ComponentModel.DesignTimeVisibleAttribute
+System.ComponentModel.DisplayNameAttribute
+System.ComponentModel.EditorAttribute
+System.ComponentModel.EditorBrowsableAttribute
+System.ComponentModel.ExtenderProvidedPropertyAttribute
+System.ComponentModel.ImmutableObjectAttribute
+System.ComponentModel.InheritanceAttribute
+System.ComponentModel.InitializationEventAttribute
+System.ComponentModel.InstallerTypeAttribute
+System.ComponentModel.LicenseProviderAttribute
+System.ComponentModel.ListBindableAttribute
+System.ComponentModel.LocalizableAttribute
+System.ComponentModel.LookupBindingPropertiesAttribute
+System.ComponentModel.MergablePropertyAttribute
+System.ComponentModel.NotifyParentPropertyAttribute
+System.ComponentModel.ParenthesizePropertyNameAttribute
+System.ComponentModel.PasswordPropertyTextAttribute
+System.ComponentModel.PropertyFilterAttribute
+System.ComponentModel.PropertyTabAttribute
+System.ComponentModel.ProvidePropertyAttribute
+System.ComponentModel.ReadOnlyAttribute
+System.ComponentModel.RecommendedAsConfigurableAttribute
+System.ComponentModel.RefreshPropertiesAttribute
+System.ComponentModel.RunInstallerAttribute
+System.ComponentModel.SettingsBindableAttribute
+System.ComponentModel.ToolboxItemAttribute
+System.ComponentModel.ToolboxItemFilterAttribute
+System.ComponentModel.TypeConverterAttribute
+System.ComponentModel.TypeDescriptionProviderAttribute
+System.Configuration.ConfigurationCollectionAttribute
+System.Configuration.ConfigurationPropertyAttribute
+System.Configuration.ConfigurationValidatorAttribute
+System.Configuration.DefaultSettingValueAttribute
+System.Configuration.NoSettingsVersionUpgradeAttribute
+System.Configuration.SettingAttribute
+System.Configuration.SettingsDescriptionAttribute
+System.Configuration.SettingsGroupDescriptionAttribute
+System.Configuration.SettingsGroupNameAttribute
+System.Configuration.SettingsManageabilityAttribute
+System.Configuration.SettingsProviderAttribute
+System.Configuration.SettingsSerializeAsAttribute
+System.Configuration.SpecialSettingAttribute
+System.ContextStaticAttribute
+System.Data.Common.DbProviderSpecificTypePropertyAttribute
+System.Data.Linq.Mapping.DataAttribute
+System.Data.Linq.Mapping.DatabaseAttribute
+System.Data.Linq.Mapping.FunctionAttribute
+System.Data.Linq.Mapping.InheritanceMappingAttribute
+System.Data.Linq.Mapping.ParameterAttribute
+System.Data.Linq.Mapping.ProviderAttribute
+System.Data.Linq.Mapping.ResultTypeAttribute
+System.Data.Linq.Mapping.TableAttribute
+System.Data.Mapping.EntityViewGenerationAttribute
+System.Data.Objects.DataClasses.EdmFunctionAttribute
+System.Data.Objects.DataClasses.EdmPropertyAttribute
+System.Data.Objects.DataClasses.EdmRelationshipAttribute
+System.Data.Objects.DataClasses.EdmSchemaAttribute
+System.Data.Objects.DataClasses.EdmTypeAttribute
+System.Data.Services.ChangeInterceptorAttribute
+System.Data.Services.Client.MediaEntryAttribute
+System.Data.Services.Client.MimeTypePropertyAttribute
+System.Data.Services.Common.DataServiceEntityAttribute
+System.Data.Services.Common.DataServiceKeyAttribute
+System.Data.Services.Common.EntityPropertyMappingAttribute
+System.Data.Services.Common.EntitySetAttribute
+System.Data.Services.Common.HasStreamAttribute
+System.Data.Services.ETagAttribute
+System.Data.Services.IgnorePropertiesAttribute
+System.Data.Services.MimeTypeAttribute
+System.Data.Services.QueryInterceptorAttribute
+System.Data.Services.SingleResultAttribute
+System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute
+System.Diagnostics.CodeAnalysis.SuppressMessageAttribute
+System.Diagnostics.ConditionalAttribute
+System.Diagnostics.Contracts.ContractAbbreviatorAttribute
+System.Diagnostics.Contracts.ContractArgumentValidatorAttribute
+System.Diagnostics.Contracts.ContractClassAttribute
+System.Diagnostics.Contracts.ContractClassForAttribute
+System.Diagnostics.Contracts.ContractInvariantMethodAttribute
+System.Diagnostics.Contracts.ContractOptionAttribute
+System.Diagnostics.Contracts.ContractPublicPropertyNameAttribute
+System.Diagnostics.Contracts.ContractReferenceAssemblyAttribute
+System.Diagnostics.Contracts.ContractRuntimeIgnoredAttribute
+System.Diagnostics.Contracts.ContractVerificationAttribute
+System.Diagnostics.Contracts.PureAttribute
+System.Diagnostics.DebuggableAttribute
+System.Diagnostics.DebuggerBrowsableAttribute
+System.Diagnostics.DebuggerDisplayAttribute
+System.Diagnostics.DebuggerHiddenAttribute
+System.Diagnostics.DebuggerNonUserCodeAttribute
+System.Diagnostics.DebuggerStepperBoundaryAttribute
+System.Diagnostics.DebuggerStepThroughAttribute
+System.Diagnostics.DebuggerTypeProxyAttribute
+System.Diagnostics.DebuggerVisualizerAttribute
+System.Diagnostics.SwitchAttribute
+System.Diagnostics.SwitchLevelAttribute
+System.Diagnostics.Tracing.EventAttribute
+System.Diagnostics.Tracing.EventDataAttribute
+System.Diagnostics.Tracing.EventFieldAttribute
+System.Diagnostics.Tracing.EventIgnoreAttribute
+System.Diagnostics.Tracing.EventSourceAttribute
+System.Diagnostics.Tracing.NonEventAttribute
+System.DirectoryServices.AccountManagement.DirectoryObjectClassAttribute
+System.DirectoryServices.AccountManagement.DirectoryPropertyAttribute
+System.DirectoryServices.AccountManagement.DirectoryRdnPrefixAttribute
+System.Drawing.BitmapSuffixInSameAssemblyAttribute
+System.Drawing.BitmapSuffixInSatelliteAssemblyAttribute
+System.Drawing.ToolboxBitmapAttribute
+System.EnterpriseServices.ApplicationAccessControlAttribute
+System.EnterpriseServices.ApplicationActivationAttribute
+System.EnterpriseServices.ApplicationIDAttribute
+System.EnterpriseServices.ApplicationNameAttribute
+System.EnterpriseServices.ApplicationQueuingAttribute
+System.EnterpriseServices.AutoCompleteAttribute
+System.EnterpriseServices.CompensatingResourceManager.ApplicationCrmEnabledAttribute
+System.EnterpriseServices.ComponentAccessControlAttribute
+System.EnterpriseServices.COMTIIntrinsicsAttribute
+System.EnterpriseServices.ConstructionEnabledAttribute
+System.EnterpriseServices.DescriptionAttribute
+System.EnterpriseServices.EventClassAttribute
+System.EnterpriseServices.EventTrackingEnabledAttribute
+System.EnterpriseServices.ExceptionClassAttribute
+System.EnterpriseServices.IISIntrinsicsAttribute
+System.EnterpriseServices.InterfaceQueuingAttribute
+System.EnterpriseServices.JustInTimeActivationAttribute
+System.EnterpriseServices.LoadBalancingSupportedAttribute
+System.EnterpriseServices.MustRunInClientContextAttribute
+System.EnterpriseServices.ObjectPoolingAttribute
+System.EnterpriseServices.PrivateComponentAttribute
+System.EnterpriseServices.SecureMethodAttribute
+System.EnterpriseServices.SecurityRoleAttribute
+System.EnterpriseServices.SynchronizationAttribute
+System.EnterpriseServices.TransactionAttribute
+System.FlagsAttribute
+System.LoaderOptimizationAttribute
+System.Management.Instrumentation.IgnoreMemberAttribute
+System.Management.Instrumentation.InstrumentationClassAttribute
+System.Management.Instrumentation.InstrumentedAttribute
+System.Management.Instrumentation.ManagedNameAttribute
+System.Management.Instrumentation.ManagementEntityAttribute
+System.Management.Instrumentation.ManagementMemberAttribute
+System.Management.Instrumentation.ManagementNameAttribute
+System.Management.Instrumentation.ManagementQualifierAttribute
+System.Management.Instrumentation.ManagementReferenceAttribute
+System.Management.Instrumentation.WmiConfigurationAttribute
+System.MTAThreadAttribute
+System.NonSerializedAttribute
+System.ObsoleteAttribute
+System.ParamArrayAttribute
+System.Reflection.AssemblyAlgorithmIdAttribute
+System.Reflection.AssemblyCompanyAttribute
+System.Reflection.AssemblyConfigurationAttribute
+System.Reflection.AssemblyCopyrightAttribute
+System.Reflection.AssemblyCultureAttribute
+System.Reflection.AssemblyDefaultAliasAttribute
+System.Reflection.AssemblyDelaySignAttribute
+System.Reflection.AssemblyDescriptionAttribute
+System.Reflection.AssemblyFileVersionAttribute
+System.Reflection.AssemblyFlagsAttribute
+System.Reflection.AssemblyInformationalVersionAttribute
+System.Reflection.AssemblyKeyFileAttribute
+System.Reflection.AssemblyKeyNameAttribute
+System.Reflection.AssemblyMetadataAttribute
+System.Reflection.AssemblyProductAttribute
+System.Reflection.AssemblySignatureKeyAttribute
+System.Reflection.AssemblyTitleAttribute
+System.Reflection.AssemblyTrademarkAttribute
+System.Reflection.AssemblyVersionAttribute
+System.Reflection.DefaultMemberAttribute
+System.Reflection.ObfuscateAssemblyAttribute
+System.Reflection.ObfuscationAttribute
+System.Resources.NeutralResourcesLanguageAttribute
+System.Resources.SatelliteContractVersionAttribute
+System.Runtime.AssemblyTargetedPatchBandAttribute
+System.Runtime.CompilerServices.AccessedThroughPropertyAttribute
+System.Runtime.CompilerServices.CallerFilePathAttribute
+System.Runtime.CompilerServices.CallerLineNumberAttribute
+System.Runtime.CompilerServices.CallerMemberNameAttribute
+System.Runtime.CompilerServices.CompilationRelaxationsAttribute
+System.Runtime.CompilerServices.CompilerGeneratedAttribute
+System.Runtime.CompilerServices.CompilerGlobalScopeAttribute
+System.Runtime.CompilerServices.CustomConstantAttribute
+System.Runtime.CompilerServices.DecimalConstantAttribute
+System.Runtime.CompilerServices.DefaultDependencyAttribute
+System.Runtime.CompilerServices.DependencyAttribute
+System.Runtime.CompilerServices.DisablePrivateReflectionAttribute
+System.Runtime.CompilerServices.DiscardableAttribute
+System.Runtime.CompilerServices.DynamicAttribute
+System.Runtime.CompilerServices.ExtensionAttribute
+System.Runtime.CompilerServices.FixedAddressValueTypeAttribute
+System.Runtime.CompilerServices.FixedBufferAttribute
+System.Runtime.CompilerServices.HasCopySemanticsAttribute
+System.Runtime.CompilerServices.IndexerNameAttribute
+System.Runtime.CompilerServices.InternalsVisibleToAttribute
+System.Runtime.CompilerServices.MethodImplAttribute
+System.Runtime.CompilerServices.NativeCppClassAttribute
+System.Runtime.CompilerServices.ReferenceAssemblyAttribute
+System.Runtime.CompilerServices.RequiredAttributeAttribute
+System.Runtime.CompilerServices.RuntimeCompatibilityAttribute
+System.Runtime.CompilerServices.ScopelessEnumAttribute
+System.Runtime.CompilerServices.SpecialNameAttribute
+System.Runtime.CompilerServices.StateMachineAttribute
+System.Runtime.CompilerServices.StringFreezingAttribute
+System.Runtime.CompilerServices.SuppressIldasmAttribute
+System.Runtime.CompilerServices.TypeForwardedFromAttribute
+System.Runtime.CompilerServices.TypeForwardedToAttribute
+System.Runtime.CompilerServices.UnsafeValueTypeAttribute
+System.Runtime.ConstrainedExecution.PrePrepareMethodAttribute
+System.Runtime.ConstrainedExecution.ReliabilityContractAttribute
+System.Runtime.ExceptionServices.HandleProcessCorruptedStateExceptionsAttribute
+System.Runtime.InteropServices.AllowReversePInvokeCallsAttribute
+System.Runtime.InteropServices.AutomationProxyAttribute
+System.Runtime.InteropServices.BestFitMappingAttribute
+System.Runtime.InteropServices.ClassInterfaceAttribute
+System.Runtime.InteropServices.CoClassAttribute
+System.Runtime.InteropServices.ComAliasNameAttribute
+System.Runtime.InteropServices.ComCompatibleVersionAttribute
+System.Runtime.InteropServices.ComConversionLossAttribute
+System.Runtime.InteropServices.ComDefaultInterfaceAttribute
+System.Runtime.InteropServices.ComEventInterfaceAttribute
+System.Runtime.InteropServices.ComImportAttribute
+System.Runtime.InteropServices.ComRegisterFunctionAttribute
+System.Runtime.InteropServices.ComSourceInterfacesAttribute
+System.Runtime.InteropServices.ComUnregisterFunctionAttribute
+System.Runtime.InteropServices.ComVisibleAttribute
+System.Runtime.InteropServices.DefaultCharSetAttribute
+System.Runtime.InteropServices.DefaultDllImportSearchPathsAttribute
+System.Runtime.InteropServices.DefaultParameterValueAttribute
+System.Runtime.InteropServices.DispIdAttribute
+System.Runtime.InteropServices.DllImportAttribute
+System.Runtime.InteropServices.FieldOffsetAttribute
+System.Runtime.InteropServices.GuidAttribute
+System.Runtime.InteropServices.IDispatchImplAttribute
+System.Runtime.InteropServices.ImportedFromTypeLibAttribute
+System.Runtime.InteropServices.InAttribute
+System.Runtime.InteropServices.InterfaceTypeAttribute
+System.Runtime.InteropServices.LCIDConversionAttribute
+System.Runtime.InteropServices.ManagedToNativeComInteropStubAttribute
+System.Runtime.InteropServices.MarshalAsAttribute
+System.Runtime.InteropServices.OptionalAttribute
+System.Runtime.InteropServices.OutAttribute
+System.Runtime.InteropServices.PreserveSigAttribute
+System.Runtime.InteropServices.PrimaryInteropAssemblyAttribute
+System.Runtime.InteropServices.ProgIdAttribute
+System.Runtime.InteropServices.SetWin32ContextInIDispatchAttribute
+System.Runtime.InteropServices.StructLayoutAttribute
+System.Runtime.InteropServices.TypeIdentifierAttribute
+System.Runtime.InteropServices.TypeLibFuncAttribute
+System.Runtime.InteropServices.TypeLibImportClassAttribute
+System.Runtime.InteropServices.TypeLibTypeAttribute
+System.Runtime.InteropServices.TypeLibVarAttribute
+System.Runtime.InteropServices.TypeLibVersionAttribute
+System.Runtime.InteropServices.UnmanagedFunctionPointerAttribute
+System.Runtime.InteropServices.WindowsRuntime.DefaultInterfaceAttribute
+System.Runtime.InteropServices.WindowsRuntime.InterfaceImplementedInVersionAttribute
+System.Runtime.InteropServices.WindowsRuntime.ReadOnlyArrayAttribute
+System.Runtime.InteropServices.WindowsRuntime.ReturnValueNameAttribute
+System.Runtime.InteropServices.WindowsRuntime.WriteOnlyArrayAttribute
+System.Runtime.Remoting.Contexts.ContextAttribute
+System.Runtime.Remoting.Messaging.OneWayAttribute
+System.Runtime.Remoting.Metadata.SoapAttribute
+System.Runtime.Remoting.Proxies.ProxyAttribute
+System.Runtime.Serialization.CollectionDataContractAttribute
+System.Runtime.Serialization.ContractNamespaceAttribute
+System.Runtime.Serialization.DataContractAttribute
+System.Runtime.Serialization.DataMemberAttribute
+System.Runtime.Serialization.EnumMemberAttribute
+System.Runtime.Serialization.IgnoreDataMemberAttribute
+System.Runtime.Serialization.KnownTypeAttribute
+System.Runtime.Serialization.OnDeserializedAttribute
+System.Runtime.Serialization.OnDeserializingAttribute
+System.Runtime.Serialization.OnSerializedAttribute
+System.Runtime.Serialization.OnSerializingAttribute
+System.Runtime.Serialization.OptionalFieldAttribute
+System.Runtime.TargetedPatchingOptOutAttribute
+System.Runtime.Versioning.ComponentGuaranteesAttribute
+System.Runtime.Versioning.ResourceConsumptionAttribute
+System.Runtime.Versioning.ResourceExposureAttribute
+System.Runtime.Versioning.TargetFrameworkAttribute
+System.Security.AllowPartiallyTrustedCallersAttribute
+System.Security.Permissions.SecurityAttribute
+System.Security.SecurityCriticalAttribute
+System.Security.SecurityRulesAttribute
+System.Security.SecuritySafeCriticalAttribute
+System.Security.SecurityTransparentAttribute
+System.Security.SecurityTreatAsSafeAttribute
+System.Security.SuppressUnmanagedCodeSecurityAttribute
+System.Security.UnverifiableCodeAttribute
+System.SerializableAttribute
+System.ServiceModel.Activation.AspNetCompatibilityRequirementsAttribute
+System.ServiceModel.Activation.ServiceActivationBuildProviderAttribute
+System.ServiceModel.Activities.Description.WorkflowContractBehaviorAttribute
+System.ServiceModel.CallbackBehaviorAttribute
+System.ServiceModel.DataContractFormatAttribute
+System.ServiceModel.DeliveryRequirementsAttribute
+System.ServiceModel.Description.DurableOperationAttribute
+System.ServiceModel.Description.DurableServiceAttribute
+System.ServiceModel.FaultContractAttribute
+System.ServiceModel.MessageContractAttribute
+System.ServiceModel.MessageContractMemberAttribute
+System.ServiceModel.MessageParameterAttribute
+System.ServiceModel.MessagePropertyAttribute
+System.ServiceModel.OperationBehaviorAttribute
+System.ServiceModel.OperationContractAttribute
+System.ServiceModel.ReceiveContextEnabledAttribute
+System.ServiceModel.ServiceBehaviorAttribute
+System.ServiceModel.ServiceContractAttribute
+System.ServiceModel.ServiceKnownTypeAttribute
+System.ServiceModel.TransactionFlowAttribute
+System.ServiceModel.Web.AspNetCacheProfileAttribute
+System.ServiceModel.Web.JavascriptCallbackBehaviorAttribute
+System.ServiceModel.Web.WebGetAttribute
+System.ServiceModel.Web.WebInvokeAttribute
+System.ServiceModel.XmlSerializerFormatAttribute
+System.STAThreadAttribute
+System.ThreadStaticAttribute
+System.Web.Compilation.BuildProviderAppliesToAttribute
+System.Web.Compilation.DesignTimeResourceProviderFactoryAttribute
+System.Web.Compilation.ExpressionEditorAttribute
+System.Web.Compilation.ExpressionPrefixAttribute
+System.Web.Compilation.FolderLevelBuildProviderAppliesToAttribute
+System.Web.DynamicData.TableNameAttribute
+System.Web.Hosting.CustomLoaderAttribute
+System.Web.ModelBinding.BindingBehaviorAttribute
+System.Web.ModelBinding.ExtensibleModelBinderAttribute
+System.Web.ModelBinding.ModelBinderProviderOptionsAttribute
+System.Web.ModelBinding.UserProfileAttribute
+System.Web.ModelBinding.ValueProviderSourceAttribute
+System.Web.PreApplicationStartMethodAttribute
+System.Web.Profile.CustomProviderDataAttribute
+System.Web.Profile.ProfileProviderAttribute
+System.Web.Profile.SettingsAllowAnonymousAttribute
+System.Web.Script.AjaxFrameworkAssemblyAttribute
+System.Web.Script.Serialization.ScriptIgnoreAttribute
+System.Web.Script.Services.GenerateScriptTypeAttribute
+System.Web.Script.Services.ScriptMethodAttribute
+System.Web.Script.Services.ScriptServiceAttribute
+System.Web.Services.Configuration.XmlFormatExtensionAttribute
+System.Web.Services.Configuration.XmlFormatExtensionPointAttribute
+System.Web.Services.Configuration.XmlFormatExtensionPrefixAttribute
+System.Web.Services.Protocols.HttpMethodAttribute
+System.Web.Services.Protocols.MatchAttribute
+System.Web.Services.Protocols.SoapDocumentMethodAttribute
+System.Web.Services.Protocols.SoapDocumentServiceAttribute
+System.Web.Services.Protocols.SoapExtensionAttribute
+System.Web.Services.Protocols.SoapHeaderAttribute
+System.Web.Services.Protocols.SoapRpcMethodAttribute
+System.Web.Services.Protocols.SoapRpcServiceAttribute
+System.Web.Services.WebMethodAttribute
+System.Web.Services.WebServiceAttribute
+System.Web.Services.WebServiceBindingAttribute
+System.Web.UI.ConstructorNeedsTagAttribute
+System.Web.UI.ControlBuilderAttribute
+System.Web.UI.ControlValuePropertyAttribute
+System.Web.UI.CssClassPropertyAttribute
+System.Web.UI.DataBindingHandlerAttribute
+System.Web.UI.DataKeyPropertyAttribute
+System.Web.UI.Design.Directives.DirectiveAttribute
+System.Web.UI.Design.Directives.SchemaElementNameAttribute
+System.Web.UI.Design.SupportsPreviewControlAttribute
+System.Web.UI.FileLevelControlBuilderAttribute
+System.Web.UI.FilterableAttribute
+System.Web.UI.IDReferencePropertyAttribute
+System.Web.UI.MobileControls.DesignerAdapterAttribute
+System.Web.UI.MobileControls.DeviceOverridableAttribute
+System.Web.UI.MobileControls.ObjectListTitleAttribute
+System.Web.UI.MobileControls.PersistNameAttribute
+System.Web.UI.NonVisualControlAttribute
+System.Web.UI.ParseChildrenAttribute
+System.Web.UI.PartialCachingAttribute
+System.Web.UI.PersistChildrenAttribute
+System.Web.UI.PersistenceModeAttribute
+System.Web.UI.ScriptResourceAttribute
+System.Web.UI.SupportsEventValidationAttribute
+System.Web.UI.TagPrefixAttribute
+System.Web.UI.TargetControlTypeAttribute
+System.Web.UI.TemplateContainerAttribute
+System.Web.UI.TemplateInstanceAttribute
+System.Web.UI.ThemeableAttribute
+System.Web.UI.ToolboxDataAttribute
+System.Web.UI.UrlPropertyAttribute
+System.Web.UI.ValidationPropertyAttribute
+System.Web.UI.VerificationAttribute
+System.Web.UI.ViewStateModeByIdAttribute
+System.Web.UI.WebControls.WebParts.ConnectionConsumerAttribute
+System.Web.UI.WebControls.WebParts.ConnectionProviderAttribute
+System.Web.UI.WebControls.WebParts.PersonalizableAttribute
+System.Web.UI.WebControls.WebParts.WebBrowsableAttribute
+System.Web.UI.WebControls.WebParts.WebDescriptionAttribute
+System.Web.UI.WebControls.WebParts.WebDisplayNameAttribute
+System.Web.UI.WebControls.WebParts.WebPartTransformerAttribute
+System.Web.UI.WebResourceAttribute
+System.Windows.AttachedPropertyBrowsableAttribute
+System.Windows.Data.ValueConversionAttribute
+System.Windows.Documents.TextElementEditingBehaviorAttribute
+System.Windows.Forms.AxHost.ClsidAttribute
+System.Windows.Forms.AxHost.TypeLibraryTimeStampAttribute
+System.Windows.Forms.DataGridViewColumnDesignTimeVisibleAttribute
+System.Windows.Forms.Design.ToolStripItemDesignerAvailabilityAttribute
+System.Windows.Forms.DockingAttribute
+System.Windows.Forms.RelatedImageListAttribute
+System.Windows.LocalizabilityAttribute
+System.Windows.Markup.AcceptedMarkupExtensionExpressionTypeAttribute
+System.Windows.Markup.AmbientAttribute
+System.Windows.Markup.ConstructorArgumentAttribute
+System.Windows.Markup.ContentPropertyAttribute
+System.Windows.Markup.ContentWrapperAttribute
+System.Windows.Markup.DependsOnAttribute
+System.Windows.Markup.DesignerSerializationOptionsAttribute
+System.Windows.Markup.DictionaryKeyPropertyAttribute
+System.Windows.Markup.MarkupExtensionReturnTypeAttribute
+System.Windows.Markup.NameScopePropertyAttribute
+System.Windows.Markup.RootNamespaceAttribute
+System.Windows.Markup.RuntimeNamePropertyAttribute
+System.Windows.Markup.TrimSurroundingWhitespaceAttribute
+System.Windows.Markup.UidPropertyAttribute
+System.Windows.Markup.UsableDuringInitializationAttribute
+System.Windows.Markup.ValueSerializerAttribute
+System.Windows.Markup.WhitespaceSignificantCollectionAttribute
+System.Windows.Markup.XamlDeferLoadAttribute
+System.Windows.Markup.XamlSetMarkupExtensionAttribute
+System.Windows.Markup.XamlSetTypeConverterAttribute
+System.Windows.Markup.XmlLangPropertyAttribute
+System.Windows.Markup.XmlnsCompatibleWithAttribute
+System.Windows.Markup.XmlnsDefinitionAttribute
+System.Windows.Markup.XmlnsPrefixAttribute
+System.Windows.Media.DisableDpiAwarenessAttribute
+System.Windows.Resources.AssemblyAssociatedContentFileAttribute
+System.Windows.StyleTypedPropertyAttribute
+System.Windows.TemplatePartAttribute
+System.Windows.TemplateVisualStateAttribute
+System.Windows.ThemeInfoAttribute
+System.Workflow.Activities.CorrelationAliasAttribute
+System.Workflow.Activities.CorrelationInitializerAttribute
+System.Workflow.Activities.CorrelationParameterAttribute
+System.Workflow.Activities.ExternalDataExchangeAttribute
+System.Workflow.Activities.Rules.RuleAttribute
+System.Workflow.ComponentModel.AlternateFlowActivityAttribute
+System.Workflow.ComponentModel.Compiler.ActivityCodeGeneratorAttribute
+System.Workflow.ComponentModel.Compiler.ActivityValidatorAttribute
+System.Workflow.ComponentModel.Compiler.AttributeInfoAttribute
+System.Workflow.ComponentModel.Compiler.ValidationOptionAttribute
+System.Workflow.ComponentModel.Compiler.WorkflowMarkupSourceAttribute
+System.Workflow.ComponentModel.Design.ActivityDesignerThemeAttribute
+System.Workflow.ComponentModel.Design.TypeFilterProviderAttribute
+System.Workflow.ComponentModel.PersistOnCloseAttribute
+System.Workflow.ComponentModel.Serialization.ConstructorArgumentAttribute
+System.Workflow.ComponentModel.Serialization.ContentPropertyAttribute
+System.Workflow.ComponentModel.Serialization.RuntimeNamePropertyAttribute
+System.Workflow.ComponentModel.Serialization.XmlnsDefinitionAttribute
+System.Workflow.ComponentModel.Serialization.XmlnsPrefixAttribute
+System.Workflow.Runtime.DebugEngine.WorkflowDebuggerSteppingAttribute
+System.Workflow.Runtime.Tracking.PreviousTrackingServiceAttribute
+System.Xml.Serialization.SoapAttributeAttribute
+System.Xml.Serialization.SoapElementAttribute
+System.Xml.Serialization.SoapEnumAttribute
+System.Xml.Serialization.SoapIgnoreAttribute
+System.Xml.Serialization.SoapIncludeAttribute
+System.Xml.Serialization.SoapTypeAttribute
+System.Xml.Serialization.XmlAnyAttributeAttribute
+System.Xml.Serialization.XmlAnyElementAttribute
+System.Xml.Serialization.XmlArrayAttribute
+System.Xml.Serialization.XmlArrayItemAttribute
+System.Xml.Serialization.XmlAttributeAttribute
+System.Xml.Serialization.XmlChoiceIdentifierAttribute
+System.Xml.Serialization.XmlElementAttribute
+System.Xml.Serialization.XmlEnumAttribute
+System.Xml.Serialization.XmlIgnoreAttribute
+System.Xml.Serialization.XmlIncludeAttribute
+System.Xml.Serialization.XmlNamespaceDeclarationsAttribute
+System.Xml.Serialization.XmlRootAttribute
+System.Xml.Serialization.XmlSchemaProviderAttribute
+System.Xml.Serialization.XmlSerializerAssemblyAttribute
+System.Xml.Serialization.XmlSerializerVersionAttribute
+System.Xml.Serialization.XmlTextAttribute
+System.Xml.Serialization.XmlTypeAttribute
+
+Синтаксис
+
+[SerializableAttribute]
+[AttributeUsageAttribute(AttributeTargets.All, Inherited = true, AllowMultiple = false)]
+[ClassInterfaceAttribute(ClassInterfaceType.None)]
+[ComVisibleAttribute(true)]
+public abstract class Attribute : _Attribute
+
+Конструкторы
+ Attribute()	Инициализирует новый экземпляр класса Attribute.
+
+Свойства
+ TypeId	При реализации в производном классе, возвращает уникальный идентификатор для Attribute.
+
+Методы
+ Equals(Object)	Этот API служит для поддержки инфраструктуры продукт и не предназначен для непосредственного использования из кода. Возвращает значение, указывающее, равен ли данный экземпляр указанному объекту. (Переопределяет Object.Equals(Object).)
+ Finalize()	Позволяет объекту попытаться освободить ресурсы и выполнить другие операции по очистке перед тем, как объект будет утилизирован сборщиком мусора. (Наследуется от Object.)
+ static	GetCustomAttribute(Assembly, Type)	Извлекает настраиваемый атрибут, примененный к заданной сборке.Параметры определяют сборку и тип настраиваемого атрибута для поиска.
+ static	GetCustomAttribute(Assembly, Type, Boolean)	Извлекает настраиваемый атрибут, примененный к сборке.Параметры определяют сборку, тип настраиваемого атрибута для поиска и игнорированный параметр поиска.
+ static	GetCustomAttribute(MemberInfo, Type)	Извлекает настраиваемый атрибут, примененный к члену типа.Параметры определяют член и тип настраиваемого атрибута для поиска.
+ static	GetCustomAttribute(MemberInfo, Type, Boolean)	Извлекает настраиваемый атрибут, примененный к члену типа.Параметры определяют член и тип настраиваемого атрибута для поиска и признак поиска родительского элемента члена.
+ static	GetCustomAttribute(Module, Type)	Извлекает настраиваемый атрибут, примененный к модулю.Параметры определяют модуль и тип настраиваемого атрибута для поиска.
+ static	GetCustomAttribute(Module, Type, Boolean)	Извлекает настраиваемый атрибут, примененный к модулю.Параметры определяют модуль, тип настраиваемого атрибута для поиска и игнорированный параметр поиска.
+ static	GetCustomAttribute(ParameterInfo, Type)	Извлекает настраиваемый атрибут, примененный к параметру метода.Параметры определяют параметр метода и тип настраиваемого атрибута для поиска.
+ static	GetCustomAttribute(ParameterInfo, Type, Boolean)	Извлекает настраиваемый атрибут, примененный к параметру метода.Параметры определяют параметр метода и тип настраиваемого атрибута для поиска и признак поиска родительского элемента параметра метода.
+ static	GetCustomAttributes(Assembly)	Извлекает массив настраиваемых атрибутов, примененных к сборке.Параметр задает имя сборки.
+ static	GetCustomAttributes(Assembly, Boolean)	Извлекает массив настраиваемых атрибутов, примененных к сборке.Параметры задают сборку и игнорируемый параметр поиска.
+ static	GetCustomAttributes(Assembly, Type)	Извлекает массив настраиваемых атрибутов, примененных к сборке.Параметры определяют сборку и тип настраиваемого атрибута для поиска.
+ static	GetCustomAttributes(Assembly, Type, Boolean)	Извлекает массив настраиваемых атрибутов, примененных к сборке.Параметры определяют сборку, тип настраиваемого атрибута для поиска и игнорированный параметр поиска.
+ static	GetCustomAttributes(MemberInfo)	Извлекает массив настраиваемых атрибутов, примененных к члену типа.Параметр задает имя этого члена.
+ static	GetCustomAttributes(MemberInfo, Boolean)	Извлекает массив настраиваемых атрибутов, примененных к члену типа.Параметры определяют член и тип настраиваемого атрибута для поиска и признак поиска родительского элемента члена.
+ static	GetCustomAttributes(MemberInfo, Type)	Извлекает массив настраиваемых атрибутов, примененных к члену типа.Параметры определяют член и тип настраиваемого атрибута для поиска.
+ static	GetCustomAttributes(MemberInfo, Type, Boolean)	Извлекает массив настраиваемых атрибутов, примененных к члену типа.Параметры определяют член и тип настраиваемого атрибута для поиска и признак поиска родительского элемента члена.
+ static	GetCustomAttributes(Module)	Извлекает массив настраиваемых атрибутов, примененных к модулю.Параметр задает имя этого модуля.
+ static	GetCustomAttributes(Module, Boolean)	Извлекает массив настраиваемых атрибутов, примененных к модулю.Параметры задают модуль и игнорируемый параметр поиска.
+ static	GetCustomAttributes(Module, Type)	Извлекает массив настраиваемых атрибутов, примененных к модулю.Параметры определяют модуль и тип настраиваемого атрибута для поиска.
+ static	GetCustomAttributes(Module, Type, Boolean)	Извлекает массив настраиваемых атрибутов, примененных к модулю.Параметры определяют модуль, тип настраиваемого атрибута для поиска и игнорированный параметр поиска.
+ static	GetCustomAttributes(ParameterInfo)	Извлекает массив настраиваемых атрибутов, примененных к параметру метода.В параметре задается параметр метода.
+ static	GetCustomAttributes(ParameterInfo, Boolean)	Извлекает массив настраиваемых атрибутов, примененных к параметру метода.Параметры определяют параметр метода и признак поиска родительского элемента параметра метода.
+ static	GetCustomAttributes(ParameterInfo, Type)	Извлекает массив настраиваемых атрибутов, примененных к параметру метода.Параметры определяют параметр метода и тип настраиваемого атрибута для поиска.
+ static	GetCustomAttributes(ParameterInfo, Type, Boolean)	Извлекает массив настраиваемых атрибутов, примененных к параметру метода.Параметры определяют параметр метода и тип настраиваемого атрибута для поиска и признак поиска родительского элемента параметра метода.
+ GetHashCode()	Возвращает хэш-код для текущего экземпляра. (Переопределяет Object.GetHashCode().)
+ GetType()	Возвращает объект класса Type для текущего экземпляра. (Наследуется от Object.)
+ IsDefaultAttribute()	При переопределении в производном классе показывает, является ли значение данного экземпляра значением по умолчанию для производного класса.
+ static	IsDefined(Assembly, Type)	Определяет, применены ли какие-либо настраиваемые атрибуты к сборке.Параметры определяют сборку и тип настраиваемого атрибута для поиска.
+ static	IsDefined(Assembly, Type, Boolean)	Определяет, применены ли какие-либо настраиваемые атрибуты к сборке.Параметры определяют сборку, тип настраиваемого атрибута для поиска и игнорированный параметр поиска.
+ static	IsDefined(MemberInfo, Type)	Определяет, применены ли какие-либо настраиваемые атрибуты к члену типа.Параметры определяют член и тип настраиваемого атрибута для поиска.
+ static	IsDefined(MemberInfo, Type, Boolean)	Определяет, применены ли какие-либо настраиваемые атрибуты к члену типа.Параметры определяют член и тип настраиваемого атрибута для поиска и признак поиска родительского элемента члена.
+ static	IsDefined(Module, Type)	Определяет применены ли какие-либо пользовательские атрибуты заданного типа к модулю.Параметры определяют модуль и тип настраиваемого атрибута для поиска.
+ static	IsDefined(Module, Type, Boolean)	Определяет, применены ли какие-либо настраиваемые атрибуты к модулю.Параметры определяют модуль, тип настраиваемого атрибута для поиска и игнорированный параметр поиска.
+ static	IsDefined(ParameterInfo, Type)	Определяет, применены ли какие-либо настраиваемые атрибуты к параметру метода.Параметры определяют параметр метода и тип настраиваемого атрибута для поиска.
+ static	IsDefined(ParameterInfo, Type, Boolean)	Определяет, применены ли какие-либо настраиваемые атрибуты к параметру метода.Параметры определяют параметр метода и тип настраиваемого атрибута для поиска и признак поиска родительского элемента параметра метода.
+ Match(Object)	При переопределении в производном классе возвращает значение, указывающее, является ли данный экземпляр равным заданному объекту.
+ MemberwiseClone()	Создает "поверхностную" копию текущего объекта. (Наследуется от Object.)
+ ToString()	Возвращает строковое представление текущего объекта.(Наследуется от Object.)
+
+Явные реализации интерфейса
+ _Attribute.GetIDsOfNames(Guid, IntPtr, UInt32, UInt32, IntPtr)	Сопоставляет набор имен соответствующему набору идентификаторов диспетчеризации.
+ _Attribute.GetTypeInfo(UInt32, UInt32, IntPtr)	Возвращает сведения о типе объекта, которые могут использоваться для получения сведений о типе интерфейса.
+ _Attribute.GetTypeInfoCount(UInt32)	Возвращает количество предоставляемых объектом интерфейсов для доступа к сведениям о типе (0 или 1).
+ _Attribute.Invoke(UInt32, Guid, UInt32, Int16, IntPtr, IntPtr, IntPtr, IntPtr)	Предоставляет доступ к открытым свойствам и методам объекта.
+
+Заметки
+Коллекция Attribute связывает предопределенную системную информацию или заданную пользователем информацию с целевым элементом.Целевым элементом может быть: сборка, класс, конструктор, делегат, перечисление, событие, поле, интерфейс, метод, переносимый исполняемый (PE) файл, модуль, параметр, свойство, возвращаемое значение, структура или другой атрибут.
+Информация, предоставляемая атрибутом, называется также метаданными.Метаданные можно анализировать в приложении во время выполнения, для того чтобы управлять тем, как это приложение осуществляет обработку данных, или до времени выполнения внешними средствами для управления обработкой и выполнением самого приложения.Например, на платформе .NET Framework предопределены и используются типы атрибутов для управления поведением времени выполнения, и некоторые языки программирования используют типы атрибутов для представления языковых функций, не поддерживаемых непосредственно общей системой типов .NET Framework.
+Все типы атрибутов прямо или косвенно наследуются от класса Attribute.Атрибуты могут быть применены к любому целевому элементу; несколько экземпляров атрибута могут быть применены к одному и тому же целевому элементу; атрибуты могут наследоваться элементом, являющимся производным от целевого элемента.Используйте класс AttributeTargets для задания целевого элемента, к которому применяется атрибут.
+Класс Attribute предоставляет удобные методы для извлечения и проверки настраиваемых атрибутов.Дополнительные сведения о работе с атрибутами см. в Применение атрибутов и в Extending Metadata Using Attributes.
+
+Примеры
+В следующем примере кода демонстрируется использование Attribute.
+
+using System;
+using System.Reflection;
+
+// An enumeration of animals. Start at 1 (0 = uninitialized).
+public enum Animal {
+    // Pets.
+    Dog = 1,
+    Cat,
+    Bird,
+}
+
+// A custom attribute to allow a target to have a pet.
+public class AnimalTypeAttribute : Attribute {
+    // The constructor is called when the attribute is set.
+    public AnimalTypeAttribute(Animal pet) {
+        thePet = pet;
+    }
+
+    // Keep a variable internally ...
+    protected Animal thePet;
+
+    // .. and show a copy to the outside world.
+    public Animal Pet {
+        get { return thePet; }
+        set { thePet = value; }
+    }
+}
+
+// A test class where each method has its own pet.
+class AnimalTypeTestClass {
+    [AnimalType(Animal.Dog)]
+    public void DogMethod() {}
+
+    [AnimalType(Animal.Cat)]
+    public void CatMethod() {}
+
+    [AnimalType(Animal.Bird)]
+    public void BirdMethod() {}
+}
+
+class DemoClass {
+    static void Main(string[] args) {
+        AnimalTypeTestClass testClass = new AnimalTypeTestClass();
+        Type type = testClass.GetType();
+        // Iterate through all the methods of the class.
+        foreach(MethodInfo mInfo in type.GetMethods()) {
+            // Iterate through all the Attributes for each method.
+            foreach (Attribute attr in
+                Attribute.GetCustomAttributes(mInfo)) {
+                // Check for the AnimalType attribute.
+                if (attr.GetType() == typeof(AnimalTypeAttribute))
+                    Console.WriteLine(
+                        "Method {0} has a pet {1} attribute.",
+                        mInfo.Name, ((AnimalTypeAttribute)attr).Pet);
+            }
+
+        }
+    }
+}
+/*
+ * Output:
+ * Method DogMethod has a pet Dog attribute.
+ * Method CatMethod has a pet Cat attribute.
+ * Method BirdMethod has a pet Bird attribute.
+ */

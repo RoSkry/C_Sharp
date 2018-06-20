@@ -1,0 +1,172 @@
+Environment - класс
+
+Предоставляет сведения о текущей среде и платформе, а также необходимые для управления ими средства. Этот класс не наследуется.
+
+Пространство имен:  System
+
+Свойства
+
+ CommandLine	Возвращает командную строку для данного процесса.
+ CurrentDirectory	Возвращает или задает полный путь к текущей рабочей папке.
+ CurrentManagedThreadId	Возвращает уникальный идентификатор текущего управляемого потока.
+ ExitCode	Возвращает или задает код выхода из процесса.
+ HasShutdownStarted	Возвращает значение, указывающее, выгружается ли текущий домен приложения или среда CLR завершает работу.
+ Is64BitOperatingSystem	Определяет, является ли текущая операционная система 64-разрядной.
+ Is64BitProcess	Определяет, является ли текущий процесс 64-разрядным.
+ MachineName	Возвращает имя NetBIOS данного локального компьютера.
+ NewLine	Возвращает строку, обозначающую в данной среде начало новой строки.
+ Получает объект OperatingSystem, который содержит идентификатор текущей платформы и номер версии.
+ ProcessorCount	Возвращает число процессоров на текущем компьютере.
+ StackTrace	Возвращает текущие сведения о трассировке стека.
+ SystemDirectory	Возвращает полный путь к системному каталогу.
+ SystemPageSize	Получает количество байтов на странице памяти операционной системы.
+ TickCount	Возвращает время, истекшее с момента загрузки системы (в миллисекундах).
+ UserDomainName	Возвращает имя сетевого домена, связанное с текущим пользователем.
+ UserInteractive	Возвращает значение, позволяющее определить, выполняется ли текущий процесс в режиме взаимодействия с пользователем.
+ UserName	Возвращает имя пользователя, который на данный момент выполнил вход в операционную систему Windows.
+ Version	Получает объект Version, который описывает основной и дополнительный номера, а также номер построения и редакции среды CLR.
+ WorkingSet	Возвращает объем физической памяти, сопоставленной контексту процесса.
+
+Методы
+
+ Exit	Завершает этот процесс и возвращает внутренней операционной системе указанный код выхода.
+ ExpandEnvironmentVariables	Замещает имя каждой переменной среды, внедренной в указанную строку, строчным эквивалентом значения переменной, а затем возвращает результирующую строку.
+ FailFast(String)	Завершает процесс сразу после записи сообщения в журнал событий приложений Windows, после чего включает сообщение в отчет об ошибках, отправляемый в корпорацию Майкрософт.
+ FailFast(String, Exception)	Завершает процесс сразу после записи сообщения в журнал событий приложений Windows, после чего включает сообщение и сведения об исключении в отчет об ошибках, отправляемый в корпорацию Майкрософт.
+ GetCommandLineArgs	Возвращает строковый массив, содержащий аргументы командной строки для текущего процесса.
+ GetEnvironmentVariable(String)	Возвращает из текущего процесса значение переменной среды.
+ GetEnvironmentVariable(String, EnvironmentVariableTarget)	Возвращает из текущего процесса или раздела реестра операционной системы Windows значение переменной среды для текущего пользователя или локального компьютера.
+ GetEnvironmentVariables()	Возвращает из текущего процесса имена всех переменных среды и их значения.
+ GetEnvironmentVariables(EnvironmentVariableTarget)	Возвращает из текущего процесса или раздела реестра операционной системы Windows имена и значения всех переменных среды для текущего пользователя или локального компьютера.
+ GetFolderPath(Environment.SpecialFolder)	Получает путь к особой системной папке, указанной в заданном перечислении.
+ GetFolderPath(Environment.SpecialFolder, Environment.SpecialFolderOption)	Получает путь к особой системной папке, указанной в заданном перечислении, и использует заданный параметр для доступа к особым папкам.
+ GetLogicalDrives	Возвращает массив строк, содержащий имена логических дисков текущего компьютера.
+ SetEnvironmentVariable(String, String)	Создает, изменяет или удаляет переменную среды, хранящуюся в текущем процессе.
+ SetEnvironmentVariable(String, String, EnvironmentVariableTarget)	Создает, изменяет или удаляет переменную среды, хранящуюся в текущем процессе или разделе реестра операционной системы Windows, зарезервированном для текущего пользователя или локального компьютера.
+
+Заметки
+
+Класс Environment используется для получения сведений об аргументах командной строки, коде выхода, значениях переменных среды, содержании стека вызова, времени, прошедшего с момента последней загрузки, и версии среды CLR.
+
+Примеры
+
+В следующем примере демонстрируется отображение списка сведений о текущей среде.
+
+// Sample for Environment class summary
+using System;
+using System.Collections;
+
+class Sample 
+{
+    public static void Main() 
+    {
+    String str;
+    String nl = Environment.NewLine;
+//
+    Console.WriteLine();
+    Console.WriteLine("-- Environment members --");
+
+//  Invoke this sample with an arbitrary set of command line arguments.
+    Console.WriteLine("CommandLine: {0}", Environment.CommandLine);
+
+    String[] arguments = Environment.GetCommandLineArgs();
+    Console.WriteLine("GetCommandLineArgs: {0}", String.Join(", ", arguments));
+
+//  <-- Keep this information secure! -->
+    Console.WriteLine("CurrentDirectory: {0}", Environment.CurrentDirectory);
+
+    Console.WriteLine("ExitCode: {0}", Environment.ExitCode);
+
+    Console.WriteLine("HasShutdownStarted: {0}", Environment.HasShutdownStarted);
+
+//  <-- Keep this information secure! -->
+    Console.WriteLine("MachineName: {0}", Environment.MachineName);
+
+    Console.WriteLine("NewLine: {0}  first line{0}  second line{0}  third line",
+                          Environment.NewLine);
+
+    Console.WriteLine("OSVersion: {0}", Environment.OSVersion.ToString());
+
+    Console.WriteLine("StackTrace: '{0}'", Environment.StackTrace);
+
+//  <-- Keep this information secure! -->
+    Console.WriteLine("SystemDirectory: {0}", Environment.SystemDirectory);
+
+    Console.WriteLine("TickCount: {0}", Environment.TickCount);
+
+//  <-- Keep this information secure! -->
+    Console.WriteLine("UserDomainName: {0}", Environment.UserDomainName);
+
+    Console.WriteLine("UserInteractive: {0}", Environment.UserInteractive);
+
+//  <-- Keep this information secure! -->
+    Console.WriteLine("UserName: {0}", Environment.UserName);
+
+    Console.WriteLine("Version: {0}", Environment.Version.ToString());
+
+    Console.WriteLine("WorkingSet: {0}", Environment.WorkingSet);
+
+//  No example for Exit(exitCode) because doing so would terminate this example.
+
+//  <-- Keep this information secure! -->
+    String query = "My system drive is %SystemDrive% and my system root is %SystemRoot%";
+    str = Environment.ExpandEnvironmentVariables(query);
+    Console.WriteLine("ExpandEnvironmentVariables: {0}  {1}", nl, str);
+
+    Console.WriteLine("GetEnvironmentVariable: {0}  My temporary directory is {1}.", nl,
+                           Environment.GetEnvironmentVariable("TEMP"));
+
+    Console.WriteLine("GetEnvironmentVariables: ");
+    IDictionary	environmentVariables = Environment.GetEnvironmentVariables();
+    foreach (DictionaryEntry de in environmentVariables)
+        {
+        Console.WriteLine("  {0} = {1}", de.Key, de.Value);
+        }
+
+    Console.WriteLine("GetFolderPath: {0}", 
+                 Environment.GetFolderPath(Environment.SpecialFolder.System));
+
+    String[] drives = Environment.GetLogicalDrives();
+    Console.WriteLine("GetLogicalDrives: {0}", String.Join(", ", drives));
+    }
+}
+/*
+This example produces results similar to the following:
+(Any result that is lengthy or reveals information that should remain 
+secure has been omitted and marked "!---OMITTED---!".)
+
+C:\>env0 ARBITRARY TEXT
+
+-- Environment members --
+CommandLine: env0 ARBITRARY TEXT
+GetCommandLineArgs: env0, ARBITRARY, TEXT
+CurrentDirectory: C:\Documents and Settings\!---OMITTED---!
+ExitCode: 0
+HasShutdownStarted: False
+MachineName: !---OMITTED---!
+NewLine:
+  first line
+  second line
+  third line
+OSVersion: Microsoft Windows NT 5.1.2600.0
+StackTrace: '   at System.Environment.GetStackTrace(Exception e)
+   at System.Environment.GetStackTrace(Exception e)
+   at System.Environment.get_StackTrace()
+   at Sample.Main()'
+SystemDirectory: C:\WINNT\System32
+TickCount: 17995355
+UserDomainName: !---OMITTED---!
+UserInteractive: True
+UserName: !---OMITTED---!
+Version: !---OMITTED---!
+WorkingSet: 5038080
+ExpandEnvironmentVariables:
+  My system drive is C: and my system root is C:\WINNT
+GetEnvironmentVariable:
+  My temporary directory is C:\DOCUME~1\!---OMITTED---!\LOCALS~1\Temp.
+GetEnvironmentVariables: 
+  !---OMITTED---!
+GetFolderPath: C:\WINNT\System32
+GetLogicalDrives: A:\, C:\, D:\
+
+*/

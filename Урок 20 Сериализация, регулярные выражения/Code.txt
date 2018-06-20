@@ -1,0 +1,545 @@
+
+1. Написать программу “Выборы”. 
+2. В выборах участвует 4 кандидатов, всего население составляет 200000 человек (всё население страны)
+3. При генерировании события “начало выборов”   жители страны “голосуют”. Каждый человек либо голосует за одного из кандидатов, либо голосует против всех, либо не голосует.
+4. Выбор одного из перечисленных вариантов осуществляется случайным образом.
+5. В случае если в выборах приняло участие менее 85 % населения, выборы считаются несостоявшимися и происходит второй тур. Максимально – 3 тура. То же самое, если количество голосов за кандидатов одинаково (нельзя выделить явного лидера)
+6. Программа должна каждый раз печатать результаты голосования (количество голосов за каждого).
+7. Программа выводит имя победителя и поздравления от кандидата.
+
+---------------------------------------------------------------------------
+
+Разработать класс, который будет хранить сведения о старухе из сказки «Золотая рыбка». В классе предусмотреть поля: 
+	- имя
+	- возраст
+	- имущество
+и методы:
+	- выполнение желания: в метод передается название имущества, которое старуха хочет получить. 
+		В методе старухе передается запрошенное имущество и выполняется сериализация класса в новый файл с использованием бинарного форматера.
+		Имя файла формируется по номеру желания. 
+	- просмотр имущества после выполнения желания с заданным номером: по номеру желания определяется имя файла и выполняется десериализация.
+
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Json;
+
+namespace ConsoleApplication1
+{
+    [DataContract]
+    public class Person
+    {
+        [DataMember]
+        public string Name { get; set; }
+        [DataMember]
+        public int Age { get; set; }
+
+        public override string ToString()
+        {
+            return $"Имя: {Name} Возраст: {Age}";
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // объект для сериализации
+            List<Person> people = new List<Person>
+            {
+                new Person { Name = "Tom", Age = 29 },
+                new Person { Name = "Bill", Age = 25 }
+            };
+
+            DataContractJsonSerializer jsonFormatter = new DataContractJsonSerializer(typeof(List<Person>));
+
+            using (FileStream fs = new FileStream("people.json", FileMode.OpenOrCreate))
+            {
+                jsonFormatter.WriteObject(fs, people);
+            }
+
+            using (FileStream fs = new FileStream("people.json", FileMode.OpenOrCreate))
+            {
+                List<Person> newPeople = (List<Person>)jsonFormatter.ReadObject(fs);
+
+                foreach (Person p in newPeople)
+                {
+                    Console.WriteLine(p);
+                }
+            }
+
+            Console.ReadLine();
+        }
+    }
+}
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Xml.Serialization;
+using static System.Console;
+
+namespace SimpleProject
+{
+    public class Person
+    {
+        public string Name { get; set; }
+        public int Age { get; set; }
+
+        int _identNumber;
+
+        [NonSerialized]
+        const string Planet = "Earth";
+
+        public Person() { }
+
+        public Person(int number)
+        {
+            _identNumber = number;
+        }
+
+        public override string ToString()
+        {
+            return $"Name: {Name}, Age: {Age}, Identification number: { _identNumber}, Planet: {Planet}.";
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            List<Person> persons = new List<Person>()
+            {
+                new Person(346875) { Name = "Jack", Age = 34 },
+                new Person(975648) { Name = "Bob", Age = 37 },
+                new Person(870312) { Name = "John", Age = 23 }
+            };
+
+            XmlSerializer xmlFormat = new XmlSerializer(typeof(List<Person>));
+            try
+            {
+                using (Stream fStream = File.Create("test.xml"))
+                {
+                    xmlFormat.Serialize(fStream, persons);
+                }
+                WriteLine("XmlSerialize OK!\n");
+
+                List<Person> list = null;
+                using (Stream fStream = File.OpenRead("test.xml"))
+                {
+                    list = (List<Person>)xmlFormat.Deserialize(fStream);
+                }
+                foreach (Person item in list)
+                {
+                    WriteLine(item);
+                }
+            }
+            catch (Exception ex)
+            {
+                WriteLine(ex);
+            }
+        }
+    }
+}
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Атрибуты сериализации Xml:
+ - [XmlAttribute] – сериализуется как атрибут
+ - [XmlElement] – сериализуется как элемент
+ - [XmlIgnore] – не сериализутеся 
+ - [XmlEnum] – сериализуется как значение перечисления
+ - [XmlRoot] – сериализуется как корневой элемент документа
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+В отличии от двух предыдущих форматов сериализации, при XML сериализации наличие атрибута [Serializable] у класса необязательно.
+
+Также при XML форматировании класса необходимо учитывать несколько особенностей:
+ - этот класс должен иметь модификатор доступа public;
+ - у этого класса должен быть конструктор не принимающий параметров;
+ - при XML сериализации учитываюся только открытые свойства класса, закрытые и защищенные поля просто игнорируются.
+
+Еще одна особенность XML сериализации заключается в том, что при создании объекта класса XmlSerializer, необходимо указывать тип сериализируемого объекта.
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+using System;
+using System.IO;
+using System.Xml.Serialization;
+using static System.Console;
+
+namespace SimpleProject
+{
+    public class Person
+    {
+        public string Name { get; set; }
+        public int Age { get; set; }
+
+        int _identNumber;
+
+        [NonSerialized]
+        const string Planet = "Earth";
+
+        public Person() { }
+
+        public Person(int number)
+        {
+            _identNumber = number;
+        }
+
+        public override string ToString()
+        {
+            return $"Name: {Name}, Age: {Age}, Identification number: { _identNumber}, Planet: {Planet}.";
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Person person = new Person(346875) { Name = "Jack", Age = 34 };
+
+            XmlSerializer xmlFormat = new XmlSerializer(typeof(Person));
+            try
+            {
+                using (Stream fStream = File.Create("test.xml"))
+                {
+                    xmlFormat.Serialize(fStream, person);
+                }
+                WriteLine("XmlSerialize OK!\n");
+
+                Person p = null;
+                using (Stream fStream = File.OpenRead("test.xml"))
+                {
+                    p = (Person)xmlFormat.Deserialize(fStream);
+                }
+                WriteLine(p);
+            }
+            catch (Exception ex)
+            {
+                WriteLine(ex);
+            }
+        }
+    }
+}
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+using System;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Soap;
+using static System.Console;
+
+namespace SimpleProject
+{
+    [Serializable]
+    public class Person
+    {
+        public string Name { get; set; }
+        public int Age { get; set; }
+
+        int _identNumber;
+
+        [NonSerialized]
+        const string Planet = "Earth";
+
+        public Person(int number)
+        {
+            _identNumber = number;
+        }
+
+        public override string ToString()
+        {
+            return $"Name: {Name}, Age: {Age}, Identification number: { _identNumber}, Planet: {Planet}.";
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Person person = new Person(346875) { Name = "Jack", Age = 34 };
+
+            SoapFormatter soapFormat = new SoapFormatter();
+            try
+            {
+                using (Stream fStream = File.Create("test.soap"))
+                {
+                    soapFormat.Serialize(fStream, person);
+                }
+                WriteLine("SoapSerialize OK!\n");
+
+                Person p = null;
+                using (Stream fStream = File.OpenRead("test.soap"))
+                {
+                    p = (Person)soapFormat.Deserialize(fStream);
+                }
+                WriteLine(p);
+            }
+            catch (Exception ex)
+            {
+                WriteLine(ex);
+            }
+        }
+    }
+}
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+using System;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using static System.Console;
+
+namespace SimpleProject
+{
+    [Serializable]
+    public class Person
+    {
+        public string Name { get; set; }
+        public int Age { get; set; }
+
+        int _identNumber;
+
+        [NonSerialized]
+        const string Planet = "Earth";
+
+        public Person(int number)
+        {
+            _identNumber = number;
+        }
+
+        public override string ToString()
+        {
+            return $"Name: {Name}, Age: {Age}, Identification number: { _identNumber}, Planet: {Planet}.";
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Person person = new Person(346875) { Name = "Jack", Age = 34 };
+            BinaryFormatter binFormat = new BinaryFormatter();
+            try
+            {
+                using (Stream fStream = File.Create("test.bin"))
+                {
+                    binFormat.Serialize(fStream, person);
+                }
+                WriteLine("BinarySerialize OK!\n");
+
+                Person p = null;
+                using (Stream fStream = File.OpenRead("test.bin"))
+                {
+                    p = (Person)binFormat.Deserialize(fStream);
+                }
+                WriteLine(p);
+            }
+            catch (Exception ex)
+            {
+                WriteLine(ex);
+            }
+        }
+    }
+}
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+// По умолчанию AllowMultiple = false.
+public class MyAttribute : Attribute
+{
+}
+
+[AttributeUsage(AllowMultiple = true)]
+public class YourAttribute : Attribute
+{
+}
+
+----------------------------------------
+
+public class MyClass
+{
+  // Ошибка -  дублирование не разрешено.
+  [MyAttribute, MyAttribute]
+  public void MyMethod()
+  {
+    //...
+  }
+
+  // Это допустимо.
+  [YourAttribute, YourAttribute]
+  public void YourMethod()
+  {
+    //...
+  }
+}
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+/ По умолчанию Inherited = true.
+public class MyAttribute : Attribute
+{
+}
+
+// Явно задается false.
+[AttributeUsage(Inherited = false)]
+public class YourAttribute : Attribute
+{
+}
+
+------------------------------------
+
+public class MyClass
+{
+  // В C# несколько атрибутов могут определяться в разных блоках,
+  // ограниченных скобками или в одном блоке – через запятую.
+  // Порядок следования атрибутов неважен.
+
+  [MyAttribute][YourAttribute]
+  public void MyMethod() {
+    //...
+  }
+}
+
+---------------------------------------
+
+public class YourClass : MyClass
+{
+  // Этот метод имеет только атрибут MyAttribute.
+  public void MyMethod()
+  {
+    //...
+
+  }
+}
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Допустимые цели атрибутов:
+All - применяется к любому из элементов: сборка, класс, элемент класса, делегат, перечисление, событие, поле, интерфейс, метод, модуль, параметр, свойство, возвращаемое значение, структура.
+Assembly - сборка в целом
+Class - к объектам класса
+Constructor -  к конкретному конструктору
+Delegate - к делегированному методу
+Enum - к перечислению
+Event - к событию
+Field - к полю
+Interface - к интерфейсу
+Method - к методу
+Module - к отдельному модулю
+Parameter - к параметру метода
+Property - к свойству
+ReturnValue - к возвращаемому значению
+Struct  - к структуре
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+using System;
+using System.Reflection;
+using static System.Console;
+
+namespace SimpleProject
+{
+    [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class)]
+    public class CoderAttribute : Attribute
+    {
+        string _name = "Yuriy";
+        DateTime _date = DateTime.Now;
+
+        public CoderAttribute() { }
+
+        public CoderAttribute(string name, string date)
+        {
+            try
+            {
+                _name = name;
+                _date = Convert.ToDateTime(date);
+            }
+            catch (Exception ex)
+            {
+                WriteLine(ex.Message);
+            }
+        }
+        public override string ToString()
+        {
+            return $"Coder: {_name}, Date: {_date}";
+        }
+    }
+
+    [Coder]
+    class Employee
+    {
+        public int Id { get; set; }
+
+        public string Name { get; set; }
+
+        public double Salary { get; set; }
+
+        [Coder("John", "2017-3-29")]
+        public void IncreaseWages(double wage)
+        {
+            Salary += wage;
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            WriteLine("\tAttributes of class Employee:");
+
+            foreach (var attr in typeof(Employee).GetCustomAttributes())
+            {
+                WriteLine(attr);
+            }
+
+            WriteLine("\n\tAttributes of members of class Employee:");
+
+            foreach (MemberInfo info in typeof(Employee).GetMembers())
+            {
+                foreach (var attr in info.GetCustomAttributes(true))
+                {
+                    WriteLine(attr);
+                }
+            }
+        }
+    }
+}
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+using System.Text.RegularExpressions;
+using static System.Console;
+
+namespace SimpleProject
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string emailPattern = @"^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$";
+
+            Write("Enter e-mail: ");
+            string email = ReadLine();
+            Regex regex = new Regex(emailPattern);
+            WriteLine(regex.IsMatch(email) ? "E-mail confirmed." : "Incorrect e-mail!");
+
+            string phonePattern = @"^\+\d{ 2}\(\d{ 3}\)\d{ 3}-\d{ 2}-\d{ 2}$";
+            Write("Enter phone: ");
+            string phone = ReadLine();
+            regex = new Regex(phonePattern);
+            WriteLine(regex.IsMatch(email) ? "Data received." : "Data is not correct!");
+
+            WriteLine("\nReplacement of words matching a pattern.");
+            string text = "I like Java. Java forever.";
+            string textPattern = "Java";
+
+            WriteLine(text);
+            WriteLine(Regex.Replace(text, textPattern, "C#"));
+        }
+    }
+}

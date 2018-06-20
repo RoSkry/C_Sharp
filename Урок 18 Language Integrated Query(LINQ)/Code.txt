@@ -1,0 +1,620 @@
+
+using System;
+using static System.Console;
+
+namespace SimpleProject
+{
+    public delegate double AnonimDelegateDouble(double x, double y);
+
+    public delegate void AnonimDelegateInt(int n);
+
+    public delegate void AnonimDelegateVoid();
+
+    class Dispacher
+    {
+        public event AnonimDelegateDouble eventDouble;
+
+        public event AnonimDelegateInt eventVoid;
+
+        public double OnEventDouble(double x, double y)
+        {
+            if (eventDouble != null)
+            {
+                return eventDouble(x, y);
+            }
+            throw new NullReferenceException();
+        }
+
+        public void OnEventVoid(int n = 0)
+        {
+            if (eventVoid != null)
+            {
+                eventVoid(n);
+            }
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            WriteLine("\tПрименение с событиями");
+
+            Dispacher dispacher = new Dispacher();
+
+            // анонимный метод
+            dispacher.eventDouble += delegate (double a, double b)
+            {
+                if (b != 0)
+                {
+                    return a / b;
+                }
+                throw new DivideByZeroException();
+            };
+
+            double n1 = 5.7, n2 = 3.2;
+
+            WriteLine($"{n1} / {n2} = {dispacher.OnEventDouble(n1, n2)}"); // вызов
+
+            WriteLine("   Использование локальной переменной");
+
+            int number = 5;
+
+            dispacher.eventVoid += delegate (int n) // анонимный метод
+            {
+                WriteLine($"{number} + {n} = { number + n}");
+            };
+
+            dispacher.OnEventVoid(); // вызов
+            dispacher.OnEventVoid(6);
+
+            WriteLine("\tПрименение с делегатом");
+
+            AnonimDelegateVoid voidDel = new AnonimDelegateVoid(delegate { WriteLine("Ok!"); });
+
+            voidDel += delegate { WriteLine("Bye!"); }; // анонимный метод
+
+            voidDel(); // вызов
+        }
+    }
+}
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+using System;
+using static System.Console;
+
+namespace SimpleProject
+{
+    public delegate double AnonimDelegateDouble(double x, double y);
+
+    public delegate int AnonimDelegateInt(int n);
+
+    public delegate void AnonimDelegateVoid();
+
+    class Dispacher
+    {
+        public event AnonimDelegateDouble eventDouble;
+        public event AnonimDelegateInt eventInt;
+
+        public double OnEventDouble(double x, double y)
+        {
+            if (eventDouble != null)
+            {
+                return eventDouble(x, y);
+            }
+            throw new NullReferenceException();
+        }
+
+        public int OnEventInt(int n = 0)
+        {
+            if (eventInt != null)
+            {
+                return eventInt(n);
+            }
+            throw new NullReferenceException();
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            WriteLine("\tБлочное лямбда выражение");
+
+            Dispacher dispacher = new Dispacher();
+
+            // явная типизация
+            dispacher.eventDouble += (double a, double b) =>
+            {
+                if (b != 0)
+                {
+                    return a / b;
+                }
+                throw new DivideByZeroException();
+            };
+
+            double n1 = 5.7, n2 = 3.2;
+
+            WriteLine($"{n1} / {n2} = {dispacher.OnEventDouble(n1, n2)}"); // вызов
+
+            WriteLine("\tОдиночное лямбда выражение");
+
+            int number1 = 5, number2 = 6;
+
+            dispacher.eventInt += n => number1 + n; // неявная типизация
+
+            WriteLine($"{number1} + {number2} = {dispacher.OnEventInt(number2)}"); // вызов
+
+            WriteLine("\tПрименение с делегатом");
+
+            AnonimDelegateVoid voidDel = new AnonimDelegateVoid(() => { WriteLine("Ok!"); });
+
+            voidDel += () => { WriteLine("Bye!"); };
+
+            voidDel(); // вызов
+        }
+    }
+}
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+using System;
+using System.Collections.Generic;
+using static System.Console;
+
+namespace SimpleProject
+{
+    class Student
+    {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public DateTime BirthDate { get; set; }
+        public override string ToString()
+        {
+            return $"Фамилия: {LastName}, Имя: {FirstName}, Родился: {BirthDate.ToLongDateString()}";
+        }
+    }
+
+    class Program
+    {
+        static int SortBirthDate(Student student1, Student student2)
+        {
+            return student1.BirthDate.CompareTo(student2.BirthDate);
+        }
+
+        static void Main(string[] args)
+        {
+            List<Student> group = new List<Student> {
+                new Student {
+                    FirstName = "John",
+                    LastName = "Miller",
+                    BirthDate = new DateTime(1997,3,12)
+                },
+                new Student {
+                    FirstName = "Candice",
+                    LastName = "Leman",
+                    BirthDate = new DateTime(1998,7,22)
+                },
+                new Student {
+                    FirstName = "Joey",
+                    LastName = "Finch",
+                    BirthDate = new DateTime(1996,11,30)
+                },
+                new Student {
+                    FirstName = "Nicole",
+                    LastName = "Taylor",
+                    BirthDate = new DateTime(1996,5,10)
+                }
+            };
+            WriteLine("Сортировка по дате рождения:");
+
+            group.Sort(SortBirthDate);
+
+            foreach (Student item in group)
+            {
+                WriteLine(item);
+            }
+        }
+    }
+}
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+using System;
+using System.Collections.Generic;
+using static System.Console;
+
+namespace SimpleProject
+{
+    class Student
+    {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public DateTime BirthDate { get; set; }
+        public override string ToString()
+        {
+            return $"Фамилия: {LastName}, Имя: {FirstName}, Родился: {BirthDate.ToLongDateString()}";
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            List<Student> group = new List<Student> {
+                new Student {
+                    FirstName = "John",
+                    LastName = "Miller",
+                    BirthDate = new DateTime(1997,3,12)
+                },
+                new Student {
+                    FirstName = "Candice",
+                    LastName = "Leman",
+                    BirthDate = new DateTime(1998,7,22)
+                },
+                new Student {
+                    FirstName = "Joey",
+                    LastName = "Finch",
+                    BirthDate = new DateTime(1996,11,30)
+                },
+                new Student {
+                    FirstName = "Nicole",
+                    LastName = "Taylor",
+                    BirthDate = new DateTime(1996,5,10)
+                }
+            };
+            WriteLine("Рожденные весной:");
+
+            List<Student> students = group.FindAll(s => s.BirthDate.Month >= 3 && s.BirthDate.Month <= 5);
+
+            foreach (Student item in students)
+            {
+                WriteLine(item);
+            }
+        }
+    }
+}
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+using static System.Console;
+
+namespace SimpleProject
+{
+    static class ExampleExtensions
+    {
+        public static int NumberWords(this string data)
+        {
+            if (string.IsNullOrEmpty(data))
+            {
+                return 0;
+            }
+
+            data = System.Text.RegularExpressions.Regex.Replace(data.Trim(), @"\s+", " ");
+
+            return data.Split(' ').Length;
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            WriteLine("Введите строку:");
+
+            string str = ReadLine();
+
+            WriteLine($"Количество слов в строке: {str.NumberWords()}");
+        }
+    }
+}
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+string[] poem = { "В этой сказке", "Нет порядка:", "Что ни слово -", "То загадка!" };
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+using System.Collections.Generic;
+using System.Linq;
+using static System.Console;
+
+namespace SimpleProject
+{
+    class Student
+    {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public int GroupId { get; set; }
+    }
+
+    class Group
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            List<Group> groups = new List<Group> { new Group { Id = 1, Name = "27PPS11" }, new Group { Id = 2, Name = "27PPS12" } };
+            List<Student> students = new List<Student> {
+                new Student { FirstName = "John", LastName = "Miller", GroupId = 2 },
+                new Student { FirstName = "Candice", LastName = "Leman", GroupId = 1 },
+                new Student { FirstName = "Joey", LastName = "Finch", GroupId = 1 },
+                new Student { FirstName = "Nicole", LastName = "Taylor", GroupId = 2 }
+            };
+
+            IEnumerable<Student> query = from g in groups
+                                         join st in students on g.Id equals st.GroupId into res
+                                         from r in res
+                                         select r;
+
+            WriteLine("\tСтуденты по группам:");
+
+            foreach (Student item in query)
+            {
+                WriteLine($"Фамилия: { item.LastName}, Имя: { item.FirstName}, Группа: {groups.First(g => g.Id == item.GroupId).Name}");
+            }
+        }
+    }
+}
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+var worker = new { FirstName = "John", LastName = "Doe", Salary = 7456.32 };
+            WriteLine($"Строка: {worker}");
+            WriteLine($"Тип: {worker.GetType()}");
+            WriteLine($"Хеш-код: {worker.GetHashCode()}");
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+using System.Collections.Generic;
+using System.Linq;
+using static System.Console;
+
+namespace SimpleProject
+{
+    class Student
+    {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public int GroupId { get; set; }
+    }
+
+    class Group
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            List<Group> groups = new List<Group> { new Group { Id = 1, Name = "27PPS11" }, new Group { Id = 2, Name = "27PPS12" } };
+            List<Student> students = new List<Student> {
+                new Student { FirstName = "John", LastName = "Miller", GroupId = 2 },
+                new Student { FirstName = "Candice", LastName = "Leman", GroupId = 1 },
+                new Student { FirstName = "Joey", LastName = "Finch", GroupId = 3 },
+                new Student { FirstName = "Nicole", LastName = "Taylor", GroupId = 2 }
+            };
+
+            var query = from g in groups
+                        join st in students on g.Id equals st.GroupId
+                        select new { FirstName = st.FirstName, LastName = st.LastName, GroupName = g.Name };
+
+            WriteLine("\tСтуденты по группам:");
+
+            foreach (var item in query)
+            {
+                WriteLine(item);
+            }
+        }
+    }
+}
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using static System.Console;
+
+namespace SimpleProject
+{
+    class Student
+    {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public DateTime BirthDate { get; set; }
+        public override string ToString()
+        {
+            return $"Фамилия: {LastName}, Имя: {FirstName}, Родился: {BirthDate.ToLongDateString()}";
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            const double daysOfYear = 365.25;
+
+            List<Student> students = new List<Student> {
+                new Student {
+                    FirstName = "John",
+                    LastName = "Miller",
+                    BirthDate = new DateTime(1997,3,12)
+                },
+                new Student {
+                    FirstName = "Candice",
+                    LastName = "Leman",
+                    BirthDate = new DateTime(1998,7,22)
+                },
+                new Student {
+                    FirstName = "Joey",
+                    LastName = "Finch",
+                    BirthDate = new DateTime(1996,11,30)
+                },
+                new Student {
+                    FirstName = "Nicole",
+                    LastName = "Taylor",
+                    BirthDate = new DateTime(1996,1,10)
+                }
+            };
+
+            WriteLine($"\tТекущая дата: {DateTime.Now.ToLongDateString()}\n");
+            
+            var query = from s in students
+                         where (DateTime.Now - s.BirthDate).Days / daysOfYear > 20
+                         select s;
+
+            WriteLine("\tСтуденты старше 20 лет:");
+
+            foreach (var item in query)
+            {
+                WriteLine(item);
+            }
+        }
+    }
+}
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using static System.Console;
+
+namespace SimpleProject
+{
+    class Student
+    {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public DateTime BirthDate { get; set; }
+        public override string ToString()
+        {
+            return $"Фамилия: {LastName}, Имя: {FirstName}, Родился: {BirthDate.ToLongDateString()}";
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            const double daysOfYear = 365.25;
+
+
+            List<Student> students = new List<Student> {
+                new Student {
+                    FirstName = "John",
+                    LastName = "Miller",
+                    BirthDate = new DateTime(1997,3,12)
+                },
+                new Student {
+                    FirstName = "Candice",
+                    LastName = "Leman",
+                    BirthDate = new DateTime(1998,7,22)
+                },
+                new Student {
+                    FirstName = "Joey",
+                    LastName = "Finch",
+                    BirthDate = new DateTime(1996,11,30)
+                },
+                new Student {
+                    FirstName = "Nicole",
+                    LastName = "Taylor",
+                    BirthDate = new DateTime(1996,1,10)
+                }
+            };
+
+            WriteLine($"\tТекущая дата: {DateTime.Now.ToLongDateString()}\n");
+
+            var query = students.Where(s => (DateTime.Now - s.BirthDate).Days / daysOfYear > 20).Select(s => s);
+
+            WriteLine("\tСтуденты старше 20 лет:");
+
+            foreach (var item in query)
+            {
+                WriteLine(item);
+            }
+        }
+    }
+}
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using static System.Console;
+
+namespace SimpleProject
+{
+    class Student
+    {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public DateTime BirthDate { get; set; }
+        public override string ToString()
+        {
+            return $"Фамилия: {LastName}, Имя: {FirstName}, Родился: {BirthDate.ToLongDateString()}";
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            const double daysOfYear = 365.25;
+
+
+            List<Student> students = new List<Student> {
+                new Student {
+                    FirstName = "John",
+                    LastName = "Miller",
+                    BirthDate = new DateTime(1997,3,12)
+                },
+                new Student {
+                    FirstName = "Candice",
+                    LastName = "Leman",
+                    BirthDate = new DateTime(1998,7,22)
+                },
+                new Student {
+                    FirstName = "Joey",
+                    LastName = "Finch",
+                    BirthDate = new DateTime(1996,11,30)
+                },
+                new Student {
+                    FirstName = "Nicole",
+                    LastName = "Taylor",
+                    BirthDate = new DateTime(1996,1,10)
+                }
+            };
+
+            WriteLine($"\tТекущая дата: {DateTime.Now.ToLongDateString()}\n");
+
+            WriteLine($"\tСамый молодой студент:");
+            var student = from s in students
+                          where s.BirthDate == (from b in students select b.BirthDate).Max()
+                          select s;
+
+            foreach (var item in student)
+            {
+                WriteLine(item);
+            }
+
+            var minAge = (from s in students
+                          select s).Min(s => (DateTime.Now - s.BirthDate).Days / daysOfYear);
+
+            WriteLine($"Возраст: {(int)minAge}");
+        }
+    }
+}

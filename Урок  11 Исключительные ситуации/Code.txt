@@ -1,0 +1,152 @@
+[Serializable]
+public class MyException : Exception
+{
+    public DateTime TimeException { get; private set; }
+    public MyException() : this("Мое исключение")
+    { TimeException = DateTime.Now; }
+    public MyException(string message) : base(message) { }
+    public MyException(string message, Exception inner)
+                                       : base(message, inner) { }
+    protected MyException(System.Runtime.Serialization.SerializationInfo info,
+                        System.Runtime.Serialization.StreamingContext context)
+                                       : base(info, context) { }
+}
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+try                 // внешний блок
+{
+    // точка A
+    try             // внутренний блок
+    {
+        // точка B
+    }
+    catch
+    {
+        // точка C
+    }
+    finally
+    {
+        // очистка
+    }
+    // точка D
+}
+catch
+{
+    // обработка ошибок
+}
+finally
+{
+    // очистка
+}
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+using System;
+using static System.Console;
+
+namespace SimpleProject
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int[] a = new int[5];
+            int n = 0;
+            try // внешний блок try
+            {
+                for (int i = -3; i <= 3; i++)
+                {
+                    //при делении на 0 не происходит выход из цикла:
+                    // исключение перехватывается и
+                    // обрабатывается внутренним блоком try
+                    try // внутренний блок try
+                    {
+                        a[n] = 100 / i;
+                        WriteLine(a[n]);
+                        n++;
+                    }
+                    catch (DivideByZeroException e)
+                    {
+                        WriteLine("Внутренний catch");
+                        WriteLine(e.Message);
+                    }
+                }
+            }
+            catch (IndexOutOfRangeException e)
+            {
+                WriteLine("Внешний catch");
+                WriteLine(e.Message);
+            }
+        }
+    }
+}
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+    public class A
+    {
+        private int num;
+
+        public A(int num)
+        {
+            this.num = num;
+        }
+        public void MethodA()
+        {
+            Console.WriteLine("Entering MethodA");
+            try
+            {
+                this.MethodB();
+                Console.WriteLine("Class A");
+            }
+            catch(Exception e)
+            {
+                throw new Exception(e.Message);
+                // throw; передача исходного объекта исключения
+                Console.WriteLine("Exception MethodA");
+            }
+            Console.WriteLine("Leaving MethodA");
+        }
+        public void MethodB()
+        {
+            Console.WriteLine("Entering MethodB");
+            if (this.num > 10 || this.num < 0)
+                throw new System.Exception("Exception in MethodB - out of range");
+            Console.WriteLine("Leaving MethodB");
+        }
+    }
+    public class Tester
+    {
+        public static void Main()
+        {
+            Console.WriteLine("Entering Main");
+            A a = new A(15);
+            try
+            {
+                a.MethodA();
+                Console.WriteLine("Main");
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine("Exception Main");
+            
+            // причина возникновения исключения
+            Console.WriteLine(e.Message);
+            // имена, сигнатуры и нахождение методов, вызов которых привел к возникновению исключения
+            Console.WriteLine(e.StackTrace);
+            // метод, сгенерировавший исключение
+            Console.WriteLine(e.TargetSite);
+            }
+            Console.WriteLine("Leaving Main");
+        }
+    }
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Написать класс Money, предназначенный для хранения денежной суммы (в гривнах и копейках).
+Для класса реализовать перегрузку операторов + (сложение денежных сумм), - (вычитание сумм), / (деление суммы на целое число), * (умножение суммы на целое число), ++ (сумма увеличивается на 1 копейку), -- (сумма уменьшается на 1 копейку), <, >, ==, !=. 
+Класс не может содержать отрицательную сумму.
+В случае, если при исполнении какой-либо операции получается отрицательная сумма денег, то класс генерирует исключительную ситуацию «Банкрот».
+Программа должна с помощью меню продемонстрировать все возможности класса Money. Обработка исключительной ситуации производится в программе.

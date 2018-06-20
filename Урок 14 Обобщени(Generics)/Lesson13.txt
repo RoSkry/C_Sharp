@@ -1,0 +1,62 @@
+using System;
+using System.Collections.Generic;
+using System.Collections;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using static System.Console;
+
+namespace SimpleProject
+{
+    class Program
+    {
+        class CollectionPrint
+        {
+            ArrayList Arr;
+            public CollectionPrint()
+            {
+                Arr = new ArrayList();
+            }
+            public void addToCollection(Person aPerson)
+            {
+                Arr.Add(aPerson);
+            }
+            public void Print()
+            {
+                Arr.Sort();
+                foreach (Person item in Arr)
+                {
+                    Console.WriteLine($"{item.Surname} {item.Name}");
+                }
+            }
+        }
+        class Person:IComparable
+        {
+            public int priority { get; set; }
+            public string Name { get; set; }
+            public string Surname { get; set; }
+
+            public int CompareTo(object obj)
+            {
+                return priority.CompareTo(((Person)obj).priority);
+            }
+        }
+        static void Main(string[] args)
+        {
+            Person Per0 = new Person { Name = "Perl", Surname = "Tutunnik", priority = 3 };
+            Person Per1 = new Person { Name = "Alexey", Surname = "Tutunnik", priority = 1 };
+            Person Per2 = new Person { Name = "Margarita", Surname = "Tutunnik", priority = 3 };
+            Person Per3 = new Person { Name = "Elena", Surname = "Tutunnik", priority = 3 };
+            Person Per4 = new Person { Name = "Vacheslav", Surname = "Tutunnik", priority = 2 };
+
+            CollectionPrint Col = new CollectionPrint();
+            Col.addToCollection(Per1);
+            Col.addToCollection(Per2);
+            Col.addToCollection(Per3);
+            Col.addToCollection(Per4);
+            Col.addToCollection(Per0);
+            Col.Print();
+        }
+
+    }
+}

@@ -1,0 +1,22 @@
+Регулярные выражения 
+Атрибуты [] -некоторая информация которая добавляется в проект D:\Скрипник Ростислав\Урок 20 Сериализация, регулярные выражения\RegEx1\RegEx1\Properties\AssemblyInfo.cs
+[WebMethod]
+[obsolete("Устаревшая")] 
+ObsoleteAttribute 
+
+WebMethodAttribute 
+Type t=typeof(Employee);
+или 
+Employee empl=new Employee();
+Type t1=empl.GetType(); 
+Собственые атрибуты это информация 
+А програмные атрибуты влияют на код 
+
+Серилизация процесс сохранения состояния обьекта в любом потоке, с возможностью его последующегно востановления 
+Student->FileStream *.bin.
+                    *.xml 
+                    *.soap
+                    *.json
+                                                                                                                                      
+SOAP - SOAP Object Access Protocal для WCF  
+Создаем клас Dispasher(Диспечиризация),  1 делегат метод выборы 

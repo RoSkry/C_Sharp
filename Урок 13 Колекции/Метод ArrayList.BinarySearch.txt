@@ -1,0 +1,84 @@
+Метод ArrayList.BinarySearch (Object)
+
+.NET Framework (current version) Другие версии 
+ 
+Опубликовано: Октябрь 2016
+Выполняет поиск элемента по всему отсортированному списку ArrayList, используя компаратор по умолчанию, и возвращает индекс элемента, отсчитываемый от нуля.
+Пространство имен:   System.Collections
+Сборка:  mscorlib (в mscorlib.dll)
+
+Синтаксис
+C#C++F#VB
+public virtual int BinarySearch(
+	object value
+)
+Параметры
+value
+Type: System.Object
+Искомый объект Object. Допускается значение null.
+Возвращаемое значение
+Type: System.Int32
+Начинающийся с нуля индекс элемента value в отсортированном списке ArrayList, если элемент value найден; в противном случае — отрицательное число, которое является двоичным дополнением индекса следующего элемента, большего, чем value, или, если большего элемента не существует, двоичным дополнением значения Count.
+Исключения
+Exception	Condition
+ArgumentException	
+Ни один из элементов value и ArrayList не реализуют интерфейс IComparable.
+InvalidOperationException	
+Тип value не совпадает с типом элементов ArrayList.
+Комментарии
+value Параметр и каждый элемент ArrayList необходимо реализовать IComparable интерфейс, который используется для сравнения. Элементы ArrayList должны быть уже отсортированы по возрастанию в соответствии с порядком сортировки определяется IComparable реализации; в противном случае, результаты могут быть неправильными.
+Сравнение null с любым типом может быть и не создает исключение при использовании IComparable. При сортировке, null считается меньше любого другого объекта.
+Если ArrayList содержит более одного элемента с тем же значением, метод возвращает только один из экземпляров и может возвращать одно из вхождений, не обязательно первый из них.
+Если ArrayList не содержит заданного значения, метод возвращает отрицательное целое число. Можно применить операцию поразрядного дополнения (~), это отрицательное целое число, возвращается индекс первого элемента, большего, чем искомое значение. При вставке значения в ArrayList, этот индекс следует использовать как курсор, чтобы сохранить порядок сортировки.
+Этот метод является операцией O(log n), где n — Count.
+Примеры
+В следующем примере кода показано, как использовать BinarySearch для нахождения определенного объекта в ArrayList.
+C#C++VB
+using System;
+using System.Collections;
+public class SamplesArrayList  {
+
+   public static void Main()  {
+
+      // Creates and initializes a new ArrayList. BinarySearch requires
+      // a sorted ArrayList.
+      ArrayList myAL = new ArrayList();
+      for ( int i = 0; i <= 4; i++ )
+         myAL.Add( i*2 );
+
+      // Displays the ArrayList.
+      Console.WriteLine( "The Int32 ArrayList contains the following:" );
+      PrintValues( myAL );
+
+      // Locates a specific object that does not exist in the ArrayList.
+      Object myObjectOdd = 3;
+      FindMyObject( myAL, myObjectOdd );
+
+      // Locates an object that exists in the ArrayList.
+      Object myObjectEven = 6;
+      FindMyObject( myAL, myObjectEven );
+   }
+
+   public static void FindMyObject( ArrayList myList, Object myObject )  {
+      int myIndex=myList.BinarySearch( myObject );
+      if ( myIndex < 0 )
+         Console.WriteLine( "The object to search for ({0}) is not found. The next larger object is at index {1}.", myObject, ~myIndex );
+      else
+         Console.WriteLine( "The object to search for ({0}) is at index {1}.", myObject, myIndex );
+   }
+
+   public static void PrintValues( IEnumerable myList )  {
+      foreach ( Object obj in myList )
+         Console.Write( "   {0}", obj );
+      Console.WriteLine();
+   }
+
+}
+/* 
+This code produces the following output.
+
+The Int32 ArrayList contains the following:
+   0   2   4   6   8
+The object to search for (3) is not found. The next larger object is at index 2.
+The object to search for (6) is at index 3.
+*/

@@ -1,0 +1,54 @@
+Ќаследование повторное использование существующих класов плюс расширение их функциональных особенностей 
+Ѕазовый класс object 
+System.Object 
+ћожно наследоватьс€ только от одного класса 
+
+Class C1{}
+Class C2{}
+Class My:C1,c2//ошибка 
+{}
+
+
+Class My:C1,IA,IB,IC ... может быть множество интерфейсов 
+{}
+≈сли модификатор private оно видно только в текущем класс
+
+public sealed class tutor //нельз€ создать наследников, он запечатан
+{}
+
+class Curator:Tutor
+{
+}
+
+Human
+Employee:Human 
+Human h=new Human();
+Employee e=new Employee();
+Human empl=new Employee();// методы Employee не видит, видит только базовый класс 
+
+Manager m=null;
+if(item is Meneger)
+{
+(Manager)item).Showmeneger();
+m=item as Meneger;
+(item as Maneger).ShowMeneger();
+
+}
+
+ѕолиморфизм 
+overide переопредело€ет 
+
+јбстрактный класс 
+хот€ бы один метод абстрактный 
+
+public abstract class Figure
+{
+public virtual void M1(){}
+public abstact int M2(int a, double b);// об€зательно должны быть переопределены 
+
+
+}
+Figure f=new Figure
+
+¬ этом классе могут быть виртуальные методы 
+а могут быть абстрактные методы 

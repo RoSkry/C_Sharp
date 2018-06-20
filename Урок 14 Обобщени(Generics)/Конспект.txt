@@ -1,0 +1,7 @@
+1)Безопасности типов
+2) прозводительность 
+
+List<int> list = new List<int>();
+            list.Add(20);
+            list.Add(8.8);//Error 
+Итератор

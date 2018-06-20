@@ -1,0 +1,12 @@
+FileStream stream 
+try{
+
+
+
+}
+finally{
+stream.Close();
+}
+
+ Console.Out.WriteLine();//TextWriter
+            Console.In.ReadLine();//Textreader        

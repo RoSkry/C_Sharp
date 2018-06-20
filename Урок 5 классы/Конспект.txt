@@ -1,0 +1,41 @@
+Ключевые слова при обьявлении полей классов 
+static поле которое является общим для всех экземляров класса 
+const 
+readonly с public, можно в конструктуре проинициализировать или сразу при обьявлении
+
+class student 
+{
+string _lastName;
+public const string country ="Ukraine";
+static string _university="Step";
+public static string getUniver()//внутри метода только статические поля 
+{
+return _university;
+}
+public void show()
+{
+CWL()
+}
+
+статический конструктор
+только один может быть 
+нечего не возвращает 
+вызвать не можем
+нужен для инициализации статических полей 
+
+методы
+передача параметров по значению 
+перегрузка методов 
+public int N(int);
+public double N(int);//нельзя (другой параметр надо передать)
+public int N(double);
+private int N(int);//нельзя 
+public int M(ini,int);//нельзя
+public double N(int,double);
+
+ref ссылка указывать при обьявлении и при вызове
+если out можно не инициализировать переменную 
+
+
+
+

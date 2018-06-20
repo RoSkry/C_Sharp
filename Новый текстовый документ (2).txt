@@ -1,0 +1,23 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace Tamagotchi
+{
+    class Program
+    {
+
+        static void Main(string[] args)
+        {
+            do
+            {
+                Tamagotchi tamagotchi = new Tamagotchi() { };
+                while (!tamagotchi.PokemonGone) ;
+                MessageBox.Show($"Tamagotchi Gone. You points: {tamagotchi.Points}", "Game information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            } while (MessageBox.Show("Restart?", "Game information", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes);
+        }
+    }
+}

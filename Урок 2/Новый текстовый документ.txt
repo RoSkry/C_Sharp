@@ -1,0 +1,104 @@
+литералы фиксированые значения не могут изменены компилятором 
+float n=1.57f;
+L-long
+f-float
+d-double
+m-decimal
+u- ulong(неотрицательные и целые)
+escape последовательности теже
+знак собаки с:\\Temp\\Folder1\\Test.txt как напишем так и выводит
+именование точно также как в с++
+int @int;(можно сделать но не нужно)
+имена переменных выглядят
+double SupperSale- нотация паскаля
+int supperCame - верблюжья запись(рекомендуется!)
+char SUPPER;upper case
+
+
+1 способ приведение строки к числу
+int number;
+Console.Writeline("Enter numer:");
+string str=Console.Readline();
+метод parse осуществляет привести некую строку к целому числу
+number=int.Parse(str);// работает только со строкой
+
+number=int.TryParse(str);//0 если ничего нет
+
+number=int.parse(Console.Readline());
+
+2 способ приведение строки к числу
+double d=Convert.ToDouble(number);\\ работают со всеми типами
+
+int code=Console.Read();записывает код символа 
+
+setCursorposition(100,200) координаты х и у помещаем маркер в любое место консоли
+
+Явное неявное преобразование типов
+Явное приведение если создаем переменную 
+int n=5;
+double d=n;
+int m=(int)d - явное приведение
+
+операторы 
+
+деление по модулю
+737%6=5;
+
+3%8=3;
+
+A%B=A-B*(A/B);формула целочисленого деления
+
+операторы объеденение 
+&& сокращенное логическое и 
+|| или
+& логическое и (если первое фолсе остальные не проверяет)
+| логическое или
+! НЕ
+
+int n=5,m=7,k=10,f=4;
+Console.Writeline(n>m&&f<k)
+CWL(n<m||f<k)
+
+(a+b)>>2 
+
+Условие
+int number=5; 
+if(numbur>10)  if(number==6) 
+{
+CWL("OK");
+}
+
+if Tab Tab - для других тоже 
+
+switch(n)// используються int,char,enum,string
+{
+case 1: CWL("1"):break;
+case 3:
+case 2: CWL("2"):break; 
+default:CWL("Ok"):break;
+}
+если return или goto не можно не писать break;
+варианты тернарного оператора должны быть одного типа
+Циклы 
+while(условие) везде условие
+int i=5;
+for(int i=0;i<10;i++)// не сработает
+{
+CWL(i);
+}
+
+массивы 
+int [] numbers=new int[]{34,16,5,38,6};(new int[] можно не писать) 
+
+foreach(int item in numbers)(каждый item  в колекции numbers)
+{
+CWL(item);
+item++;//ошибка изменять нельзя 
+}
+
+
+Строки 
+Console.WriteLine("Число N1={0}, Число N2={1},num,num1")
+
+
+

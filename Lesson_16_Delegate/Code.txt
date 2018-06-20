@@ -1,0 +1,527 @@
+//Multicasting
+'accsess modificator' delegate type name<type parameters>(parameters);
+
+
+using static System.Console;
+
+namespace SimpleProject
+{
+    public delegate T AddDelegate <T>(T x, T y);
+
+    public class ExampleClass
+    {
+        public int AddInt(int x, int y)
+        {
+            return x + y;
+        }
+        public double AddDouble(double x, double y)
+        {
+            return x + y;
+        }
+        public static char AddChar(char x, char y)
+        {
+            return (char)(x + y);
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            ExampleClass example = new ExampleClass();
+
+            AddDelegate<int> delInt = example.AddInt;
+            WriteLine($"Сумма целых чисел: {delInt(8, 6)}");
+
+            AddDelegate<double> delDouble = example.AddDouble;
+            WriteLine($"Сумма вещественных чисел: {delDouble(45.67, 62.81)}");
+
+            AddDelegate<char> delChar = ExampleClass.AddChar;
+            WriteLine($"Сумма символов: {delChar('S', 'h')}");
+        }
+    }
+}
+
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+//Action delegate.
+
+using System;
+using System.Collections.Generic;
+using static System.Console;
+
+namespace SimpleProject
+{
+    class Student
+    {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public DateTime BirthDate { get; set; }
+    }
+
+    class Program
+    {
+        static void FullName(Student student)
+        {
+            WriteLine($" {student.LastName}\t{student.FirstName}");
+        }
+
+        static void Main(string[] args)
+        {
+            List<Student> group = new List<Student> {
+                new Student {
+                    FirstName = "John",
+                    LastName = "Miller",
+                    BirthDate = new DateTime(1997,3,12)
+                },
+                new Student {
+                    FirstName = "Candice",
+                    LastName = "Leman",
+                    BirthDate = new DateTime(1998,7,22)
+                },
+                new Student {
+                    FirstName = "Joey",
+                    LastName = "Finch",
+                    BirthDate = new DateTime(1996,11,30)
+                },
+                new Student {
+                    FirstName = "Nicole",
+                    LastName = "Taylor",
+                    BirthDate = new DateTime(1996,5,10)
+                }
+            };
+
+            WriteLine("Список студентов:");
+
+            // одно и то же
+            //group.ForEach(new Action<Student>(FullName));
+            //group.ForEach(Program.FullName);
+            group.ForEach(FullName);
+        }
+    }
+}
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+//Delegae Func
+
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using static System.Console;
+
+namespace SimpleProject
+{
+    class Student
+    {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public DateTime BirthDate { get; set; }
+    }
+
+    class Program
+    {
+        static string FullName(Student student)
+        {
+            return $" {student.LastName}\t{student.FirstName}";
+        }
+
+        static void Main(string[] args)
+        {
+            List<Student> group = new List<Student> {
+                new Student {
+                    FirstName = "John",
+                    LastName = "Miller",
+                    BirthDate = new DateTime(1997,3,12)
+                },
+                new Student {
+                    FirstName = "Candice",
+                    LastName = "Leman",
+                    BirthDate = new DateTime(1998,7,22)
+                },
+                new Student {
+                    FirstName = "Joey",
+                    LastName = "Finch",
+                    BirthDate = new DateTime(1996,11,30)
+                },
+                new Student {
+                    FirstName = "Nicole",
+                    LastName = "Taylor",
+                    BirthDate = new DateTime(1996,5,10)
+                }
+            };
+
+            WriteLine("Список студентов:");
+			//Func
+            //IEnumerable<string> students = group.Select(new Func<Student, string>(Program.FullName));
+            //IEnumerable<string> students = group.Select(new Func<Student, string>(FullName));
+            IEnumerable<string> students = group.Select(FullName);
+            
+            foreach (string item in students)
+            {
+                WriteLine(item);
+            }
+
+            WriteLine("\n++++++++++++++++++++++++++++++\n");
+
+            List<string> studs = students.ToList();
+
+            foreach (string item in studs)
+            {
+                WriteLine(item);
+            }
+        }
+    }
+}
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Predicate deligate.
+
+using System;
+using System.Collections.Generic;
+using static System.Console;
+
+namespace SimpleProject
+{
+    class Student
+    {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public DateTime BirthDate { get; set; }
+        public override string ToString()
+        {
+            return $"Фамилия: {LastName}, Имя: {FirstName}, Родился: {BirthDate.ToLongDateString()}";
+        }
+    }
+
+    class Program
+    {
+        static bool OnlySpring(Student student)
+        {
+            return student.BirthDate.Month >= 3 && student.BirthDate.Month <= 5;
+        }
+
+        static void Main(string[] args)
+        {
+            List<Student> group = new List<Student> {
+                new Student {
+                    FirstName = "John",
+                    LastName = "Miller",
+                    BirthDate = new DateTime(1997,3,12)
+                },
+                new Student {
+                    FirstName = "Candice",
+                    LastName = "Leman",
+                    BirthDate = new DateTime(1998,7,22)
+                },
+                new Student {
+                    FirstName = "Joey",
+                    LastName = "Finch",
+                    BirthDate = new DateTime(1996,11,30)
+                },
+                new Student {
+                    FirstName = "Nicole",
+                    LastName = "Taylor",
+                    BirthDate = new DateTime(1996,5,10)
+                }
+            };
+            WriteLine("Рожденные весной:");
+
+            //List<Student> students = group.FindAll(new Predicate<Student>(Program.OnlySpring));
+            //List<Student> students = group.FindAll(new Predicate<Student>(OnlySpring));
+            List<Student> students = group.FindAll(OnlySpring);
+
+            foreach (Student item in students)
+            {
+                WriteLine(item);
+            }
+        }
+    }
+}
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+//Comperison
+
+using System;
+using System.Collections.Generic;
+using static System.Console;
+
+namespace SimpleProject
+{
+    class Student:IComparable<Student>
+    {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public DateTime BirthDate { get; set; }
+        public override string ToString()
+        {
+            return $"Фамилия: {LastName}, Имя: {FirstName}, Родился: {BirthDate.ToLongDateString()}";
+        }
+
+        public int CompareTo(Student other)
+        {
+            return LastName.CompareTo(other.LastName);
+        }
+    }
+
+    class FirstNameComparer : IComparer<Student>
+    {
+        public int Compare(Student x, Student y)
+        {
+            return string.Compare(x.FirstName, y.FirstName);
+        }
+    }
+
+    class Program
+    {
+        static int SortBirthDate(Student student1, Student student2)
+        {
+            return student1.BirthDate.CompareTo(student2.BirthDate);
+        }
+
+        static void Main(string[] args)
+        {
+            List<Student> group = new List<Student> {
+                new Student {
+                    FirstName = "John",
+                    LastName = "Miller",
+                    BirthDate = new DateTime(1997,3,12)
+                },
+                new Student {
+                    FirstName = "Candice",
+                    LastName = "Leman",
+                    BirthDate = new DateTime(1998,7,22)
+                },
+                new Student {
+                    FirstName = "Joey",
+                    LastName = "Finch",
+                    BirthDate = new DateTime(1996,11,30)
+                },
+                new Student {
+                    FirstName = "Nicole",
+                    LastName = "Taylor",
+                    BirthDate = new DateTime(1996,5,10)
+                }
+            };
+            WriteLine("\nСортировка по дате рождения:");
+
+            //group.Sort(new Comparison<Student>(Program.SortBirthDate));
+            //group.Sort(new Comparison<Student>(SortBirthDate));
+            group.Sort(SortBirthDate);
+
+            foreach (Student item in group)
+            {
+                WriteLine(item);
+            }
+
+            WriteLine("\nСортировка по фамилии:");
+            group.Sort();
+
+            foreach (Student item in group)
+            {
+                WriteLine(item);
+            }
+
+            WriteLine("\nСортировка по имени:");
+            IComparer<Student> iComp = new FirstNameComparer();
+            group.Sort(iComp);
+
+            foreach (Student item in group)
+            {
+                WriteLine(item);
+            }
+        }
+    }
+}
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+/*
+Events.
+*/
+
+
+using System;
+using System.Collections.Generic;
+using static System.Console;
+
+namespace SimpleProject
+{
+    public delegate void ExamDelegate(string t);
+
+    class Student
+    {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public DateTime BirthDate { get; set; }
+
+        public void Exam(string task)
+        {
+            WriteLine($"Студент {LastName} решил {task}");
+        }
+    }
+
+    class Teacher
+    {
+        public event ExamDelegate examEvent;
+
+        public void Exam(string task)
+        {
+            if (examEvent != null)
+            {
+                examEvent(task);
+            }
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            List<Student> group = new List<Student> {
+                new Student {
+                    FirstName = "John",
+                    LastName = "Miller",
+                    BirthDate = new DateTime(1997,3,12)
+                },
+                new Student {
+                    FirstName = "Candice",
+                    LastName = "Leman",
+                    BirthDate = new DateTime(1998,7,22)
+                },
+                new Student {
+                    FirstName = "Joey",
+                    LastName = "Finch",
+                    BirthDate = new DateTime(1996,11,30)
+                },
+                new Student {
+                    FirstName = "Nicole",
+                    LastName = "Taylor",
+                    BirthDate = new DateTime(1996,5,10)
+                }
+            };
+
+            Teacher teacher = new Teacher();
+
+            foreach (Student item in group)
+            {
+                teacher.examEvent += item.Exam;
+            }
+
+            teacher.Exam("Задача");
+        }
+    }
+}
+
+//Example 2 (Difference between the delegate and an event).
+
+using System;
+using System.Collections.Generic;
+using static System.Console;
+
+namespace SimpleProject
+{
+    public delegate void ExamDelegate(string t);
+
+    class Student
+    {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public DateTime BirthDate { get; set; }
+
+        public void ExamStudent(string task)
+        {
+            WriteLine($"Студент {LastName} решил {task}");
+        }
+    }
+
+    class Teacher
+    {
+        public ExamDelegate examEvent;
+
+        public void ExamTeacher(string task)
+        {
+            if (examEvent != null)
+            {
+                examEvent(task);
+            }
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            List<Student> group = new List<Student> {
+                new Student {
+                    FirstName = "John",
+                    LastName = "Miller",
+                    BirthDate = new DateTime(1997,3,12)
+                },
+                new Student {
+                    FirstName = "Candice",
+                    LastName = "Leman",
+                    BirthDate = new DateTime(1998,7,22)
+                },
+                new Student {
+                    FirstName = "Joey",
+                    LastName = "Finch",
+                    BirthDate = new DateTime(1996,11,30)
+                },
+                new Student {
+                    FirstName = "Nicole",
+                    LastName = "Taylor",
+                    BirthDate = new DateTime(1996,5,10)
+                }
+            };
+
+            Teacher teacher = new Teacher();
+
+            foreach (Student item in group)
+            {
+                teacher.examEvent += item.Exam;
+            }
+
+            teacher.examEvent.Invoke("Всем 2!"); // обращение напрямую
+
+            teacher.examEvent = null; // новое значение
+
+            teacher.Exam("Задача"); // ни к чему не приведет
+        }
+    }
+}
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+int? nullInt = null;
+nullInt = nullInt ?? 50;
+Console.WriteLine(nullInt); // 50
+
+int number = nullInt ?? 100;
+Console.WriteLine(number); // 50
+
+**************************************************************************
+
+int? nullInt = null;
+if (nullInt == null)
+{
+      nullInt = 100;
+}
+Console.WriteLine(nullInt); // 100
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+            Student student = null;
+            DateTime? date = null;
+            if (student != null)
+            {
+                date = student.DateBirth;
+            }
+
+-------------------------------------------------------------------------
+
+            Student student = null;
+            DateTime? date = student?.DateBirth;
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
